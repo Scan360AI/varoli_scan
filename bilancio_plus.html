@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilancio Plus - Ottimizzazione - VAROLI GUIDO E FIGLIO S.R.L. | SCAN</title>
+    <!-- Librerie Esterne -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- CSS Custom -->
+    <link href="../css/styles.css" rel="stylesheet">
+    <link href="../css/print.css" rel="stylesheet" media="print">
+    <!-- Stili Incorporati -->
+    <link href="./css/bilancio_plus.css" rel="stylesheet">
+    <!-- Chart.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+
+    <!-- Sidebar Semplificata -->
+    <aside class="sidebar no-print">
+         <div class="sidebar-header">
+            <!-- Inserisci qui il logo se desiderato -->
+             <img src="assets/img/logo_scan.png" alt="FREM Logo" style="max-height: 40px;">
+            <h5>VAROLI GUIDO E FIGLIO S.R.L.</h5>
+        </div>
+        <ul class="sidebar-nav flex-grow-1">
+            <!-- Link Home -->
+            <li class="nav-item"> <a class="nav-link" href="index.html"> <i class="fas fa-home fa-fw"></i> Torna alla Home </a> </li>
+            <li class="nav-title">Sezioni Bilancio Plus</li>
+            <!-- Ancore alle sezioni della pagina -->
+            <li class="nav-item"> <a class="nav-link" href="#summary"> <i class="fas fa-clipboard-list fa-fw"></i> Sintesi Attuale </a> </li>
+            <li class="nav-item"> <a class="nav-link" href="#optimization-areas"> <i class="fas fa-search-plus fa-fw"></i> Aree Ottimizzazione </a> </li>
+            <li class="nav-item"> <a class="nav-link" href="#optimization-proposals"> <i class="fas fa-cogs fa-fw"></i> Ipotesi Ottimizzazione </a> </li>
+            <li class="nav-item"> <a class="nav-link" href="#impact-summary"> <i class="fas fa-chart-pie fa-fw"></i> Impatto Complessivo </a> </li>
+            <li class="nav-item"> <a class="nav-link" href="#final-thoughts"> <i class="fas fa-gavel fa-fw"></i> Considerazioni Finali </a> </li>
+            
+        </ul>
+        <div class="sidebar-footer"> <small>SCAN360 © <span id="currentYearSidebar"></span> Kitzanos</small> </div>
+    </aside>
+
+    <!-- Contenuto Principale Wrapper -->
+    <div class="main-wrapper">
+        <!-- Header Orizzontale -->
+        <header class="dashboard-header no-print">
+            <div class="header-title">
+                <h5 class="mb-0">Analisi Finanziaria e Proposte di Ottimizzazione (Bilancio Plus)</h5>
+                <p class="mb-0">VAROLI GUIDO E FIGLIO S.R.L. | <span class="report-date">Dati al 12/2024</span></p>
+            </div>
+            <div class="header-controls d-flex align-items-center">
+                <!-- Rimosso badge IRP -->
+                <button class="btn btn-sm btn-outline-secondary me-2 print-button" onclick="printDocument()"> <i class="fas fa-print"></i> Stampa </button>
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-light border dropdown-toggle" type="button" id="userMenuButton" data-bs-toggle="dropdown" aria-expanded="false"> <i class="fas fa-user-circle me-1"></i> VAROLI GUIDO E FIGLIO S.R.L. </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenuButton"> <li><button class="dropdown-item" type="button" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i>Logout</button></li> </ul>
+                </div>
+            </div>
+        </header>
+        <div class="container d-none d-print-block mt-4 mb-4">
+            <h1 class="text-center mb-0"><span class="company-name">VAROLI GUIDO E FIGLIO S.R.L.</span></h1>
+            <p class="text-center mb-0">Analisi Finanziaria e Proposte di Ottimizzazione (Bilancio Plus) | <span class="report-date">Dati al 12/2024</span></p>
+            <hr>
+        </div>
+
+        <!-- Area Contenuto Specifico del Report -->
+        <div class="dashboard-container">
+
+            <!-- ================================================================ -->
+            <!-- CONTENUTO BILANCIO PLUS - VAROLI GUIDO E FIGLIO S.R.L. (con grafici e colori) -->
+            <!-- ================================================================ -->
+
+             <h2 class="section-title" id="optimization-analysis-title"><i class="fas fa-magic me-2"></i>Analisi Finanziaria e Proposte di Ottimizzazione</h2>
+
+            <!-- Sezione 1: Premessa -->
+            <div class="card mb-4 report-section">
+                 <div class="card-header"><h5 class="mb-0">1. Premessa e ambito di analisi</h5></div>
+                 <div class="card-body small">
+                     <p>L'analisi si basa sui dati del bilancio 2024 di VAROLI GUIDO E FIGLIO S.R.L., operante nel settore "Commercio all'ingrosso di legname" (ATECO 46.73.1). L'azienda, attiva dal 1985, si configura come una piccola impresa con 9 dipendenti e un fatturato di €2.849.913. Presenta una contrazione dei ricavi (-14,27%) con una marginalità operativa negativa (EBITDA -1,53%). L'azienda è classificata come operatore di tipo trader nel mercato B2B, con un profilo di rischio elevato (IRP: 54,12/100, categoria D+).</p>
+                 </div>
+            </div>
+
+             <!-- Sezione 2: Sintesi Situazione Attuale -->
+             <div class="card mb-4 report-section" id="summary">
+                 <div class="card-header"><h5 class="mb-0">2. Sintesi della Situazione Attuale</h5></div>
+                 <div class="card-body small">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="card-title-small">2.1 Profilo Economico</h6>
+                            <ul class="list-styled">
+                                <li><strong>Ricavi:</strong> €2.849.913 (<span class="text-danger">-14,27%</span> vs 2023)</li>
+                                <li><strong>EBITDA:</strong> -€43.535 (-1,53% sui Ricavi) (<span class="text-danger">negativo</span>)</li>
+                                <li><strong>EBIT:</strong> -€92.982 (-3,26% sui Ricavi) (<span class="text-danger">negativo</span>)</li>
+                                <li><strong>Utile netto:</strong> -€149.177 (-5,23% sui Ricavi) (<span class="text-danger">negativo</span>)</li>
+                            </ul>
+                             <h6 class="card-title-small mt-3">2.2 Profilo Patrimoniale</h6>
+                            <ul class="list-styled">
+                                <li><strong>Patrimonio Netto:</strong> €479.666</li>
+                                <li><strong>PFN:</strong> €919.610 (<span class="badge bg-danger">Indebitamento</span>)</li>
+                                <li><strong>Liquidità:</strong> €355.443 (12,47% sui ricavi)</li>
+                                <li><strong>PFN/EBITDA:</strong> NOK (EBITDA negativo) (<span class="badge bg-danger">Critico</span>)</li>
+                                <li><strong>Leva (D/E):</strong> 2,66 (<span class="badge bg-warning">Discreta</span>)</li>
+                            </ul>
+                        </div>
+                         <div class="col-md-6">
+                             <h6 class="card-title-small">2.3 Profilo Finanziario</h6>
+                            <ul class="list-styled">
+                                <li><strong>Cash Flow Operativo:</strong> €211.345 (7,42% sui Ricavi)</li>
+                                <li><strong>DSO:</strong> 41 giorni</li>
+                                <li><strong>DPO:</strong> 68 giorni</li>
+                                <li><strong>DIO:</strong> 194 giorni (<span class="text-danger">elevato</span>)</li>
+                                <li><strong>CCC:</strong> 167 giorni (<span class="badge bg-danger">Critico</span>)</li>
+                            </ul>
+                             <h6 class="card-title-small mt-3">2.4 Indicatori di Rischio e Rating</h6>
+                             <ul class="list-styled">
+                                <li><strong>Leanus Score:</strong> 3,47 ("3 - Discreto")</li>
+                                <li><strong>Z-Score di Altman:</strong> 2,22 (<span class="badge bg-warning">Zona Grigia</span>)</li>
+                                <li><strong>IRP (Indice di Rischio Ponderato):</strong> 54,12/100 (<span class="badge bg-danger">Rischio Elevato - D+</span>)</li>
+                                <li><strong>Interest Coverage Ratio:</strong> -1,38 (<span class="badge bg-danger">Critico</span>)</li>
+                             </ul>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+
+             <!-- Sezione 3: Aree di Potenziale Ottimizzazione -->
+             <div class="card mb-4 report-section" id="optimization-areas">
+                 <div class="card-header"><h5 class="mb-0">3. Analisi delle Aree di Potenziale Ottimizzazione</h5></div>
+                 <div class="card-body small">
+                      <div class="row">
+                          <div class="col-md-4">
+                              <h6 class="card-title-small">3.1 Area Economica</h6>
+                               <ul class="list-styled">
+                                   <li><i class="fas fa-exclamation-triangle text-danger me-1"></i> EBITDA: -€43.535 (-1,53%)</li>
+                                   <li><i class="fas fa-exclamation-triangle text-danger me-1"></i> EBIT: -€92.982 (-3,26%)</li>
+                                   <li><i class="fas fa-exclamation-triangle text-danger me-1"></i> Utile netto: -€149.177 (-5,23%)</li>
+                                   <li><i class="fas fa-exclamation-triangle text-warning me-1"></i> Moltiplicatore costi fissi: 11,69 (elevato)</li>
+                                   <li><i class="fas fa-exclamation-triangle text-danger me-1"></i> ROE: -31,10% (negativo)</li>
+                               </ul>
+                          </div>
+                           <div class="col-md-4">
+                               <h6 class="card-title-small">3.2 Area Patrimoniale</h6>
+                                <ul class="list-styled">
+                                    <li><i class="fas fa-exclamation-triangle text-warning me-1"></i> Attivo Fisso: €854.485 (49,1%)</li>
+                                    <li><i class="fas fa-exclamation-triangle text-danger me-1"></i> Copertura Immob.: 0,56 (insufficiente)</li>
+                                    <li><i class="fas fa-exclamation-triangle text-warning me-1"></i> Patrimonio Netto: €479.666</li>
+                                    <li><i class="fas fa-info-circle text-success me-1"></i> Turnover: 2,04 (ottimo)</li>
+                                </ul>
+                           </div>
+                            <div class="col-md-4">
+                                <h6 class="card-title-small">3.3 Area Finanziaria</h6>
+                                 <ul class="list-styled">
+                                     <li><i class="fas fa-info-circle text-success me-1"></i> CF Operativo: €211.345 (7,42%)</li>
+                                     <li><i class="fas fa-info-circle text-success me-1"></i> Var. netta cassa: €183.808 (6,45%)</li>
+                                     <li><i class="fas fa-info-circle text-success me-1"></i> Liquidità: €355.443 (12,47%)</li>
+                                     <li><i class="fas fa-exclamation-triangle text-danger me-1"></i> Ciclo Circolante: 167 giorni (critico)</li>
+                                     <li><i class="fas fa-exclamation-triangle text-danger me-1"></i> Rimanenze: 194 giorni (eccessive)</li>
+                                 </ul>
+                            </div>
+                      </div>
+                 </div>
+            </div>
+
+             <!-- Sezione 4: Ipotesi di Ottimizzazione -->
+             <div class="card mb-4 report-section" id="optimization-proposals">
+                <div class="card-header"><h5 class="mb-0">4. Ipotesi di Ottimizzazione del Bilancio 2024</h5></div>
+                 <div class="card-body">
+                     <h6 class="card-title-small">4.1 Premessa Metodologica</h6>
+                     <p class="small">Le seguenti ipotesi sono formulate nel pieno rispetto della normativa e dei principi contabili vigenti, con l'obiettivo di migliorare la rappresentazione della realtà economica sottostante dell'azienda che opera nel settore del commercio all'ingrosso di legname, mantenendo una rappresentazione veritiera e corretta della situazione aziendale.</p>
+
+                     <h6 class="card-title-small mt-4">4.2 Tabella Miglioramenti Proposti</h6>
+                     <div class="table-responsive">
+                         <table class="table table-sm table-striped table-hover">
+                              <thead class="table-light">
+                                  <tr>
+                                      <th>Voce/Indice</th>
+                                      <th>Situazione Attuale (2024)</th>
+                                      <th>Azione Suggerita</th>
+                                      <th>Effetto Previsto</th>
+                                      <th>Impatto Quantitativo</th>
+                                      <th>Principio/Norma</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr>
+                                      <td><strong>Ripristino redditività operativa</strong></td>
+                                      <td>EBITDA: -1,53% (-€43.535)</td>
+                                      <td>Revisione prezzi di vendita e mix prodotti</td>
+                                      <td>Inversione trend negativo</td>
+                                      <td class="text-end"><span class="text-success">+€140.000/+€180.000</span> (EBITDA 4-6%)</td>
+                                      <td>OIC 12, OIC 13</td>
+                                  </tr>
+                                  <tr>
+                                      <td><strong>Ottimizzazione rimanenze</strong></td>
+                                      <td>Rimanenze: 194 giorni</td>
+                                      <td>Sistema avanzato gestione scorte</td>
+                                      <td>Liberazione capitale circolante</td>
+                                      <td class="text-end"><span class="text-success">+€380.000/+€450.000</span> (riduzione 50-60 gg)</td>
+                                      <td>OIC 13</td>
+                                  </tr>
+                                  <tr>
+                                      <td><strong>Razionalizzazione costi fissi</strong></td>
+                                      <td>Moltiplicatore: 11,69</td>
+                                      <td>Conversione parziale costi fissi in variabili</td>
+                                      <td>Miglioramento elasticità struttura costi</td>
+                                      <td class="text-end"><span class="text-success">-€70.000/-€90.000</span> (costi fissi)</td>
+                                      <td>OIC 12, OIC 19</td>
+                                  </tr>
+                                   <tr>
+                                      <td><strong>Ristrutturazione indebitamento</strong></td>
+                                      <td>Debiti finanziari: €1.275.053</td>
+                                      <td>Consolidamento linee a breve e rinegoziazione tassi</td>
+                                      <td>Riduzione oneri finanziari</td>
+                                      <td class="text-end"><span class="text-success">-€15.000/-€20.000</span> (oneri finanziari)</td>
+                                      <td>OIC 19, OIC 6</td>
+                                  </tr>
+                                  <tr>
+                                      <td><strong>Rafforzamento patrimoniale</strong></td>
+                                      <td>Copertura immob.: 0,56</td>
+                                      <td>Apporto capitale da parte dei soci</td>
+                                      <td>Miglioramento solidità patrimoniale</td>
+                                      <td class="text-end"><span class="text-success">+€200.000/+€300.000</span> (patrimonio netto)</td>
+                                      <td>Artt. 2446, 2447 c.c.</td>
+                                  </tr>
+                                   <tr>
+                                      <td><strong>Controllo di gestione evoluto</strong></td>
+                                      <td>Sistema controllo limitato</td>
+                                      <td>Implementazione KPI operativi e finanziari</td>
+                                      <td>Miglioramento capacità decisionale</td>
+                                      <td class="text-end"><span class="text-success">-3%/-5%</span> (costi operativi)</td>
+                                      <td>Art. 2086 c.c., OIC 11</td>
+                                  </tr>
+                              </tbody>
+                         </table>
+                     </div>
+
+                     <!-- Sezione Grafici Impatto INSERITA QUI -->
+                     <h6 class="card-title-small mt-5">5.0 Visualizzazione Impatto Ottimizzazioni</h6>
+                     <div class="row">
+                         <div class="col-lg-6 col-md-6 mb-3">
+                            <h6 class="text-center small">Grafico 5.1: EBITDA (€) - Prima vs Dopo</h6>
+                            <div class="chart-container"><canvas id="ebitdaChart"></canvas></div>
+                         </div>
+                         <div class="col-lg-6 col-md-6 mb-3">
+                            <h6 class="text-center small">Grafico 5.2: EBIT Margin (%) - Prima vs Dopo</h6>
+                            <div class="chart-container"><canvas id="ebitdaMarginChart"></canvas></div>
+                         </div>
+                         <div class="col-lg-6 col-md-6 mb-3">
+                            <h6 class="text-center small">Grafico 5.3: Cash Flow Operativo (€) - Prima vs Dopo</h6>
+                            <div class="chart-container"><canvas id="pfnEbitdaChart"></canvas></div>
+                         </div>
+                         <div class="col-lg-6 col-md-6 mb-3">
+                             <h6 class="text-center small">Grafico 5.4: ROE (%) - Prima vs Dopo</h6>
+                             <div class="chart-container"><canvas id="leanusScoreChart"></canvas></div>
+                         </div>
+                     </div>
+                     <!-- Fine Sezione Grafici -->
+
+                     <h6 class="card-title-small mt-4">4.3 Motivazioni dei Miglioramenti Proposti (Dettaglio)</h6>
+                      <div class="accordion small" id="motivationsAccordion">
+                          <!-- Ripristino redditività operativa -->
+                          <div class="accordion-item">
+                              <h2 class="accordion-header" id="headingMotiv1"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMotiv1" aria-expanded="false" aria-controls="collapseMotiv1">4.3.1 Ripristino della redditività operativa</button></h2>
+                              <div id="collapseMotiv1" class="accordion-collapse collapse" aria-labelledby="headingMotiv1" data-bs-parent="#motivationsAccordion"><div class="accordion-body"><strong>Problematica:</strong> L'EBITDA margin del -1,53% (-€43.535) e l'EBIT margin del -3,26% (-€92.982) evidenziano una significativa criticità nella redditività operativa, con marginalità negativa che compromette la sostenibilità del business nel lungo periodo.<br><strong>Soluzione Proposta:</strong> Revisione integrale della struttura dei prezzi di vendita con incremento mirato del 4-6%, ottimizzazione del mix di prodotti con focus su segmenti a maggiore valore aggiunto, rinegoziazione delle condizioni di acquisto con i principali fornitori.<br><strong>Ratio/Logica:</strong> L'OIC 12 richiede una corretta rappresentazione dei costi e ricavi. L'ottimizzazione del mix di prodotti e della struttura dei prezzi migliora la redditività operativa senza alterare la rappresentazione veritiera.<br><strong>Benefici Attesi:</strong> Incremento dell'EBITDA fino a +€140.000-€180.000 (recupero di 4-6 punti percentuali di marginalità), inversione del trend negativo e ripristino della sostenibilità economica.<br><strong>Normativa Riferimento:</strong> OIC 12 sulla rilevazione dei costi e ricavi, OIC 13 sulla rilevazione dei costi.</div></div>
+                          </div>
+                          <!-- Ottimizzazione rimanenze -->
+                           <div class="accordion-item">
+                              <h2 class="accordion-header" id="headingMotiv2"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMotiv2" aria-expanded="false" aria-controls="collapseMotiv2">4.3.2 Ottimizzazione delle rimanenze</button></h2>
+                              <div id="collapseMotiv2" class="accordion-collapse collapse" aria-labelledby="headingMotiv2" data-bs-parent="#motivationsAccordion"><div class="accordion-body"><strong>Problematica:</strong> Le rimanenze presentano una rotazione estremamente lenta (194 giorni), contribuendo a un ciclo del circolante di 167 giorni e immobilizzando capitale che potrebbe essere impiegato più efficacemente.<br><strong>Soluzione Proposta:</strong> Implementazione di un sistema avanzato di gestione delle scorte (SKU optimization), razionalizzazione del portafoglio prodotti con eliminazione degli articoli a bassa rotazione, introduzione di un sistema di forecasting della domanda per ottimizzare gli approvvigionamenti.<br><strong>Ratio/Logica:</strong> L'ottimizzazione delle rimanenze è essenziale per liberare risorse finanziarie e migliorare l'efficienza operativa, riducendo l'immobilizzazione di capitale nel ciclo operativo.<br><strong>Benefici Attesi:</strong> Riduzione delle rimanenze di 50-60 giorni con liberazione di €380.000-€450.000 di capitale circolante, miglioramento del cash flow operativo e della redditività del capitale investito.<br><strong>Normativa Riferimento:</strong> OIC 13 sulle rimanenze, best practice di gestione del magazzino.</div></div>
+                          </div>
+                           <!-- Razionalizzazione costi fissi -->
+                           <div class="accordion-item">
+                              <h2 class="accordion-header" id="headingMotiv3"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMotiv3" aria-expanded="false" aria-controls="collapseMotiv3">4.3.3 Razionalizzazione della struttura dei costi</button></h2>
+                              <div id="collapseMotiv3" class="accordion-collapse collapse" aria-labelledby="headingMotiv3" data-bs-parent="#motivationsAccordion"><div class="accordion-body"><strong>Problematica:</strong> Il moltiplicatore dei costi fissi pari a 11,69 indica una struttura dei costi estremamente rigida che amplifica l'impatto delle variazioni di fatturato sulla redditività, aumentando la vulnerabilità aziendale.<br><strong>Soluzione Proposta:</strong> Analisi ABC dei costi fissi con individuazione delle voci comprimibili, conversione parziale dei costi fissi in variabili, outsourcing selettivo di funzioni non core.<br><strong>Ratio/Logica:</strong> Una struttura dei costi più flessibile migliora la resilienza aziendale e la capacità di adattamento alle fluttuazioni di mercato, senza alterare la rappresentazione veritiera e corretta del bilancio.<br><strong>Benefici Attesi:</strong> Riduzione dei costi fissi di €70.000-€90.000, riduzione del moltiplicatore a 9,0-9,5, miglioramento della flessibilità operativa e della redditività.<br><strong>Normativa Riferimento:</strong> OIC 12 sulla classificazione dei costi, OIC 19 sui debiti, principi di corretta gestione aziendale.</div></div>
+                          </div>
+                          <!-- Ristrutturazione indebitamento -->
+                          <div class="accordion-item">
+                              <h2 class="accordion-header" id="headingMotiv4"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMotiv4" aria-expanded="false" aria-controls="collapseMotiv4">4.3.4 Ristrutturazione dell'indebitamento finanziario</button></h2>
+                              <div id="collapseMotiv4" class="accordion-collapse collapse" aria-labelledby="headingMotiv4" data-bs-parent="#motivationsAccordion"><div class="accordion-body"><strong>Problematica:</strong> I debiti finanziari ammontano a €1.275.053, di cui €658.692 a breve termine, con un Interest Coverage Ratio negativo (-1,38) che indica l'incapacità di coprire gli oneri finanziari con il risultato operativo.<br><strong>Soluzione Proposta:</strong> Consolidamento delle linee a breve termine con finanziamento a MLT, rinegoziazione dei tassi di interesse, valutazione del ricorso a strumenti agevolati di finanza (es. Fondo di Garanzia).<br><strong>Ratio/Logica:</strong> La ristrutturazione del debito mira a migliorare la sostenibilità finanziaria e ridurre gli oneri finanziari, allineando la struttura del debito con la capacità di generazione di cassa dell'azienda.<br><strong>Benefici Attesi:</strong> Riduzione degli oneri finanziari di €15.000-€20.000, miglioramento della sostenibilità del debito, riequilibrio della struttura finanziaria.<br><strong>Normativa Riferimento:</strong> OIC 19 sui debiti, OIC 6 sulla ristrutturazione del debito, principi di corretta gestione finanziaria.</div></div>
+                          </div>
+                          <!-- Rafforzamento patrimoniale -->
+                           <div class="accordion-item">
+                              <h2 class="accordion-header" id="headingMotiv5"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMotiv5" aria-expanded="false" aria-controls="collapseMotiv5">4.3.5 Rafforzamento patrimoniale</button></h2>
+                              <div id="collapseMotiv5" class="accordion-collapse collapse" aria-labelledby="headingMotiv5" data-bs-parent="#motivationsAccordion"><div class="accordion-body"><strong>Problematica:</strong> Il patrimonio netto di €479.666 risulta insufficiente a coprire l'attivo fisso (copertura immobilizzazioni 0,56), evidenziando uno squilibrio patrimoniale che compromette la solidità aziendale.<br><strong>Soluzione Proposta:</strong> Apporto di capitale da parte dei soci (aumento di capitale), valutazione di strumenti finanziari partecipativi, rivalutazione mirata di asset strategici, ove possibile.<br><strong>Ratio/Logica:</strong> Il rafforzamento patrimoniale è essenziale per migliorare la solidità aziendale, ridurre il rischio finanziario e creare una base più solida per lo sviluppo futuro.<br><strong>Benefici Attesi:</strong> Incremento del patrimonio netto di €200.000-€300.000, miglioramento del rapporto di copertura delle immobilizzazioni a 0,80-0,90, riduzione del rischio finanziario.<br><strong>Normativa Riferimento:</strong> Artt. 2446, 2447 c.c. sulla riduzione del capitale per perdite, OIC 28 sul patrimonio netto, principi di corretta gestione aziendale.</div></div>
+                          </div>
+                          <!-- Controllo di gestione evoluto -->
+                           <div class="accordion-item">
+                              <h2 class="accordion-header" id="headingMotiv6"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMotiv6" aria-expanded="false" aria-controls="collapseMotiv6">4.3.6 Implementazione di un sistema evoluto di controllo di gestione</button></h2>
+                              <div id="collapseMotiv6" class="accordion-collapse collapse" aria-labelledby="headingMotiv6" data-bs-parent="#motivationsAccordion"><div class="accordion-body"><strong>Problematica:</strong> Il sistema di controllo attuale appare limitato, con carenza di KPI operativi e finanziari che compromette la capacità di monitoraggio e intervento tempestivo sulle criticità aziendali.<br><strong>Soluzione Proposta:</strong> Implementazione di un sistema di controllo di gestione strutturato con reportistica mensile, introduzione di KPI operativi e finanziari con sistema di early warning, sviluppo di un modello di forecasting integrato.<br><strong>Ratio/Logica:</strong> Un sistema evoluto di controllo di gestione migliora la capacità decisionale e consente di identificare tempestivamente le criticità, intervenendo prima che si trasformino in problemi strutturali.<br><strong>Benefici Attesi:</strong> Incremento dell'efficienza decisionale con riduzione dei costi operativi del 3-5%, miglioramento della capacità di pianificazione e controllo, ottimizzazione dei processi aziendali.<br><strong>Normativa Riferimento:</strong> Art. 2086 c.c. sugli adeguati assetti, OIC 11 sui principi di redazione del bilancio, principi di corretta gestione aziendale.</div></div>
+                          </div>
+                      </div> <!-- Fine Accordion -->
+                 </div>
+            </div>
+
+             <!-- Sezione 6: Impatto Complessivo -->
+              <div class="card mb-4 report-section" id="impact-summary">
+                 <div class="card-header"><h5 class="mb-0">6. Impatto Complessivo delle Ottimizzazioni Proposte</h5></div>
+                 <div class="card-body small">
+                      <div class="row">
+                         <div class="col-md-4">
+                             <h6 class="card-title-small">6.1 Impatto Indici Economici</h6>
+                             <ul class="list-styled">
+                                 <li><strong>EBITDA:</strong> <span class="text-success">€130.000-€160.000</span> (da -€43.535)</li>
+                                 <li><strong>EBITDA Margin:</strong> <span class="text-success">4,5-5,5%</span> (da -1,53%)</li>
+                                 <li><strong>EBIT:</strong> <span class="text-success">€80.000-€110.000</span> (da -€92.982)</li>
+                                 <li><strong>EBIT Margin:</strong> <span class="text-success">2,8-3,9%</span> (da -3,26%)</li>
+                                 <li><strong>Utile Netto:</strong> <span class="text-success">€15.000-€40.000</span> (da -€149.177)</li>
+                                 <li><strong>ROE:</strong> <span class="text-success">3,0-8,0%</span> (da -31,10%)</li>
+                             </ul>
+                         </div>
+                         <div class="col-md-4">
+                              <h6 class="card-title-small">6.2 Impatto Indici Patrimoniali/Finanziari</h6>
+                              <ul class="list-styled">
+                                 <li><strong>Cash Flow Operativo:</strong> <span class="text-success">€280.000-€320.000</span> (da €211.345)</li>
+                                 <li><strong>CF Operativo/Ricavi:</strong> <span class="text-success">9,8-11,2%</span> (da 7,42%)</li>
+                                 <li><strong>Liquidità:</strong> <span class="text-success">€450.000-€500.000</span> (da €355.443)</li>
+                                 <li><strong>Ciclo Circolante:</strong> <span class="text-success">110-120 gg</span> (da 167 gg)</li>
+                                 <li><strong>Rimanenze:</strong> <span class="text-success">130-140 gg</span> (da 194 gg)</li>
+                                 <li><strong>Copertura immobilizzazioni:</strong> <span class="text-success">0,80-0,90</span> (da 0,56)</li>
+                             </ul>
+                         </div>
+                          <div class="col-md-4">
+                              <h6 class="card-title-small">6.3 Impatto Rating/Rischio</h6>
+                               <ul class="list-styled">
+                                  <li><strong>Leanus Score:</strong> <span class="text-success">4,50-5,00</span> (da 3,47)</li>
+                                  <li><strong>Categoria:</strong> <span class="text-success">Miglioramento a "Buono"</span></li>
+                                  <li><strong>IRP:</strong> <span class="text-success">65,0-70,0</span> (da 54,12)</li>
+                                  <li><strong>Interest Coverage Ratio:</strong> <span class="text-success">1,20-1,60</span> (da -1,38)</li>
+                               </ul>
+                          </div>
+                      </div>
+                 </div>
+            </div>
+
+            <!-- Sezione 7: Conclusioni -->
+            <div class="card mb-4 report-section" id="final-thoughts">
+                 <div class="card-header"><h5 class="mb-0">7. Considerazioni Finali</h5></div>
+                 <div class="card-body small">
+                     <p>L'analisi condotta su VAROLI GUIDO E FIGLIO S.R.L. ha evidenziato un profilo di rischio elevato (IRP: 54,12/100, categoria D+), caratterizzato da una significativa criticità reddituale e da squilibri nella struttura patrimoniale-finanziaria. La società ha registrato una contrazione dei ricavi (-14,27%) rispetto all'esercizio precedente, accompagnata da una marginalità operativa negativa e da una perdita d'esercizio rilevante.</p>
+                     <p>Nonostante le criticità evidenziate, si rilevano elementi positivi quali un cash flow operativo adeguato (7,42% sui ricavi), un buon rapporto di turnover (2,04) e una posizione di liquidità non trascurabile (€355.443). Gli interventi proposti consentirebbero di invertire il trend negativo e ripristinare l'equilibrio economico-finanziario-patrimoniale nel medio termine, con un miglioramento significativo dell'EBITDA (da -€43.535 a €130.000-€160.000), una riduzione del ciclo del circolante (da 167 a 110-120 giorni) e un rafforzamento patrimoniale.</p>
+                     <p>Si raccomanda di prioritizzare: 1) il ripristino della redditività operativa (impatto potenziale fino a +€180.000 di EBITDA), 2) l'ottimizzazione delle rimanenze (impatto potenziale fino a €450.000 di capitale liberato), 3) la ristrutturazione dell'indebitamento (impatto potenziale di €15.000-€20.000 di minori oneri finanziari). Particolarmente cruciale appare il ripristino della redditività operativa, senza la quale la sostenibilità del modello di business risulta compromessa nel lungo periodo.</p>
+                 </div>
+            </div>
+
+
+            <!-- ================================================================ -->
+            <!-- FINE CONTENUTO BILANCIO PLUS -->
+            <!-- ================================================================ -->
+
+        </div> <!-- /dashboard-container -->
+
+ <!-- Footer Standard (per coerenza, ma nascosto in stampa) -->
+         <footer class="footer no-print">
+              <div class="container-fluid px-4"> <!-- Usa container-fluid per larghezza piena -->
+                  <div class="row">
+                      <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
+                           <span id="currentYearFooter"></span>
+                      </div>
+                      <div class="col-md-6 text-center text-md-end">
+                          Powered by <a href="http://www.kitzanos.com" target="_blank" class="text-white fw-bold">Kitzanos Lab</a>
+                          <img src="assets/img/logo_kitzanos.png" alt="Kitzanos Logo" class="ms-2" style="height: 20px; vertical-align: middle;">
+                      </div>
+                  </div>
+              </div>
+          </footer>
+
+
+    </div> <!-- /main-wrapper -->
+
+    <!-- Script JS Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js è già caricato nell'HEAD -->
+
+    <!-- ### START SCRIPT JS EMBEDDED ### -->
+    <script src="./js/bilancio_plus.js"></script>
+    <!-- ### END EMBEDDED JAVASCRIPT ### -->
+    <!-- ### Chatnode JAVASCRIPT ### -->
+<scan-chat data-bot-id="a944ec72-81f6-4a0a-84da-a8ced9377979"></scan-chat>
+<script src="../js/bundle.js"></script>
+</body>
+</html>

@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circolante e Flussi di Cassa - VAROLI GUIDO E FIGLIO S.R.L. | SCAN V12</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="../css/styles.css" rel="stylesheet">
+    <link href="../css/print.css" rel="stylesheet" media="print">
+    <style>
+        /* Stili specifici V12 (possono andare in styles.css se usati altrove) */
+        .cycle-kpi { text-align: center; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--card-border); background-color: var(--white); margin-bottom: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.04);}
+        .cycle-kpi .kpi-label { display: block; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 3px; }
+        .cycle-kpi .kpi-value-days-lg { font-size: 2.1rem; font-weight: 700; line-height: 1.1; }
+        .card-header-primary { background-color: rgba(25, 25, 112, 0.05); border-bottom: 1px solid rgba(25, 25, 112, 0.2); color: var(--primary); }
+        .card-header-secondary { background-color: rgba(74, 105, 189, 0.05); border-bottom: 1px solid rgba(74, 105, 189, 0.2); color: var(--secondary); }
+        .strategy-card { background-color: var(--white); border-left: 4px solid #4f6d7a; padding: 1.25rem; border-radius: 8px; box-shadow: var(--shadow); margin-bottom: 1.5rem; }
+        .strategy-card h6 { color: #4f6d7a; margin-bottom: 0.75rem; font-weight: 600;}
+        .strategy-card ol { padding-left: 1.2rem; margin-bottom: 0; }
+        .strategy-card li { font-size: 0.85rem; margin-bottom: 0.3rem; }
+        .report-section + .report-section { margin-top: 2.5rem; }
+        .waterfall-label { font-size: 0.75rem; text-align: center; color: var(--text-secondary); margin-top: -5px; }
+        /* Altri stili V9/V11 */
+        :root {
+            --primary: #191970; --secondary: #4a69bd; --success: #4CAF50;
+            --warning: #FFC107; --danger: #F44336; --info: #0dcaf0;
+            --light: #f8f9fa; --dark: #343a40; --white: #ffffff;
+            --text-primary: #212529; --text-secondary: #6c757d;
+            --card-bg: var(--white); --card-border: #dee2e6;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        html, body { height: 100%; overflow-x: hidden; font-family: 'Titillium Web', sans-serif; background-color: #f4f8fb; }
+        body { display: flex; }
+        .sidebar { width: 250px; background-color: var(--primary); color: #e0e0e0; position: fixed; top: 0; bottom: 0; left: 0; z-index: 1031; display: flex; flex-direction: column; box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1); transition: width 0.3s ease; overflow-y: auto; }
+        .main-wrapper { margin-left: 250px; width: calc(100% - 250px); display: flex; flex-direction: column; min-height: 100vh; position: relative; padding-top: 70px; }
+        .dashboard-header { background-color: var(--white); padding: 15px 30px; border-bottom: 1px solid var(--card-border); box-shadow: 0 2px 5px rgba(0,0,0,0.05); min-height: 70px; display: flex; align-items: center; justify-content: space-between; position: fixed; top: 0; left: 250px; right: 0; z-index: 1030; }
+        .dashboard-container { padding: 30px; flex-grow: 1; width: 100%; }
+        .footer { background-color: var(--primary); color: rgba(255, 255, 255, 0.7); padding: 15px 30px; font-size: 0.85rem; margin-top: auto; flex-shrink: 0; width: 100%; }
+        .footer img { max-height: 20px; width: auto; filter: brightness(0) invert(1); opacity: 0.8; vertical-align: middle;}
+        .sidebar-header { padding: 10px 20px; margin-bottom: 20px; text-align: left; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .sidebar-header img { max-height: 40px; } .sidebar-header h5 { color: var(--white); margin-top: 10px; font-size: 1.1rem; font-weight: 600; }
+        .sidebar-nav { list-style: none; padding: 0; } .sidebar-nav .nav-item { margin: 0; }
+        .sidebar-nav .nav-link { color: #e0e0e0; padding: 12px 20px; display: flex; align-items: center; font-size: 0.95rem; font-weight: 500; border-left: 4px solid transparent; transition: all 0.2s ease; }
+        .sidebar-nav .nav-link:hover { background-color: rgba(255, 255, 255, 0.05); color: var(--white); border-left-color: var(--warning); }
+        .sidebar-nav .nav-link.active { background-color: rgba(255, 255, 255, 0.1); color: var(--white); font-weight: 600; border-left-color: var(--white); }
+        .sidebar-nav .nav-link i { margin-right: 15px; width: 20px; text-align: center; font-size: 1rem; }
+        .sidebar-nav .nav-title { padding: 10px 20px; font-size: 0.75rem; color: rgba(255, 255, 255, 0.5); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 15px; }
+        .sidebar-footer { margin-top: auto; padding: 15px 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.9rem; text-align: left; }
+        .section-title { color: var(--primary); font-weight: 600; margin-top: 2.5rem; margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--secondary); font-size: 1.75rem; display: flex; align-items: center; } .section-title i { margin-right: 10px; }
+        .dashboard-card { background-color: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: var(--shadow); transition: all 0.3s ease; height: 100%; }
+        .dashboard-card:hover { box-shadow: 0 8px 16px rgba(0,0,0,0.1); transform: translateY(-3px); }
+        .card-title-small { font-size: 0.9rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .table { border: 1px solid var(--card-border); margin-bottom: 1rem; } .table thead th { background-color: var(--light); color: var(--primary); font-weight: 600; border-bottom: 2px solid var(--primary); font-size: 0.9rem; white-space: nowrap; } .table-hover tbody tr:hover { background-color: #eef2f7; } .table td, .table th { vertical-align: middle; padding: 0.6rem 0.75rem; font-size: 0.9rem;} .value-highlight { font-weight: 600; color: var(--primary); } .text-end { text-align: right !important;} .text-success { color: var(--success) !important; } .text-danger { color: var(--danger) !important; } .text-warning { color: var(--warning) !important; } .text-secondary { color: var(--text-secondary) !important; }
+        .alert-box { padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid; } .alert-box h5 { margin-bottom: 10px; font-size: 1.1rem; font-weight: 600;} .alert-box ul { padding-left: 20px; margin-bottom: 0; font-size: 0.9rem;} .alert-box.alert-success { background-color: #d1e7dd; border-color: #a3cfbb; color: #0a3622; } .alert-box.alert-warning { background-color: #fff3cd; border-color: #ffda6a; color: #664d03; } .alert-box.alert-danger { background-color: #f8d7da; border-color: #f1aeb5; color: #58151c; } .alert-box.alert-info { background-color: #cff4fc; border-color: #9eeaf9; color: #055160; }
+        .status-badge { font-size: .75em; font-weight: 700; line-height: 1; padding: .35em .65em; border-radius: .375rem; color: white; display: inline-block; } .status-badge.bg-success { background-color: var(--success) !important; } .status-badge.bg-warning { background-color: var(--warning) !important; color: var(--dark) !important;} .status-badge.bg-danger { background-color: var(--danger) !important; } .status-badge.bg-info { background-color: var(--info) !important; color: var(--dark) !important;}
+        .chart-container { height: 300px; margin-bottom: 20px; background-color: var(--white); padding: 15px; border-radius: 8px; border: 1px solid var(--card-border); box-shadow: 0 2px 4px rgba(0,0,0,0.05); position: relative; }
+        .icon-circle { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; color: white; margin-right: 12px; font-size: 0.9rem; flex-shrink: 0; }
+        .bg-icon-success { background-color: var(--success); } .bg-icon-warning { background-color: var(--warning); } .bg-icon-danger { background-color: var(--danger); } .bg-icon-info { background-color: #4f6d7a; } .bg-icon-primary { background-color: var(--primary); } .bg-icon-secondary { background-color: var(--secondary); }
+        @media (max-width: 991.98px) { .sidebar { width: 0; border: none; box-shadow: none;} .main-wrapper { margin-left: 0; width: 100%; padding-top: 56px; } .dashboard-header { left: 0; width: 100%; min-height: 56px; padding: 5px 15px;} .header-title h5 { font-size: 1rem;} .header-title p { font-size: 0.75rem;} .dashboard-container { padding: 15px;} .footer { padding: 10px 15px;} }
+        @media print { body { display: block; } .main-wrapper { margin-left: 0; width: 100%; padding-top: 0; } .no-print { display: none !important; } .report-section { page-break-inside: avoid; } }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar no-print">
+        <div class="sidebar-header"> <img src="../assets/img/logo_scan.png" alt="SCAN Logo" style="max-height: 40px;"> <h5>VAROLI GUIDO E FIGLIO S.R.L.</h5> </div>
+        <ul class="sidebar-nav flex-grow-1">
+            <li class="nav-item"> <a class="nav-link" href="../dashboard_v2.html"> <i class="fas fa-tachometer-alt fa-fw"></i> Dashboard </a> </li>
+            <li class="nav-title">Analisi Dettagliata</li>
+            <li class="nav-item"> <a class="nav-link" href="parte1_sintesi.html"> <i class="fas fa-file-alt fa-fw"></i> Sintesi e Profilo </a> </li>
+            <li class="nav-item"> <a class="nav-link" href="parte2_economico.html"> <i class="fas fa-balance-scale fa-fw"></i> Analisi Economica </a> </li>
+            <li class="nav-item"> <a class="nav-link" href="parte3_patrimoniale.html"> <i class="fas fa-landmark fa-fw"></i> Analisi Patrimoniale </a> </li>
+            <li class="nav-item"> <a class="nav-link" href="parte4_bancabilita.html"> <i class="fas fa-university fa-fw"></i> Bancabilità </a> </li>
+            <li class="nav-item"> <a class="nav-link active" href="parte5_circolante_flussi.html"> <i class="fas fa-sync-alt fa-fw"></i> Circolante e Flussi </a> </li>
+            <li class="nav-item"> <a class="nav-link" href="parte6_rischi-raccomandazioni.html"> <i class="fas fa-exclamation-triangle fa-fw"></i> Rischi e Azioni </a> </li>
+            <li class="nav-title">Approfondimenti</li>
+            <li class="nav-item"> <a class="nav-link" href="irp_dettaglio.html"> <i class="fas fa-shield-alt fa-fw"></i> Dettaglio IRP </a> </li>
+        </ul>
+        <div class="sidebar-footer"> <small>SCAN360 © <span id="currentYearSidebar"></span> Kitzanos</small> </div>
+    </aside>
+
+    <!-- Contenuto Principale Wrapper -->
+    <div class="main-wrapper">
+        <!-- Header Orizzontale -->
+        <header class="dashboard-header no-print">
+            <div class="header-title">
+                <h5 class="mb-0">Report Dettagliato: Analisi Circolante e Flussi</h5>
+                <p class="mb-0">VAROLI GUIDO E FIGLIO S.R.L. | <span class="report-date">29 Settembre 2025</span></p>
+            </div>
+            <div class="header-controls d-flex align-items-center">
+                <span id="irp-header-badge" class="badge me-3"></span> <!-- Badge IRP -->
+                <button class="btn btn-sm btn-outline-secondary me-2 print-button" onclick="printDocument()"> <i class="fas fa-print"></i> Stampa </button>
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-light border dropdown-toggle" type="button" id="userMenuButton" data-bs-toggle="dropdown" aria-expanded="false"> <i class="fas fa-user-circle me-1"></i> VAROLI GUIDO E FIGLIO S.R.L. </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenuButton"> <li><button class="dropdown-item" type="button" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i>Logout</button></li> </ul>
+                </div>
+            </div>
+        </header>
+        <div class="container d-none d-print-block mt-4 mb-4">
+            <h1 class="text-center mb-0"><span class="company-name">VAROLI GUIDO E FIGLIO S.R.L.</span></h1>
+            <p class="text-center mb-0">Report Dettagliato: Analisi Circolante e Flussi | <span class="report-date">29 Settembre 2025</span></p>
+            <hr>
+        </div>
+
+        <!-- Area Contenuto Specifico del Report -->
+        <div class="dashboard-container">
+
+            <!-- ================================================================ -->
+            <!-- CONTENUTO SPECIFICO PARTE 5 - V12 - Updated for VAROLI GUIDO E FIGLIO S.R.L. -->
+            <!-- ================================================================ -->
+
+            <h2 class="section-title" id="capital"><i class="fas fa-sync-alt me-2"></i>5.1 ANALISI CAPITALE CIRCOLANTE</h2>
+
+            <div class="card mb-4 report-section">
+                 <div class="card-header card-header-primary"><h5 class="mb-0">Sintesi Ciclo Capitale Circolante</h5></div>
+                 <div class="card-body">
+                     <p>Il capitale circolante rappresenta una componente fondamentale per la valutazione della gestione finanziaria a breve termine dell'azienda. L'analisi del ciclo del circolante permette di comprendere il tempo che intercorre tra il pagamento ai fornitori e l'incasso dai clienti, evidenziando il fabbisogno finanziario generato dal ciclo operativo.</p>
+                     <div class="row gy-3 mt-4 mb-4">
+                         <div class="col-md-3 col-6"> <div class="cycle-kpi border-warning"> <span class="kpi-label">DSO (Clienti)</span> <span class="kpi-value-days-lg text-warning">41</span> </div> </div>
+                         <div class="col-md-3 col-6"> <div class="cycle-kpi border-success"> <span class="kpi-label">DIO (Magazzino)</span> <span class="kpi-value-days-lg text-success">194</span> </div> </div>
+                         <div class="col-md-3 col-6"> <div class="cycle-kpi border-warning"> <span class="kpi-label">DPO (Fornitori)</span> <span class="kpi-value-days-lg text-warning">68</span> </div> </div>
+                          <div class="col-md-3 col-6"> <div class="cycle-kpi border-warning bg-light"> <span class="kpi-label">Ciclo Circolante</span> <span class="kpi-value-days-lg text-warning">167</span> </div> </div>
+                     </div>
+                     <p class="small">Il ciclo del circolante particolarmente elevato di 167 giorni indica che l'azienda ha un significativo fabbisogno finanziario generato dalla differenza temporale tra pagamenti e incassi, elemento che richiede un'attenta gestione della liquidità. Il valore è sensibilmente superiore al benchmark di settore (55-74 giorni), evidenziando inefficienze strutturali nella gestione del circolante, con particolare criticità per quanto riguarda la gestione del magazzino.</p>
+
+                     <h6 class="mt-4 card-title-small">TREND CICLO CIRCOLANTE 2022-2024 (GIORNI - VAROLI GUIDO E FIGLIO S.R.L.)</h6>
+                     <div class="table-responsive">
+                         <table class="table table-sm table-striped table-hover caption-top">
+                             <caption class="small text-muted"></caption>
+                             <thead class="table-light"><tr><th>Componente</th><th class="text-end">12/2022</th><th class="text-end">12/2023</th><th class="text-end">12/2024</th><th>Trend</th></tr></thead>
+                             <tbody>
+                                 <tr><td>DSO (giorni)</td><td class="text-end">59</td><td class="text-end">55</td><td class="text-end">41</td><td class="text-success">Miglioramento ↓</td></tr>
+                                 <tr><td>DIO (giorni)</td><td class="text-end">159</td><td class="text-end">186</td><td class="text-end">194</td><td class="text-danger">Peggioramento ↑</td></tr>
+                                 <tr><td>DPO (giorni)</td><td class="text-end">73</td><td class="text-end">67</td><td class="text-end">68</td><td class="text-warning">Stabile ↔</td></tr>
+                                 <tr class="table-warning fw-bold"><td>Ciclo Circolante</td><td class="text-end">145</td><td class="text-end">174</td><td class="text-end">167</td><td class="text-warning">Peggioramento ↑</td></tr>
+                             </tbody>
+                         </table>
+                     </div>
+                 </div>
+            </div>
+
+            <div class="card mb-4 report-section">
+                 <div class="card-header card-header-secondary"><h5 class="mb-0">Analisi Dettagliata Giorni e Test di Congruità</h5></div>
+                 <div class="card-body">
+                      <div class="row mb-4">
+                          <div class="col-lg-7 mb-3 mb-lg-0">
+                              <h6 class="text-center small">Grafico 5.1: Ciclo Capitale Circolante vs Benchmark (Giorni - VAROLI GUIDO E FIGLIO S.R.L.)</h6>
+                               <div class="chart-container" style="height: 320px;"> <canvas id="workingCapitalCycleChart"></canvas> </div>
+                          </div>
+                          <div class="col-lg-5 d-flex flex-column justify-content-center">
+                                <div class="alert-box alert-warning p-3 mb-3">
+                                     <h6 class="mb-1"><i class="fas fa-exclamation-circle me-2"></i>Analisi Ciclo (167 giorni)</h6>
+                                     <p class="small mb-0">Ciclo del circolante in peggioramento rispetto al 2022 (da 145 a 167 giorni). Il ciclo di 167 giorni comporta un fabbisogno finanziario di circa €1.179.688.</p>
+                                </div>
+                                 <div class="alert-box alert-info p-3 small">
+                                    <h6 class="mb-2"><i class="fas fa-info-circle me-2"></i>Componenti Chiave 2024:</h6>
+                                    <ul class="list-unstyled mb-0">
+                                        <li><strong class="text-success">DSO (41gg):</strong> Inferiore al benchmark di settore (53-66gg), con una riduzione di 14 giorni rispetto al 2023.</li>
+                                        <li><strong class="text-danger">DIO (194gg):</strong> Significativamente superiore al benchmark (68-92gg), con un incremento di 8 giorni rispetto al 2023.</li>
+                                        <li><strong class="text-warning">DPO (68gg):</strong> Allineato al benchmark (66-84gg), con un leggero incremento rispetto al 2023.</li>
+                                    </ul>
+                                </div>
+                          </div>
+                      </div>
+                      <hr class="my-4">
+                       <h6 class="mt-4 mb-3"><i class="fas fa-balance-scale me-1"></i> Test di Congruità Componenti (2024 - VAROLI GUIDO E FIGLIO S.R.L.)</h6>
+                       <div class="row gy-4">
+                           <!-- Test Crediti -->
+                           <div class="col-lg-4 col-md-6">
+                               <div class="dashboard-card h-100 border-success">
+                                   <h6 class="card-title-small text-success"><i class="fas fa-file-invoice-dollar me-1"></i> Crediti (DSO)</h6>
+                                   <ul class="list-unstyled small mb-0">
+                                       <li>Valore: € 317.323</li>
+                                       <li>DSO Effettivo: <strong>41 gg</strong></li>
+                                       <li>DSO Standard: 60 gg</li>
+                                       <li class="mt-2 border-top pt-2">Eccesso giorni: <strong class="text-success">-19 gg</strong></li>
+                                       <li>Liquidità immobilizzata: <strong class="text-success">-€150.404</strong></li>
+                                   </ul>
+                               </div>
+                           </div>
+                            <!-- Test Debiti -->
+                           <div class="col-lg-4 col-md-6">
+                               <div class="dashboard-card h-100 border-warning">
+                                   <h6 class="card-title-small text-warning"><i class="fas fa-truck me-1"></i> Debiti (DPO)</h6>
+                                    <ul class="list-unstyled small mb-0">
+                                       <li>Valore: € 480.162</li>
+                                       <li>DPO Effettivo: <strong>68 gg</strong></li>
+                                       <li>DPO Standard: 75 gg</li>
+                                       <li class="mt-2 border-top pt-2">Deficit giorni: <strong class="text-warning">-7 gg</strong></li>
+                                       <li>Potenziale liquidità: <strong class="text-warning">-€49.448</strong></li>
+                                   </ul>
+                               </div>
+                           </div>
+                            <!-- Test Magazzino -->
+                           <div class="col-lg-4 col-md-12">
+                               <div class="dashboard-card h-100 border-danger">
+                                    <h6 class="card-title-small text-danger"><i class="fas fa-boxes me-1"></i> Magazzino (DIO)</h6>
+                                     <ul class="list-unstyled small mb-0">
+                                       <li>Valore: € 1.180.021</li>
+                                       <li>DIO Effettivo: <strong>194 gg</strong></li>
+                                       <li>DIO Standard: 80 gg</li>
+                                       <li class="mt-2 border-top pt-2">Eccesso giorni: <strong class="text-danger">114 gg</strong></li>
+                                       <li>Eccesso scorte: <strong class="text-danger">€695.286</strong></li>
+                                   </ul>
+                               </div>
+                           </div>
+                       </div>
+                        <div class="alert-box alert-warning small mt-4 p-2">
+                           <strong>Analisi Dettagliata:</strong> L'azienda presenta un eccesso di fabbisogno finanziario di circa €695.286 dovuto principalmente a: tempi di rotazione del magazzino estremamente elevati rispetto agli standard di settore, con un eccesso di 114 giorni che comporta un'immobilizzazione di capitale significativa.
+                       </div>
+                       <hr class="my-4">
+                        <h6 class="mt-4 mb-3"><i class="fas fa-lightbulb me-1"></i> Strategie di Miglioramento e Impatto Finanziario Atteso (VAROLI GUIDO E FIGLIO S.R.L.)</h6>
+                         <div class="row">
+                             <div class="col-md-4">
+                                 <div class="strategy-card h-100">
+                                    <h6><i class="fas fa-file-invoice-dollar me-1"></i> Crediti Clienti</h6>
+                                     <ol>
+                                        <li>Mantenimento delle attuali politiche di incasso</li>
+                                        <li>Monitoraggio proattivo scadenze</li>
+                                        <li>Stabilizzazione DSO a 45 giorni</li>
+                                        <li>Preservare l'efficienza attuale</li>
+                                     </ol>
+                                     <p class="fw-bold text-success mt-2 mb-0">Impatto: +€0</p>
+                                      <small class="text-muted">(Target DSO 45gg)</small>
+                                 </div>
+                             </div>
+                              <div class="col-md-4">
+                                  <div class="strategy-card h-100">
+                                     <h6><i class="fas fa-boxes me-1"></i> Gestione Magazzino</h6>
+                                      <ol>
+                                        <li>Implementazione sistema Just-In-Time</li>
+                                        <li>Riduzione scorte obsolete</li>
+                                        <li>Analisi ABC delle scorte</li>
+                                        <li>Inventory management avanzato</li>
+                                      </ol>
+                                      <p class="fw-bold text-success mt-2 mb-0">Impatto: +€451.326</p>
+                                      <small class="text-muted">(Target DIO 120gg)</small>
+                                  </div>
+                              </div>
+                               <div class="col-md-4">
+                                  <div class="strategy-card h-100">
+                                      <h6><i class="fas fa-truck me-1"></i> Debiti Fornitori</h6>
+                                       <ol>
+                                        <li>Rinegoziazione termini pagamento</li>
+                                        <li>Centralizzazione acquisti</li>
+                                        <li>Consolidamento volumi fornitori</li>
+                                        <li>Supply Chain Finance</li>
+                                       </ol>
+                                       <p class="fw-bold text-success mt-2 mb-0">Impatto: +€84.768</p>
+                                       <small class="text-muted">(Target DPO 80gg)</small>
+                                  </div>
+                              </div>
+                         </div>
+                         <div class="alert-box alert-info text-center mt-4">
+                              <strong>Impatto totale stimato: liberazione liquidità di €536.094 con ciclo circolante target di 85 giorni</strong>
+                         </div>
+                 </div>
+            </div>
+
+            <h2 class="section-title mt-5" id="cashflow"><i class="fas fa-stream me-2"></i>5.2 ANALISI FLUSSI DI CASSA</h2>
+
+            <div class="card mb-4 report-section">
+                 <div class="card-header card-header-primary"><h5 class="mb-0">Analisi Flussi di Cassa (da EBITDA a Variazione Netta Cassa) - 2024</h5></div>
+                 <div class="card-body">
+                     <p>Il passaggio dall'EBITDA al Free Cash Flow evidenzia la capacità dell'azienda di convertire i margini operativi in liquidità effettiva. L'analisi evidenzia una situazione anomala: nonostante un EBITDA negativo (-€43.535), l'azienda ha generato un Cash Flow Operativo positivo e significativo (€211.345, pari al 7,42% dei ricavi).</p>
+                     <div class="row">
+                        <div class="col-lg-7 mb-3 mb-lg-0">
+                             <h6 class="text-center small">Grafico 5.2: Composizione Flussi di Cassa 2024 (Waterfall Semplificato - VAROLI GUIDO E FIGLIO S.R.L.)</h6>
+                            <div class="chart-container" style="height: 400px;"> <canvas id="cashFlowWaterfallChart"></canvas> </div>
+                        </div>
+                        <div class="col-lg-5">
+                             <h6 class="mt-1">Tabella 5.1: Dettaglio Flussi 2024 (€ - VAROLI GUIDO E FIGLIO S.R.L.)</h6>
+                             <div class="table-responsive">
+                                 <table class="table table-sm table-striped table-hover">
+                                      <thead class="table-light"><tr><th>Voce</th><th class="text-end">Valore</th><th class="text-end">% Ricavi</th></tr></thead>
+                                      <tbody>
+                                          <tr><td>EBITDA</td><td class="text-end text-danger">-43.535</td><td class="text-end">-1,53%</td></tr>
+                                          <tr><td><i class="fas fa-minus-circle text-danger fa-fw me-1"></i> Imposte</td><td class="text-end text-success">0</td><td class="text-end">0,00%</td></tr>
+                                          <tr><td><i class="fas fa-plus-circle text-success fa-fw me-1"></i> Variazione CCN</td><td class="text-end text-success">108.427</td><td class="text-end">3,80%</td></tr>
+                                          <tr class="table-warning fw-bold"><td><i class="fas fa-equals fa-fw me-1"></i> Cash Flow Operativo</td><td class="text-end text-success">211.345</td><td class="text-end">7,42%</td></tr>
+                                          <tr><td><i class="fas fa-minus-circle text-danger fa-fw me-1"></i> Investimenti</td><td class="text-end text-danger">-774.136</td><td class="text-end">-27,16%</td></tr>
+                                          <tr class="table-danger fw-bold"><td><i class="fas fa-equals fa-fw me-1"></i> Free Cash Flow (FCF)</td><td class="text-end text-danger">-562.791</td><td class="text-end">-19,75%</td></tr>
+                                          <tr><td><i class="fas fa-plus-circle text-success fa-fw me-1"></i> Operazioni finanziarie</td><td class="text-end text-success">746.599</td><td class="text-end">26,20%</td></tr>
+                                          <tr class="table-success fw-bold"><td><i class="fas fa-equals fa-fw me-1"></i> Variazione Netta Cassa</td><td class="text-end text-success">183.808</td><td class="text-end">6,45%</td></tr>
+                                      </tbody>
+                                 </table>
+                                 <p class="small text-muted mt-1 mb-0">*Fonte: Report Leanus 29/09/2025</p>
+                             </div>
+                        </div>
+                     </div>
+                     <h6 class="mt-4">Analisi Flussi di Cassa 2024 (VAROLI GUIDO E FIGLIO S.R.L.):</h6>
+                      <div class="alert-box alert-warning small">
+                         <ul class="mb-0">
+                            <li><strong>EBITDA negativo (-€43.535):</strong> Marginalità operativa negativa del -1,53% sui ricavi.</li>
+                            <li><strong>Cash Flow Operativo positivo (€211.345):</strong> 7,42% dei ricavi, nonostante l'EBITDA negativo.</li>
+                            <li><strong>Variazione positiva del capitale circolante (€108.427):</strong> Probabilmente grazie alla sostanziale riduzione dei crediti verso clienti.</li>
+                            <li><strong>Investimenti molto consistenti (€774.136):</strong> 27,16% dei ricavi, determinando un Free Cash Flow fortemente negativo.</li>
+                            <li><strong>Significativo ricorso a nuovo indebitamento (€746.599):</strong> Ha compensato il FCF negativo.</li>
+                            <li><strong>Incremento netto di liquidità (€183.808):</strong> 6,45% dei ricavi, nonostante la situazione operativa critica.</li>
+                        </ul>
+                      </div>
+                 </div>
+            </div>
+
+            <div class="card mb-4 report-section">
+                 <div class="card-header card-header-secondary"><h5 class="mb-0">Trend Triennale e Proiezioni dei Flussi di Cassa</h5></div>
+                 <div class="card-body">
+                      <div class="row">
+                          <div class="col-lg-7 mb-3 mb-lg-0">
+                               <h6 class="text-center small">Grafico 5.3: Evoluzione Flussi di Cassa 2022-2024 (€ - VAROLI GUIDO E FIGLIO S.R.L.)</h6>
+                               <div class="chart-container" style="height: 320px;"> <canvas id="cashFlowTrendChart"></canvas> </div>
+                          </div>
+                           <div class="col-lg-5">
+                              <h6 class="mt-1">Interpretazione Trend (VAROLI GUIDO E FIGLIO S.R.L.):</h6>
+                               <ul class="small list-unstyled">
+                                  <li><i class="fas fa-chart-line text-success me-1"></i> <strong>Cash Flow Operativo in crescita:</strong> Da -€125.524 (2022) a €211.345 (2024), miglioramento significativo.</li>
+                                  <li><i class="fas fa-exclamation text-danger me-1"></i> <strong>Investimenti in forte aumento:</strong> Da -€10.955 (2022) a -€774.136 (2024), +101.727% rispetto al 2023.</li>
+                                  <li><i class="fas fa-exchange-alt text-danger me-1"></i> <strong>EBITDA in calo:</strong> Passaggio a valori negativi nel 2024.</li>
+                                  <li><i class="fas fa-building text-warning me-1"></i> <strong>Forte ricorso all'indebitamento:</strong> €746.599 nel 2024 dopo una fase di riduzione nel 2023.</li>
+                               </ul>
+                          </div>
+                      </div>
+                       <hr class="my-4">
+                       <div class="row">
+                           <div class="col-lg-7 mb-3 mb-lg-0">
+                               <h6 class="text-center small">Grafico 5.4: Proiezioni Finanziarie 2025-2028 (€ - VAROLI GUIDO E FIGLIO S.R.L.)</h6>
+                                <div class="chart-container" style="height: 320px;"> <canvas id="cashFlowProjectionChart"></canvas> </div>
+                           </div>
+                            <div class="col-lg-5">
+                                <h6 class="mt-1">Analisi Proiezioni (Piano Inerziale 2025-2028):</h6>
+                                <ul class="small list-unstyled">
+                                   <li><i class="fas fa-arrow-up text-success me-1"></i> <strong>CF Operativo positivo:</strong> Iniziale contrazione nel 2025 seguita da forte recupero nel 2026.</li>
+                                   <li><i class="fas fa-ban text-info me-1"></i> <strong>Assenza di investimenti:</strong> Nessun nuovo investimento significativo previsto dopo i consistenti esborsi del 2024.</li>
+                                   <li><i class="fas fa-piggy-bank text-success me-1"></i> <strong>Progressivo rimborso debiti:</strong> Da -€205.454 nel 2025 a -€60.875 nel 2028.</li>
+                                   <li><i class="fas fa-shield-alt text-success me-1"></i> <strong>Accumulo liquidità:</strong> Dopo un iniziale decremento nel 2025, significativo aumento fino al 2028.</li>
+                                   <li><i class="fas fa-exclamation-triangle text-success me-1"></i> <strong>DSCR elevato:</strong> 3,15, ampiamente superiore alla soglia minima di sicurezza (1,2).</li>
+                                </ul>
+                                 <div class="alert alert-warning small p-2 mt-2">Questa dinamica è insostenibile nel medio-lungo periodo: l'EBITDA negativo segnala un problema strutturale di redditività che non può essere compensato indefinitamente dalla riduzione del capitale circolante o dall'incremento dell'indebitamento.</div>
+                            </div>
+                       </div>
+                         <h6 class="mt-4">Suggerimenti Operativi per Miglioramento Flussi (VAROLI GUIDO E FIGLIO S.R.L.)</h6>
+                          <div class="table-responsive small">
+                            <table class="table table-sm table-striped table-hover">
+                               <thead class="table-light"><tr><th>Area</th><th>Azione Suggerita</th><th>Impatto Quantitativo Annuo</th></tr></thead>
+                               <tbody>
+                                   <tr><td>Gestione operativa</td><td>Revisione struttura dei costi e pricing</td><td class="text-success">+€157.745 (EBITDA/Ricavi al 4%)</td></tr>
+                                   <tr><td>Gestione circolante</td><td>Ottimizzazione magazzino</td><td class="text-success">+€473.288 (one-off)</td></tr>
+                                   <tr><td>Strategia finanziaria</td><td>Ristrutturazione dell'indebitamento</td><td class="text-success">+€10.070 (riduzione oneri 15%)</td></tr>
+                                   <tr><td>Pianificazione fiscale</td><td>Ottimizzazione fiscale e utilizzo perdite pregresse</td><td class="text-success">+€37.294 (recupero futuro)</td></tr>
+                                   <tr><td>Gestione investimenti</td><td>Valutazione ROI investimenti effettuati</td><td class="text-success">+€77.414 (incremento redditività)</td></tr>
+                                   <tr class="table-primary fw-bold"><td>Complessivo</td><td>Piano integrato ottimizzazione</td><td class="text-success">+€755.811 miglioramento cassa</td></tr>
+                               </tbody>
+                            </table>
+                        </div>
+                        <div class="alert-box alert-info small mt-3">
+                            <strong>CONCLUSIONI:</strong> L'analisi del capitale circolante e dei flussi di cassa di VAROLI GUIDO E FIGLIO S.R.L. evidenzia un profilo finanziario complesso con elementi contrastanti: da un lato, un'eccellente capacità di generazione di liquidità operativa e un buon livello di cash flow, dall'altro, una preoccupante redditività negativa e un elevato assorbimento di capitale nel circolante. Il ciclo del circolante di 167 giorni, significativamente superiore al benchmark di settore, presenta uno squilibrio principalmente dovuto all'eccessivo DIO (194 giorni). Gli investimenti significativi effettuati nel 2024 (€774.136) dovranno necessariamente tradursi in un miglioramento della redditività operativa nei prossimi esercizi per garantire la sostenibilità del modello di business nel medio-lungo periodo.
+                        </div>
+                 </div>
+            </div>
+
+            <!-- ================================================================ -->
+            <!-- FINE CONTENUTO SPECIFICO PARTE 5 -->
+            <!-- ================================================================ -->
+
+        </div> <!-- /dashboard-container -->
+
+        <!-- Footer Standard V2 (Corretto) -->
+        <footer class="footer no-print"> <div class="container-fluid px-4"> <div class="row align-items-center"> <div class="col-md-6 text-center text-md-start mb-2 mb-md-0"> SCAN360 © <span id="currentYearFooterReport"></span> </div> <div class="col-md-6 text-center text-md-end"> Powered by <a href="http://www.kitzanos.com" target="_blank" class="text-white fw-bold">Kitzanos Lab</a> <img src="../assets/img/logo_kitzanos.png" alt="Kitzanos Logo" class="ms-2"> </div> </div> </div> </footer>
+
+    </div> <!-- /main-wrapper -->
+
+
+
+    <!-- Script JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/charts_config.js"></script>
+    <script src="../js/report_init.js"></script>
+     <script>
+        document.getElementById('currentYearSidebar').textContent = new Date().getFullYear();
+        document.getElementById('currentYearFooterReport').textContent = new Date().getFullYear();
+
+         // Script aggiornamento badge IRP header (Updated for VAROLI GUIDO E FIGLIO S.R.L.)
+         document.addEventListener('DOMContentLoaded', function() {
+             const irpScoreValue = 54.12; // IRP Score from IRP Analysis
+             const irpHeaderBadge = document.getElementById('irp-header-badge');
+             if(irpHeaderBadge) {
+                 let badgeClass = 'bg-danger';
+                 if (irpScoreValue < 51) badgeClass = 'bg-danger'; // Alto
+                 else if (irpScoreValue < 71) badgeClass = 'bg-warning text-dark'; // Medio
+                 irpHeaderBadge.className = `badge ${badgeClass} me-3`;
+                 irpHeaderBadge.textContent = `IRP: ${irpScoreValue.toFixed(1)}`;
+             }
+
+              // Ensure logout function is defined
+             if (typeof logout !== 'function') {
+                 window.logout = function() {
+                    console.log("Logout action triggered (placeholder)");
+                }
+             }
+             // Ensure print function is defined
+             if (typeof printDocument !== 'function') {
+                window.printDocument = function() {
+                    window.print();
+                }
+             }
+
+             // Initialize Working Capital Cycle Chart
+             const ctxWCC = document.getElementById('workingCapitalCycleChart');
+             if(ctxWCC) {
+                 new Chart(ctxWCC, {
+                     type: 'bar',
+                     data: {
+                         labels: ['DSO', 'DIO', 'DPO', 'Ciclo Totale'],
+                         datasets: [{
+                             label: 'VAROLI GUIDO E FIGLIO 2024',
+                             data: [41, 194, -68, 167],
+                             backgroundColor: ['#4CAF50', '#F44336', '#FFC107', '#F44336'],
+                             borderColor: ['#388E3C', '#D32F2F', '#FFA000', '#D32F2F'],
+                             borderWidth: 1
+                         }, {
+                             label: 'Benchmark Settore',
+                             data: [60, 80, -75, 65],
+                             backgroundColor: 'rgba(76, 175, 80, 0.6)',
+                             borderColor: '#388E3C',
+                             borderWidth: 1
+                         }]
+                     },
+                     options: {
+                         responsive: true,
+                         maintainAspectRatio: false,
+                         plugins: {
+                             legend: { position: 'top' },
+                             title: { display: false }
+                         },
+                         scales: {
+                             y: {
+                                 beginAtZero: true,
+                                 title: { display: true, text: 'Giorni' }
+                             }
+                         }
+                     }
+                 });
+             }
+
+             // Initialize Cash Flow Waterfall Chart
+             const ctxCFW = document.getElementById('cashFlowWaterfallChart');
+             if(ctxCFW) {
+                 new Chart(ctxCFW, {
+                     type: 'bar',
+                     data: {
+                         labels: ['EBITDA', 'Imposte', 'Var. CCN', 'CF Operativo', 'Investimenti', 'FCF', 'Op. Finanziarie', 'Var. Cassa'],
+                         datasets: [{
+                             label: 'Flussi di Cassa 2024',
+                             data: [-43535, 0, 108427, 211345, -774136, -562791, 746599, 183808],
+                             backgroundColor: [
+                                 '#F44336', '#4CAF50', '#4CAF50', '#4CAF50', 
+                                 '#F44336', '#F44336', '#4CAF50', '#4CAF50'
+                             ],
+                             borderColor: [
+                                 '#D32F2F', '#388E3C', '#388E3C', '#388E3C',
+                                 '#D32F2F', '#D32F2F', '#388E3C', '#388E3C'
+                             ],
+                             borderWidth: 1
+                         }]
+                     },
+                     options: {
+                         responsive: true,
+                         maintainAspectRatio: false,
+                         plugins: {
+                             legend: { display: false },
+                             title: { display: false }
+                         },
+                         scales: {
+                             y: {
+                                 beginAtZero: true,
+                                 title: { display: true, text: 'Euro (€)' },
+                                 ticks: {
+                                     callback: function(value) {
+                                         return value.toLocaleString('it-IT');
+                                     }
+                                 }
+                             }
+                         }
+                     }
+                 });
+             }
+
+             // Initialize Cash Flow Trend Chart
+             const ctxCFT = document.getElementById('cashFlowTrendChart');
+             if(ctxCFT) {
+                 new Chart(ctxCFT, {
+                     type: 'line',
+                     data: {
+                         labels: ['2022', '2023', '2024'],
+                         datasets: [{
+                             label: 'Cash Flow Operativo',
+                             data: [-125524, 96543, 211345],
+                             borderColor: '#2196F3',
+                             backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                             tension: 0.3
+                         }, {
+                             label: 'EBITDA',
+                             data: [0, 0, -43535],
+                             borderColor: '#F44336',
+                             backgroundColor: 'rgba(244, 67, 54, 0.1)',
+                             tension: 0.3
+                         }, {
+                             label: 'Variazione Netta Cassa',
+                             data: [33976, -132863, 183808],
+                             borderColor: '#4CAF50',
+                             backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                             tension: 0.3
+                         }]
+                     },
+                     options: {
+                         responsive: true,
+                         maintainAspectRatio: false,
+                         plugins: {
+                             legend: { position: 'top' },
+                             title: { display: false }
+                         },
+                         scales: {
+                             y: {
+                                 beginAtZero: true,
+                                 title: { display: true, text: 'Euro (€)' },
+                                 ticks: {
+                                     callback: function(value) {
+                                         return value.toLocaleString('it-IT');
+                                     }
+                                 }
+                             }
+                         }
+                     }
+                 });
+             }
+
+             // Initialize Projection Chart
+             const ctxProj = document.getElementById('cashFlowProjectionChart');
+             if(ctxProj) {
+                 new Chart(ctxProj, {
+                     type: 'line',
+                     data: {
+                         labels: ['2024', '2025', '2026', '2027', '2028'],
+                         datasets: [{
+                             label: 'Liquidità Prevista',
+                             data: [183808, 231307, 350326, 543048, 770797],
+                             borderColor: '#4CAF50',
+                             backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                             tension: 0.3,
+                             yAxisID: 'y'
+                         }, {
+                             label: 'Debiti Finanziari',
+                             data: [746599, 541145, 404176, 312863, 251988],
+                             borderColor: '#F44336',
+                             backgroundColor: 'rgba(244, 67, 54, 0.1)',
+                             tension: 0.3,
+                             yAxisID: 'y1'
+                         }]
+                     },
+                     options: {
+                         responsive: true,
+                         maintainAspectRatio: false,
+                         plugins: {
+                             legend: { position: 'top' },
+                             title: { display: false }
+                         },
+                         scales: {
+                             y: {
+                                 type: 'linear',
+                                 display: true,
+                                 position: 'left',
+                                 title: { display: true, text: 'Liquidità (€)' },
+                                 ticks: {
+                                     callback: function(value) {
+                                         return value.toLocaleString('it-IT');
+                                     }
+                                 }
+                             },
+                             y1: {
+                                 type: 'linear',
+                                 display: true,
+                                 position: 'right',
+                                 title: { display: true, text: 'Debiti Finanziari (€)' },
+                                 ticks: {
+                                     callback: function(value) {
+                                         return value.toLocaleString('it-IT');
+                                     }
+                                 },
+                                 grid: { drawOnChartArea: false }
+                             }
+                         }
+                     }
+                 });
+             }
+         });
+    </script>
+<scan-chat data-bot-id="a944ec72-81f6-4a0a-84da-a8ced9377979"></scan-chat>
+<script src="../js/bundle.js"></script>
+</body>
+</html>

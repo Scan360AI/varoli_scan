@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analisi Patrimoniale - GUIDO VAROLI E FIGLIO S.R.L. | SCAN V9</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="../css/styles.css" rel="stylesheet">
+    <link href="../css/print.css" rel="stylesheet" media="print">
+</head>
+<body>
+
+<!-- Sidebar -->
+    <aside class="sidebar no-print">
+        <div class="sidebar-header"> <img src="../assets/img/logo_scan.png" alt="SCAN Logo" style="max-height: 40px;"> <h5>GUIDO VAROLI E FIGLIO S.R.L.</h5> </div>
+        <ul class="sidebar-nav flex-grow-1">
+            <li class="nav-item"> <a class="nav-link" href="../dashboard_v2.html"> <i class="fas fa-tachometer-alt fa-fw"></i> Dashboard </a> </li>
+            <li class="nav-title">Analisi Dettagliata</li>
+            <li class="nav-item"> <a class="nav-link" href="parte1_sintesi.html"> <i class="fas fa-file-alt fa-fw"></i> Sintesi e Profilo </a> </li>
+            <li class="nav-item"> <a class="nav-link" href="parte2_economico.html"> <i class="fas fa-balance-scale fa-fw"></i> Analisi Economica </a> </li>
+            <li class="nav-item"> <a class="nav-link active" href="parte3_patrimoniale.html"> <i class="fas fa-landmark fa-fw"></i> Analisi Patrimoniale </a> </li>
+            <li class="nav-item"> <a class="nav-link" href="parte4_bancabilita.html"> <i class="fas fa-university fa-fw"></i> Bancabilità </a> </li>
+            <li class="nav-item"> <a class="nav-link" href="parte5_circolante-flussi.html"> <i class="fas fa-sync-alt fa-fw"></i> Circolante e Flussi </a> </li>
+            <li class="nav-item"> <a class="nav-link" href="parte6_rischi-raccomandazioni.html"> <i class="fas fa-exclamation-triangle fa-fw"></i> Rischi e Azioni </a> </li>
+            <li class="nav-title">Approfondimenti</li>
+            <li class="nav-item"> <a class="nav-link" href="irp_dettaglio.html"> <i class="fas fa-shield-alt fa-fw"></i> Dettaglio IRP </a> </li>
+        </ul>
+        <div class="sidebar-footer"> <small>SCAN360 © <span id="currentYearSidebar"></span> Kitzanos</small> </div>
+    </aside>
+
+    <!-- Contenuto Principale Wrapper -->
+    <div class="main-wrapper">
+        <!-- Header Orizzontale -->
+        <header class="dashboard-header no-print">
+            <div class="header-title">
+                <h5 class="mb-0">Report Dettagliato: Analisi Patrimoniale</h5>
+                <p class="mb-0">GUIDO VAROLI E FIGLIO S.R.L. | <span class="report-date">31 Dicembre 2024</span></p>
+            </div>
+            <div class="header-controls d-flex align-items-center">
+                <span id="irp-header-badge" class="badge me-3"></span>
+                <button class="btn btn-sm btn-outline-secondary me-2 print-button" onclick="printDocument()"> <i class="fas fa-print"></i> Stampa </button>
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-light border dropdown-toggle" type="button" id="userMenuButton" data-bs-toggle="dropdown" aria-expanded="false"> <i class="fas fa-user-circle me-1"></i> GUIDO VAROLI E FIGLIO S.R.L. </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenuButton"> <li><button class="dropdown-item" type="button" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i>Logout</button></li> </ul>
+                </div>
+            </div>
+        </header>
+        <div class="container d-none d-print-block mt-4 mb-4">
+            <h1 class="text-center mb-0"><span class="company-name">GUIDO VAROLI E FIGLIO S.R.L.</span></h1>
+            <p class="text-center mb-0">Report Dettagliato: Analisi Patrimoniale | <span class="report-date">31 Dicembre 2024</span></p>
+            <hr>
+        </div>
+
+        <!-- Area Contenuto Specifico del Report -->
+        <div class="dashboard-container">
+
+            <h2 class="section-title" id="patrimonial-analysis"><i class="fas fa-landmark me-2"></i>ANALISI PATRIMONIALE</h2>
+
+         <div class="card mb-4 report-section">
+            <div class="card-header"><h5 class="mb-0">1. Stato Patrimoniale Riclassificato (triennio)</h5></div>
+            <div class="card-body">
+                <p>L'analisi dello Stato Patrimoniale riclassificato secondo il criterio fonti-impieghi evidenzia la seguente situazione per il triennio 2022-2024 di GUIDO VAROLI E FIGLIO S.R.L.</p>
+
+                 <!-- Grafici Composizione Attivo e Passivo -->
+                 <div class="row mt-4">
+                     <div class="col-lg-6 mb-3 mb-lg-0">
+                         <h6 class="text-center small">Grafico 3.1: Composizione Impieghi 2024 (%)</h6>
+                         <div class="chart-container" style="height: 300px;">
+                             <canvas id="assetsChart"></canvas>
+                         </div>
+                     </div>
+                     <div class="col-lg-6">
+                          <h6 class="text-center small">Grafico 3.2: Composizione Fonti 2024 (%)</h6>
+                          <div class="chart-container" style="height: 300px;">
+                              <canvas id="liabilitiesChart"></canvas>
+                          </div>
+                     </div>
+                 </div>
+
+                 <h6 class="mt-4">Tabella 3.1: Stato Patrimoniale Riclassificato 2022-2024 (valori in €)</h6>
+                 <div class="table-responsive">
+                     <table class="table table-sm table-striped table-hover">
+                         <thead class="table-light">
+                             <tr><th>IMPIEGHI</th><th class="text-end">12/2022</th><th class="text-end">%</th><th class="text-end">12/2023</th><th class="text-end">%</th><th class="text-end">12/2024</th><th class="text-end">%</th><th class="text-end">Δ 2023-24</th></tr>
+                         </thead>
+                         <tbody>
+                             <tr><td>Liquidità</td><td class="text-end">304.498</td><td class="text-end">11,9%</td><td class="text-end">171.635</td><td class="text-end">7,5%</td><td class="text-end">355.443</td><td class="text-end">12,6%</td><td class="text-end text-success">+107,1%</td></tr>
+                             <tr><td>Crediti Clienti</td><td class="text-end">607.066</td><td class="text-end">23,6%</td><td class="text-end">503.449</td><td class="text-end">22,0%</td><td class="text-end">317.323</td><td class="text-end">11,3%</td><td class="text-end text-danger">-37,0%</td></tr>
+                             <tr><td>Rimanenze</td><td class="text-end">1.250.170</td><td class="text-end">48,7%</td><td class="text-end">1.246.652</td><td class="text-end">54,5%</td><td class="text-end">1.180.021</td><td class="text-end">41,9%</td><td class="text-end text-danger">-5,3%</td></tr>
+                             <tr><td>Altri Crediti</td><td class="text-end">263.228</td><td class="text-end">10,3%</td><td class="text-end">250.749</td><td class="text-end">11,0%</td><td class="text-end">106.760</td><td class="text-end">3,8%</td><td class="text-end text-danger">-57,4%</td></tr>
+                             <tr><td><strong>Totale Attivo Circolante</strong></td><td class="text-end"><strong>2.424.962</strong></td><td class="text-end"><strong>94,4%</strong></td><td class="text-end"><strong>2.172.485</strong></td><td class="text-end"><strong>94,9%</strong></td><td class="text-end"><strong>1.959.547</strong></td><td class="text-end"><strong>69,6%</strong></td><td class="text-end text-danger"><strong>-9,8%</strong></td></tr>
+                             <tr><td>Immobilizzazioni Nette</td><td class="text-end">142.832</td><td class="text-end">5,6%</td><td class="text-end">116.459</td><td class="text-end">5,1%</td><td class="text-end">854.485</td><td class="text-end">30,4%</td><td class="text-end text-success">+633,7%</td></tr>
+                             <tr class="table-primary fw-bold"><td>TOTALE IMPIEGHI</td><td class="text-end">2.567.794</td><td class="text-end">100,0%</td><td class="text-end">2.288.944</td><td class="text-end">100,0%</td><td class="text-end">2.814.032</td><td class="text-end">100,0%</td><td class="text-end text-success">+23,0%</td></tr>
+                         </tbody>
+                         <thead class="table-light">
+                              <tr><th>FONTI</th><th class="text-end">12/2022</th><th class="text-end">%</th><th class="text-end">12/2023</th><th class="text-end">%</th><th class="text-end">12/2024</th><th class="text-end">%</th><th class="text-end">Δ 2023-24</th></tr>
+                         </thead>
+                         <tbody>
+                             <tr><td>Debiti Fornitori</td><td class="text-end">693.468</td><td class="text-end">27,0%</td><td class="text-end">516.225</td><td class="text-end">22,6%</td><td class="text-end">480.162</td><td class="text-end">17,1%</td><td class="text-end text-danger">-7,0%</td></tr>
+                             <tr><td>Altri Debiti</td><td class="text-end">325.287</td><td class="text-end">12,7%</td><td class="text-end">381.993</td><td class="text-end">16,7%</td><td class="text-end">396.623</td><td class="text-end">14,1%</td><td class="text-end text-success">+3,8%</td></tr>
+                             <tr><td><strong>Passività Correnti</strong></td><td class="text-end"><strong>1.018.755</strong></td><td class="text-end"><strong>39,7%</strong></td><td class="text-end"><strong>898.218</strong></td><td class="text-end"><strong>39,3%</strong></td><td class="text-end"><strong>876.785</strong></td><td class="text-end"><strong>31,2%</strong></td><td class="text-end text-danger"><strong>-2,4%</strong></td></tr>
+                             <tr><td>Fondi</td><td class="text-end">277.649</td><td class="text-end">10,8%</td><td class="text-end">233.429</td><td class="text-end">10,2%</td><td class="text-end">182.528</td><td class="text-end">6,5%</td><td class="text-end text-danger">-21,8%</td></tr>
+                             <tr><td>Debiti Finanziari</td><td class="text-end">717.099</td><td class="text-end">27,9%</td><td class="text-end">508.454</td><td class="text-end">22,2%</td><td class="text-end">1.275.053</td><td class="text-end">45,3%</td><td class="text-end text-success">+150,8%</td></tr>
+                             <tr><td>di cui a M/L termine</td><td class="text-end">0</td><td class="text-end">0,0%</td><td class="text-end">0</td><td class="text-end">0,0%</td><td class="text-end">616.361</td><td class="text-end">21,9%</td><td class="text-end">N/A</td></tr>
+                             <tr><td>di cui a Breve termine</td><td class="text-end">717.099</td><td class="text-end">27,9%</td><td class="text-end">508.454</td><td class="text-end">22,2%</td><td class="text-end">658.692</td><td class="text-end">23,4%</td><td class="text-end text-success">+29,5%</td></tr>
+                             <tr><td>Patrimonio Netto</td><td class="text-end">554.291</td><td class="text-end">21,6%</td><td class="text-end">648.843</td><td class="text-end">28,3%</td><td class="text-end">479.666</td><td class="text-end">17,0%</td><td class="text-end text-danger">-26,1%</td></tr>
+                             <tr class="table-primary fw-bold"><td>TOTALE FONTI</td><td class="text-end">2.567.794</td><td class="text-end">100,0%</td><td class="text-end">2.288.944</td><td class="text-end">100,0%</td><td class="text-end">2.814.032</td><td class="text-end">100,0%</td><td class="text-end text-success">+23,0%</td></tr>
+                         </tbody>
+                     </table>
+                 </div>
+            </div>
+        </div>
+
+        <div class="card mb-4 report-section">
+             <div class="card-header"><h5 class="mb-0">2. Struttura degli Investimenti</h5></div>
+             <div class="card-body">
+                <p>L'analisi della struttura degli investimenti evidenzia un'azienda che ha subito una significativa trasformazione patrimoniale nel corso dell'ultimo esercizio. L'attivo circolante, che rappresentava il 94,9% del totale impieghi nel 2023, ha ridotto la sua incidenza al 69,6% nel 2024, principalmente a causa di un notevole incremento delle immobilizzazioni.</p>
+                 <div class="row">
+                    <div class="col-lg-7 mb-3 mb-lg-0">
+                         <h6 class="text-center small">Grafico 3.3: Evoluzione Struttura Impieghi (€)</h6>
+                         <div class="chart-container" style="height: 350px;">
+                             <canvas id="investmentsStructureChart"></canvas>
+                         </div>
+                    </div>
+                     <div class="col-lg-5">
+                         <h6 class="mt-1">Analisi Composizione Impieghi 2024:</h6>
+                          <ul class="small list-unstyled">
+                             <li class="mb-2"><span class="icon-circle icon-circle-sm bg-icon-primary me-2"><i class="fas fa-building"></i></span><strong>Attivo Fisso (€854.485):</strong> 30,4% del Tot. Impieghi. Aumento +633,7% rispetto al 2023.</li>
+                             <li class="mb-2"><span class="icon-circle icon-circle-sm bg-icon-info me-2"><i class="fas fa-laptop"></i></span><strong>Imm. Immateriali (€0):</strong> 0% dell'Attivo Fisso, assenti nel bilancio 2024.</li>
+                             <li class="mb-2"><span class="icon-circle icon-circle-sm bg-icon-warning me-2"><i class="fas fa-tools"></i></span><strong>Imm. Materiali (€854.464):</strong> 99,99% dell'Attivo Fisso, principalmente terreni e fabbricati.</li>
+                             <li class="mb-2"><span class="icon-circle icon-circle-sm bg-icon-secondary me-2"><i class="fas fa-sync-alt"></i></span><strong>Attivo Circolante (€1.959.547):</strong> 69,6% del Tot. Impieghi. Contrazione -9,8%. <span class="text-success">Liquidità in aumento (+107,1%) ma Crediti in forte calo (-37,0%).</span></li>
+                          </ul>
+                     </div>
+                 </div>
+             </div>
+        </div>
+
+        <div class="card mb-4 report-section">
+             <div class="card-header"><h5 class="mb-0">3. Struttura delle Fonti</h5></div>
+              <div class="card-body">
+                 <p>L'analisi della struttura delle fonti evidenzia significativi cambiamenti nella composizione del passivo, con un deterioramento dell'equilibrio patrimoniale complessivo. Il Patrimonio Netto è sceso da 648.843 € nel 2023 a 479.666 € nel 2024, con un'incidenza percentuale sul totale delle fonti che si è ridotta dal 28,3% al 17,0% (-26,1%).</p>
+                 <div class="row">
+                    <div class="col-lg-6 mb-3 mb-lg-0">
+                         <h6 class="text-center small">Grafico 3.4: Composizione Patrimonio Netto 2024 (%)</h6>
+                         <div class="chart-container" style="height: 300px;">
+                             <canvas id="equityCompositionChart"></canvas>
+                         </div>
+                         <h6 class="mt-3">Analisi Patrimonio Netto (€ 479.666, -26,1%):</h6>
+                          <ul class="small list-unstyled">
+                             <li><i class="fas fa-arrow-down text-warning me-1"></i> Riduzione dovuta principalmente alla perdita d'esercizio (-149.177 €).</li>
+                             <li><i class="fas fa-exclamation-triangle text-danger me-1"></i> Incidenza su Fonti: <strong>17,0%</strong> <span class="status-badge bg-danger">Insufficiente</span>.</li>
+                          </ul>
+                    </div>
+                     <div class="col-lg-6">
+                         <h6 class="text-center small">Grafico 3.5: Composizione Passività Correnti 2024 (%)</h6>
+                         <div class="chart-container" style="height: 300px;">
+                             <canvas id="currentLiabilitiesChart"></canvas>
+                         </div>
+                          <h6 class="mt-3">Analisi Passività Correnti (€876.785, -2,4%):</h6>
+                           <ul class="small list-unstyled">
+                              <li><i class="fas fa-building text-info me-1"></i> Debiti Fornitori: €480.162 (54,8% delle passività correnti).</li>
+                              <li><i class="fas fa-file-invoice text-warning me-1"></i> Altri Debiti: €396.623 (45,2%), inclusi debiti tributari e ratei.</li>
+                              <li><i class="fas fa-shield-alt text-warning me-1"></i> Fondi: €182.528 (-21,8%).</li>
+                              <li><i class="fas fa-exclamation-triangle text-danger me-1"></i> <strong>Debiti finanziari in forte aumento (+150,8%)</strong> <span class="status-badge bg-danger">Critico</span>.</li>
+                           </ul>
+                     </div>
+                 </div>
+              </div>
+        </div>
+
+        <div class="card mb-4 report-section">
+             <div class="card-header"><h5 class="mb-0">4. Posizione Finanziaria Netta (PFN)</h5></div>
+             <div class="card-body">
+                 <p>La Posizione Finanziaria Netta (PFN), calcolata come differenza tra i debiti finanziari e le disponibilità liquide, presenta la seguente evoluzione nel triennio.</p>
+                 <div class="row">
+                    <div class="col-lg-7 mb-3 mb-lg-0">
+                         <h6 class="mt-1">Tabella 4.1: Analisi PFN 2022-2024 (€)</h6>
+                         <div class="table-responsive">
+                             <table class="table table-sm table-striped table-hover">
+                                 <thead>
+                                     <tr><th>Componente</th><th class="text-end">12/2022</th><th class="text-end">12/2023</th><th class="text-end">12/2024</th><th class="text-end">Var% 23-24</th></tr>
+                                 </thead>
+                                 <tbody>
+                                     <tr><td>Debiti finanziari a breve</td><td class="text-end">717.099</td><td class="text-end">508.454</td><td class="text-end">658.692</td><td class="text-end text-danger">+29,5%</td></tr>
+                                     <tr><td>Debiti finanziari a M/L termine</td><td class="text-end">0</td><td class="text-end">0</td><td class="text-end">616.361</td><td class="text-end">N/A</td></tr>
+                                     <tr class="table-secondary"><td>Totale Debiti Finanziari</td><td class="text-end">717.099</td><td class="text-end">508.454</td><td class="text-end">1.275.053</td><td class="text-end text-danger">+150,8%</td></tr>
+                                     <tr><td>(-) Liquidità</td><td class="text-end">304.498</td><td class="text-end">171.635</td><td class="text-end">355.443</td><td class="text-end text-success">+107,1%</td></tr>
+                                     <tr class="table-danger fw-bold"><td>Posizione Finanziaria Netta (PFN)</td><td class="text-end">412.601</td><td class="text-end">336.819</td><td class="text-end">919.610</td><td class="text-end text-danger">+173,0%</td></tr>
+                                     <tr class="border-top"><td colspan="5"><em>Indicatori correlati:</em></td></tr>
+                                     <tr><td>EBITDA</td><td class="text-end">196.481</td><td class="text-end">213.178</td><td class="text-end">-43.535</td><td class="text-end text-danger">N/D</td></tr>
+                                     <tr><td>PFN/EBITDA (x)</td><td class="text-end">2,10</td><td class="text-end">1,58</td><td class="text-end">N/D</td><td class="text-end text-danger">N/A</td></tr>
+                                     <tr><td>PFN/PN (x)</td><td class="text-end">0,74</td><td class="text-end">0,52</td><td class="text-end">1,92</td><td class="text-end text-danger">+269,2%</td></tr>
+                                 </tbody>
+                             </table>
+                         </div>
+                    </div>
+                     <div class="col-lg-5">
+                         <h6 class="text-center small">Grafico 4.1: Evoluzione PFN e Liquidità (€)</h6>
+                          <div class="chart-container" style="height: 300px;">
+                             <canvas id="pfnTrendChart"></canvas>
+                         </div>
+                         <h6 class="mt-3">Analisi PFN (GUIDO VAROLI E FIGLIO S.R.L.):</h6>
+                         <ul class="small list-unstyled">
+                             <li><i class="fas fa-exclamation-triangle text-danger me-1"></i> PFN positiva: <strong>elevato indebitamento finanziario netto</strong> (€919.610).</li>
+                             <li><i class="fas fa-arrow-up text-danger me-1"></i> Forte incremento PFN (+173,0%) rispetto al 2023.</li>
+                             <li><i class="fas fa-exclamation-triangle text-danger me-1"></i> EBITDA negativo: impossibile calcolare sostenibilità del debito.</li>
+                              <li><i class="fas fa-exclamation-triangle text-danger me-1"></i> Rapporto PFN/PN elevato (1,92): squilibrio tra debito e mezzi propri.</li>
+                         </ul>
+                     </div>
+                 </div>
+             </div>
+         </div>
+
+         <div class="card mb-4 report-section">
+            <div class="card-header"><h5 class="mb-0">5. Indici di Solidità Patrimoniale</h5></div>
+             <div class="card-body">
+                 <p>L'analisi degli indici di solidità patrimoniale fornisce ulteriori elementi per valutare l'equilibrio della struttura finanziaria dell'azienda nel medio-lungo termine.</p>
+                  <h6 class="mt-4">Tabella 5.1: Principali Indici di Solidità 2022-2024 (GUIDO VAROLI E FIGLIO S.R.L.)</h6>
+                  <div class="table-responsive">
+                     <table class="table table-sm table-striped table-hover">
+                         <thead class="table-light"><tr><th>Indice</th><th class="text-end">2022</th><th class="text-end">2023</th><th class="text-end">2024</th><th>Valutazione 2024</th></tr></thead>
+                         <tbody>
+                             <tr><td>Copertura Immobilizzazioni</td><td class="text-end">3,88</td><td class="text-end">5,57</td><td class="text-end">0,56</td><td><span class="status-badge bg-danger">Insufficiente</span></td></tr>
+                             <tr><td>Indice Autonomia Finanziaria</td><td class="text-end">21,6%</td><td class="text-end">28,3%</td><td class="text-end">17,0%</td><td><span class="status-badge bg-danger">Insufficiente</span></td></tr>
+                             <tr><td>Leva Finanziaria (D/E)</td><td class="text-end">1,29</td><td class="text-end">0,78</td><td class="text-end">2,66</td><td><span class="status-badge bg-danger">Critico</span></td></tr>
+                             <tr><td>Turnover (Ricavi/CIN)</td><td class="text-end">1,56</td><td class="text-end">1,89</td><td class="text-end">1,33</td><td><span class="status-badge bg-warning">Mediocre</span></td></tr>
+                             <tr><td>Indice Struttura Secondario</td><td class="text-end">5,82</td><td class="text-end">7,57</td><td class="text-end">1,28</td><td><span class="status-badge bg-success">Adeguato</span></td></tr>
+                             <tr><td>PFN/EBITDA</td><td class="text-end">2,10</td><td class="text-end">1,58</td><td class="text-end">N/D</td><td><span class="status-badge bg-danger">Critico</span></td></tr>
+                         </tbody>
+                     </table>
+                 </div>
+                 <div class="row mt-3 small">
+                     <div class="col-md-6"><i class="fas fa-exclamation-triangle text-danger me-1"></i><strong>Copertura Immob. (0,56):</strong> Immobilizzazioni non adeguatamente finanziate da capitale proprio.</div>
+                     <div class="col-md-6"><i class="fas fa-exclamation-triangle text-danger me-1"></i><strong>Autonomia Fin. (17,0%):</strong> Insufficiente patrimonializzazione.</div>
+                     <div class="col-md-6"><i class="fas fa-exclamation-triangle text-danger me-1"></i><strong>Eccessiva Leva Finanziaria:</strong> D/E (2,66) critico, elevato rischio finanziario.</div>
+                     <div class="col-md-6"><i class="fas fa-check-circle text-success me-1"></i><strong>Indice Struttura Secondario (1,28):</strong> Fonti durevoli sufficienti a finanziare l'attivo immobilizzato.</div>
+                 </div>
+             </div>
+        </div>
+
+        <div class="card summary-card mb-4 report-section">
+             <div class="card-body">
+                 <h5 class="card-title"><i class="fas fa-exclamation-triangle text-danger me-2"></i>6. Conclusioni Analisi Patrimoniale (GUIDO VAROLI E FIGLIO S.R.L.)</h5>
+                 <p>L'analisi patrimoniale di GUIDO VAROLI E FIGLIO S.R.L. evidenzia una <strong>struttura significativamente sbilanciata</strong>, caratterizzata da un'insufficiente patrimonializzazione (17,0%) e da un forte incremento dei debiti finanziari (+150,8%).</p>
+                 <p>La società presenta una preoccupante posizione finanziaria netta con <strong>indebitamento netto di €919.610</strong>, in un contesto di redditività operativa negativa (EBITDA -43.535 €), che compromette la sostenibilità del debito.</p>
+                 <p><strong>Punti di debolezza principali:</strong> Insufficiente copertura delle immobilizzazioni (0,56), eccessiva leva finanziaria (D/E 2,66), EBITDA negativo e <strong>IRP preoccupante (54,12/100)</strong>.</p>
+                 <p class="mb-0"><strong>Raccomandazioni:</strong> Ricapitalizzazione di almeno €120.000, piano di ristrutturazione operativa per ripristinare margini positivi, riduzione delle rimanenze del 25% (circa €295.000) e rinegoziazione del debito esistente con consolidamento a medio-lungo termine.</p>
+             </div>
+         </div>
+
+        </div> <!-- /dashboard-container -->
+
+        <!-- Footer Standard V2 -->
+        <footer class="footer no-print"> 
+            <div class="container-fluid px-4"> 
+                <div class="row align-items-center"> 
+                    <div class="col-md-6 text-center text-md-start mb-2 mb-md-0"> 
+                        SCAN360 © <span id="currentYearFooterReport"></span> 
+                    </div> 
+                    <div class="col-md-6 text-center text-md-end"> 
+                        Powered by <a href="http://www.kitzanos.com" target="_blank" class="text-white fw-bold">Kitzanos Lab</a> 
+                        <img src="../assets/img/logo_kitzanos.png" alt="Kitzanos Logo" class="ms-2"> 
+                    </div> 
+                </div> 
+            </div> 
+        </footer>
+
+    </div> <!-- /main-wrapper -->
+
+    <!-- Script JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    
+    <script>
+        // Set current year
+        document.getElementById('currentYearSidebar').textContent = new Date().getFullYear();
+        document.getElementById('currentYearFooterReport').textContent = new Date().getFullYear();
+
+        // Initialize page when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update IRP badge
+            const irpScoreValue = 54.12;
+            const irpHeaderBadge = document.getElementById('irp-header-badge');
+            if(irpHeaderBadge) {
+                let badgeClass = 'bg-warning text-dark';
+                if (irpScoreValue >= 80) badgeClass = 'bg-success';
+                else if (irpScoreValue < 60) badgeClass = 'bg-danger';
+                irpHeaderBadge.className = `badge ${badgeClass} me-3`;
+                irpHeaderBadge.textContent = `IRP: ${irpScoreValue.toFixed(1)}`;
+            }
+
+            // Define utility functions
+            window.logout = function() {
+                console.log("Logout action triggered");
+            };
+            
+            window.printDocument = function() {
+                window.print();
+            };
+
+            // Initialize charts immediately after DOM is ready
+            initializeCharts();
+        });
+
+        // Backup initialization for charts
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                if (typeof Chart !== 'undefined') {
+                    // Re-initialize only if charts haven't been created yet
+                    const existingCharts = document.querySelectorAll('canvas');
+                    let hasCharts = false;
+                    existingCharts.forEach(canvas => {
+                        if (Chart.getChart(canvas)) {
+                            hasCharts = true;
+                        }
+                    });
+                    if (!hasCharts) {
+                        initializeCharts();
+                    }
+                }
+            }, 1000);
+        });
+
+        function initializeCharts() {
+            // Check if Chart.js is available
+            if (typeof Chart === 'undefined') {
+                console.error('Chart.js non disponibile');
+                return;
+            }
+
+            console.log('Inizializzazione grafici...');
+            
+            // Grafico 3.1: Composizione Impieghi 2024
+            const assetsCtx = document.getElementById('assetsChart');
+            if (assetsCtx && !Chart.getChart(assetsCtx)) {
+                console.log('Creando grafico assetsChart...');
+                new Chart(assetsCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Liquidità', 'Crediti Clienti', 'Rimanenze', 'Altri Crediti', 'Immobilizzazioni'],
+                        datasets: [{
+                            data: [12.6, 11.3, 41.9, 3.8, 30.4],
+                            backgroundColor: ['#28a745', '#17a2b8', '#ffc107', '#6c757d', '#6f42c1']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Grafico 3.2: Composizione Fonti 2024
+            const liabilitiesCtx = document.getElementById('liabilitiesChart');
+            if (liabilitiesCtx && !Chart.getChart(liabilitiesCtx)) {
+                console.log('Creando grafico liabilitiesChart...');
+                new Chart(liabilitiesCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Patrimonio Netto', 'Passività Correnti', 'Fondi', 'Debiti Finanziari'],
+                        datasets: [{
+                            data: [17.0, 31.2, 6.5, 45.3],
+                            backgroundColor: ['#28a745', '#dc3545', '#6c757d', '#fd7e14']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Grafico 3.3: Evoluzione Struttura Impieghi
+            const investmentsCtx = document.getElementById('investmentsStructureChart');
+            if (investmentsCtx && !Chart.getChart(investmentsCtx)) {
+                console.log('Creando grafico investmentsStructureChart...');
+                new Chart(investmentsCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['2022', '2023', '2024'],
+                        datasets: [{
+                            label: 'Attivo Circolante',
+                            data: [2424962, 2172485, 1959547],
+                            backgroundColor: '#17a2b8'
+                        }, {
+                            label: 'Immobilizzazioni',
+                            data: [142832, 116459, 854485],
+                            backgroundColor: '#6f42c1'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                stacked: true
+                            },
+                            y: {
+                                stacked: true
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Grafico 3.4: Composizione Patrimonio Netto 2024
+            const equityCtx = document.getElementById('equityCompositionChart');
+            if (equityCtx && !Chart.getChart(equityCtx)) {
+                console.log('Creando grafico equityCompositionChart...');
+                new Chart(equityCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Capitale Sociale', 'Riserve', 'Perdita d\'esercizio'],
+                        datasets: [{
+                            data: [51.6, 79.5, -31.1],
+                            backgroundColor: ['#007bff', '#28a745', '#dc3545']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Grafico 3.5: Composizione Passività Correnti 2024
+            const currentLiabilitiesCtx = document.getElementById('currentLiabilitiesChart');
+            if (currentLiabilitiesCtx && !Chart.getChart(currentLiabilitiesCtx)) {
+                console.log('Creando grafico currentLiabilitiesChart...');
+                try {
+                    new Chart(currentLiabilitiesCtx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Debiti Fornitori', 'Altri Debiti'],
+                            datasets: [{
+                                data: [480162, 396623],
+                                backgroundColor: ['#fd7e14', '#e83e8c']
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'bottom'
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            const ds = context.chart.data.datasets[context.datasetIndex];
+                                            const arr = Array.isArray(ds?.data) ? ds.data : [];
+                                            const total = arr.reduce((a, b) => a + b, 0);
+                                            const value = Number(context.raw) || 0;
+                                            const percentage = total ? ((value / total) * 100).toFixed(1) : '0.0';
+                                            return `${context.label}: €${value.toLocaleString()} (${percentage}%)`;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                    console.log('Grafico 3.5 creato con successo!');
+                } catch (error) {
+                    console.error('Errore creazione grafico 3.5:', error);
+                }
+            }
+
+            // Grafico 4.1: Evoluzione PFN
+            const pfnCtx = document.getElementById('pfnTrendChart');
+            if (pfnCtx && !Chart.getChart(pfnCtx)) {
+                console.log('Creando grafico pfnTrendChart...');
+                new Chart(pfnCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['2022', '2023', '2024'],
+                        datasets: [{
+                            label: 'Liquidità',
+                            data: [304498, 171635, 355443],
+                            borderColor: '#28a745',
+                            backgroundColor: '#28a745',
+                            fill: false
+                        }, {
+                            label: 'Debiti Finanziari',
+                            data: [717099, 508454, 1275053],
+                            borderColor: '#dc3545',
+                            backgroundColor: '#dc3545',
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+            
+            console.log('Inizializzazione grafici completata');
+        }
+    </script>
+     
+    <!-- Script ChatNode -->
+    <scan-chat data-bot-id="a944ec72-81f6-4a0a-84da-a8ced9377979"></scan-chat>
+    <script src="../js/bundle.js"></script>
+</body>
+</html>

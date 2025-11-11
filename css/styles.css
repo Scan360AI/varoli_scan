@@ -1,0 +1,536 @@
+/* /css/styles.css - Stile Unificato */
+:root {
+    --primary: #191970;    /* Midnight Blue */
+    --secondary: #4a69bd;  /* Blu più chiaro per accenti */
+    --success: #4CAF50;    /* Verde per positivo */
+    --warning: #FFC107;    /* Giallo/Arancio per attenzione */
+    --danger: #F44336;     /* Rosso per critico */
+    --info: #0dcaf0;       /* Ciano per info */
+    --light: #f8f9fa;
+    --dark: #343a40;
+    --white: #ffffff;
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --card-bg: var(--white);
+    --card-border: #dee2e6;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+body {
+    font-family: 'Titillium Web', sans-serif;
+    background-color: #eef2f7; /* Sfondo leggermente blu/grigio */
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+/* Header (uguale per tutte le pagine) */
+.header {
+    background-color: var(--primary);
+    color: white;
+    padding: 15px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+.header h1 { font-size: 1.5rem; margin-bottom: 0; }
+.header p { font-size: 0.9rem; opacity: 0.8; margin-bottom: 0;}
+.company-name { font-weight: 600; }
+
+/* Navbar (uguale per tutte le pagine interne) */
+.navbar.sticky-navbar {
+    background-color: var(--white);
+    box-shadow: var(--shadow);
+    border-radius: 8px;
+    margin-bottom: 30px;
+    padding: 0.5rem 1rem;
+    position: sticky; /* Aggiunto per renderla sticky */
+    top: 0;           /* Aggiunto per fissarla in alto */
+    z-index: 1020;    /* Aggiunto per assicurare che sia sopra gli altri elementi */
+}
+.navbar .nav-link {
+    color: var(--text-secondary);
+    font-weight: 500;
+    padding: 0.75rem 1rem;
+    transition: color 0.2s ease, border-bottom-color 0.2s ease;
+    border-bottom: 3px solid transparent; /* Bordo inferiore per l'active state */
+}
+.navbar .nav-link:hover {
+    color: var(--primary);
+}
+.navbar .nav-link.active {
+    color: var(--primary);
+    font-weight: 600;
+    border-bottom-color: var(--primary); /* Mostra il bordo per l'active state */
+}
+.navbar .nav-link i { margin-right: 8px; }
+.dropdown-menu { border-radius: 8px; box-shadow: var(--shadow); border: 1px solid var(--card-border);}
+.dropdown-item.active, .dropdown-item:active { background-color: var(--primary); color: white;}
+
+/* Titoli Sezione */
+.section-title {
+    color: var(--primary);
+    font-weight: 600;
+    margin-top: 2.5rem; /* Aggiunto margine sopra */
+    margin-bottom: 1.5rem; /* Ridotto margine sotto */
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--secondary);
+    font-size: 1.75rem;
+    display: flex;
+    align-items: center;
+}
+.section-title i { margin-right: 10px; }
+
+/* Stile Card Unificato */
+.dashboard-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    height: 100%; /* Per allineare le card in una riga */
+}
+.dashboard-card:hover {
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    transform: translateY(-3px);
+}
+.card-title-small {
+    font-size: 0.9rem; /* Leggermente più piccolo */
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.kpi-value {
+    font-size: 1.8rem; /* Leggermente più piccolo per CDA */
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 5px;
+    line-height: 1.2;
+    word-wrap: break-word; /* Va a capo se troppo lungo */
+}
+.kpi-trend {
+    font-size: 0.85rem; /* Leggermente più piccolo */
+    font-weight: 500;
+    margin-bottom: 10px; /* Ridotto spazio */
+    display: block; /* Assicura che vada a capo */
+}
+.kpi-trend .fas { margin-right: 4px; }
+.kpi-trend .trend-up { color: var(--success); }
+.kpi-trend .trend-down { color: var(--danger); }
+.kpi-trend .trend-neutral { color: var(--text-secondary); }
+.kpi-description {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 10px; /* Aggiunto spazio sotto la descrizione */
+    min-height: 35px; /* Altezza minima per allineamento */
+}
+.kpi-link {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--primary);
+    text-decoration: none;
+    display: inline-block; /* Cambiato in inline-block */
+    margin-top: 5px; /* Ridotto spazio sopra */
+    transition: color 0.2s ease;
+}
+.kpi-link:hover { text-decoration: underline; color: var(--secondary); }
+.kpi-link i { margin-left: 3px; }
+
+/* Stili per tabelle */
+.table { border: 1px solid var(--card-border); margin-bottom: 1rem; }
+.table thead th {
+    background-color: var(--light);
+    color: var(--primary);
+    font-weight: 600;
+    border-bottom: 2px solid var(--primary);
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+.table-hover tbody tr:hover { background-color: #eef2f7; }
+.table td, .table th { vertical-align: middle; padding: 0.6rem 0.75rem; font-size: 0.9rem;}
+.value-highlight {
+    font-weight: 600;
+    color: var(--primary);
+}
+.table .text-end { text-align: right !important;}
+.table .text-success { color: var(--success) !important; }
+.table .text-danger { color: var(--danger) !important; }
+.table .text-warning { color: var(--warning) !important; }
+.table .text-secondary { color: var(--text-secondary) !important; }
+
+
+/* Stili Alert/Status Box */
+.alert-box {
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid; /* Bordo colorato in base alla classe sotto */
+}
+.alert-box h5 { margin-bottom: 10px; font-size: 1.1rem; font-weight: 600;}
+.alert-box ul { padding-left: 20px; margin-bottom: 0; font-size: 0.9rem;}
+.alert-box strong {font-weight: 600;}
+
+/* Colori specifici per alert box */
+.alert-box.alert-success { background-color: #d1e7dd; border-color: #a3cfbb; color: #0a3622; }
+.alert-box.alert-warning { background-color: #fff3cd; border-color: #ffda6a; color: #664d03; }
+.alert-box.alert-danger  { background-color: #f8d7da; border-color: #f1aeb5; color: #58151c; }
+.alert-box.alert-info    { background-color: #cff4fc; border-color: #9eeaf9; color: #055160; }
+
+/* Stile indicatori badge */
+.status-badge {
+    font-size: 0.75rem; /* Più piccolo */
+    font-weight: 600;
+    padding: 3px 6px; /* Più compatto */
+    border-radius: 4px;
+    text-transform: uppercase;
+    color: white; /* Colore testo bianco di default */
+    display: inline-block; /* Per allineamento corretto */
+    line-height: 1.4; /* Migliora leggibilità */
+}
+.status-badge.bg-success { background-color: var(--success) !important; }
+.status-badge.bg-warning { background-color: var(--warning) !important; color: var(--text-primary) !important;} /* Testo scuro per warning */
+.status-badge.bg-danger { background-color: var(--danger) !important; }
+.status-badge.bg-info { background-color: var(--info) !important; color: var(--text-primary) !important;} /* Testo scuro per info */
+.status-badge.bg-primary { background-color: var(--primary) !important; }
+.status-badge.bg-secondary { background-color: var(--secondary) !important; }
+
+/* Stili specifici per Grafici */
+.chart-container {
+    height: 300px; /* Altezza di default */
+    margin-bottom: 20px;
+    background-color: var(--white);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    position: relative; /* Necessario per Chart.js responsiveness */
+}
+/* Stile per canvas grafico */
+canvas { max-width: 100%; }
+
+/* Footer (uguale per tutte le pagine) */
+.footer {
+    background-color: var(--primary);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 20px 0;
+    margin-top: 40px;
+    font-size: 0.9rem;
+}
+.footer a { color: var(--white); font-weight: 500; }
+.footer img { filter: brightness(0) invert(1); /* Logo bianco */ opacity: 0.8; }
+
+/* Stile per liste puntate usate nelle card (come SWOT) */
+.fa-ul { margin-left: 1.5em; padding-left: 0;}
+.fa-ul > li { margin-bottom: 0.5rem; font-size: 0.9rem;}
+.fa-li { width: 1.5em; text-align: center; }
+
+/* Elementi specifici report */
+.report-section { margin-bottom: 2.5rem; }
+.list-group-item { background-color: transparent; border: none; padding-left: 0; padding-right: 0;} /* Stile per liste azioni */
+
+/* Override specifici Bootstrap se necessario */
+.badge { line-height: 1.3; } /* Migliora allineamento badge */
+
+/* Layout Generale con Sidebar */
+body {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f4f8fb; /* Sfondo leggermente diverso per corpo */
+}
+
+.sidebar {
+    width: 250px; /* Larghezza sidebar */
+    background-color: #1a237e; /* Blu Navy Scuro */
+    color: #e0e0e0; /* Testo grigio chiaro */
+    padding: 20px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 1030;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+    transition: width 0.3s ease; /* Per eventuale collasso */
+}
+
+.main-content {
+    margin-left: 250px; /* Spazio per la sidebar */
+    flex-grow: 1;
+    padding: 0; /* Header e contenuto gestiranno il padding */
+    transition: margin-left 0.3s ease; /* Per eventuale collasso */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header Orizzontale */
+.dashboard-header {
+    background-color: var(--white);
+    padding: 10px 30px; /* Padding orizzontale aumentato */
+    border-bottom: 1px solid var(--card-border);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    min-height: 60px; /* Altezza minima */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.header-title h5 { margin-bottom: 0; font-weight: 600; color: var(--primary); }
+.header-title p { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0; }
+.header-controls .btn { font-size: 0.85rem;}
+
+/* Contenuto Principale Area */
+.dashboard-container {
+    padding: 30px; /* Padding area contenuto */
+    flex-grow: 1; /* Occupa spazio rimanente */
+    background-color: #f4f8fb;
+}
+
+/* Stile Sidebar */
+.sidebar-header {
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.sidebar-header img { max-height: 50px; } /* Adatta al tuo logo */
+.sidebar-header h5 {
+    color: var(--white);
+    margin-top: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.sidebar-nav { list-style: none; padding: 0; }
+.sidebar-nav .nav-item { margin: 0; }
+.sidebar-nav .nav-link {
+    color: #e0e0e0;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-left: 4px solid transparent;
+    transition: all 0.2s ease;
+}
+.sidebar-nav .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--white);
+    border-left-color: var(--warning); /* Giallo per hover */
+}
+.sidebar-nav .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+    font-weight: 600;
+    border-left-color: var(--white); /* Bianco per active */
+}
+.sidebar-nav .nav-link i {
+    margin-right: 15px;
+    width: 20px; /* Allinea icone */
+    text-align: center;
+    font-size: 1rem;
+}
+.sidebar-nav .nav-title { /* Per titoli sezioni nella sidebar */
+    padding: 10px 20px;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 15px;
+}
+.sidebar-footer {
+    margin-top: auto; /* Spinge in basso */
+    padding: 15px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.9rem;
+    text-align: left;
+}
+
+/* Card KPI Stile Moderno */
+.kpi-card-v2 {
+    background-color: var(--white);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--card-border);
+    transition: all 0.3s ease;
+    height: 100%;
+    position: relative;
+    overflow: hidden; /* Per l'icona di sfondo */
+}
+.kpi-card-v2:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+.kpi-card-v2 .card-title-modern { /* Titolo in maiuscolo come richiesto */
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+.kpi-card-v2 .kpi-value-modern {
+    font-size: 2.5rem; /* Valore grande */
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 5px;
+    line-height: 1.1;
+}
+.kpi-card-v2 .kpi-trend-modern {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+.kpi-card-v2 .kpi-trend-modern .trend-icon { margin-right: 5px; font-size: 0.8rem;}
+.kpi-card-v2 .kpi-trend-modern .trend-value { margin-right: 5px; }
+.kpi-card-v2 .trend-up { color: var(--success); }
+.kpi-card-v2 .trend-down { color: var(--danger); }
+.kpi-card-v2 .trend-neutral { color: var(--text-secondary); }
+
+.kpi-card-v2 .kpi-description-modern {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0;
+}
+.kpi-card-v2 .kpi-icon-modern-bg { /* Icona di sfondo */
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 2.5rem;
+    opacity: 0.08;
+    color: var(--primary);
+}
+
+/* Card con colori specifici */
+.kpi-card-v2.border-left-danger { border-left: 5px solid var(--danger); }
+.kpi-card-v2.border-left-warning { border-left: 5px solid var(--warning); }
+.kpi-card-v2.border-left-success { border-left: 5px solid var(--success); }
+.kpi-card-v2.border-left-info { border-left: 5px solid #4f6d7a; } /* Colore info */
+
+/* Pulsanti Pill */
+.btn-pill {
+    border-radius: 50rem !important; /* Stile pillola */
+    padding: 0.5rem 1.2rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Responsività Sidebar */
+@media (max-width: 991.98px) {
+    .sidebar {
+        width: 0; /* Nascondi sidebar */
+        padding: 0;
+        overflow: hidden;
+    }
+    .main-content {
+        margin-left: 0;
+    }
+    /* Qui potresti aggiungere logica JS per un toggle button per mostrare/nascondere la sidebar su mobile */
+}
+/* !!! CORREZIONE LAYOUT V6 !!! */
+html, body { height: 100%; overflow-x: hidden; /* Previene scroll orizzontale accidentale */ }
+body { display: flex; }
+
+.sidebar { width: 250px; position: fixed; top: 0; bottom: 0; left: 0; z-index: 1031; /* Sopra header */ overflow-y: auto; /* Scroll se contenuto lungo */ background-color: var(--primary); color: #e0e0e0; box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1); }
+
+.main-wrapper {
+    margin-left: 250px; /* Spazio per sidebar */
+    width: calc(100% - 250px); /* Occupa il resto */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Altezza minima per spingere footer */
+    position: relative; /* Necessario per header fisso */
+    padding-top: 60px; /* !!! SPAZIO PER HEADER FISSO !!! */
+}
+
+.dashboard-header {
+    background-color: var(--white);
+    padding: 10px 30px;
+    border-bottom: 1px solid var(--card-border);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed; /* Fissa l'header */
+    top: 0;
+    left: 250px; /* Dopo la sidebar */
+    right: 0;
+    z-index: 1030; /* Sotto la sidebar */
+    /* width: calc(100% - 250px); NON necessario se main-wrapper ha margin-left */
+}
+
+.dashboard-container {
+    padding: 30px;
+    flex-grow: 1; /* Occupa spazio verticale disponibile */
+    width: 100%;
+}
+
+.footer {
+    background-color: var(--primary);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 15px 30px;
+    font-size: 0.85rem;
+    margin-top: auto; /* Spinge in fondo */
+    flex-shrink: 0;
+    width: 100%;
+}
+/* !!! CORREZIONE LOGO FOOTER !!! */
+.footer img {
+    max-height: 20px; /* Altezza massima logo */
+    width: auto; /* Mantiene proporzioni */
+    filter: brightness(0) invert(1);
+    opacity: 0.8;
+    vertical-align: middle;
+}
+
+/* Profilo Aziendale - SOLO Icone (No Cerchi) */
+.profile-info-section ul { list-style: none; padding-left: 0; margin-bottom: 0; font-size: 0.9rem;}
+.profile-info-section li { margin-bottom: 0.6rem; display: flex; align-items: start;}
+.profile-info-section li i.fa-fw { /* Usa fa-fw per larghezza fissa */
+    margin-right: 10px; /* Spazio corretto */
+    color: var(--secondary);
+    width: 1.2em; /* Larghezza standard FontAwesome */
+    text-align: center;
+    margin-top: 3px;
+}
+.profile-info-section li strong { margin-right: 5px; color: var(--dark);}
+
+/* Mantiene gli altri stili V5 per IRP, KPI, SWOT etc. che andavano bene */
+.irp-visual-section { /* ... */ }
+.irp-gradient-bar { /* ... */ }
+.irp-marker { /* ... */ }
+.irp-score-circle { /* ... */ }
+.irp-score-value { /* ... */ }
+.kpi-card-v4 { /* ... */ }
+.icon-circle { /* ... */ } /* Mantenuto per KPI Card */
+.swot-card-v4 { /* ... */ }
+.swot-card-v4 .card-header i { /* Icone SWOT bianche */
+    color: white; margin-right: 8px; font-size: 1.1rem;
+}
+
+/* Responsive - Nasconde sidebar e aggiusta margini/posizioni */
+@media (max-width: 991.98px) {
+    .sidebar { width: 0; border: none; box-shadow: none;}
+    .main-wrapper { margin-left: 0; width: 100%; padding-top: 56px; /* Altezza header mobile */ }
+    .dashboard-header { left: 0; width: 100%; min-height: 56px; padding: 5px 15px;}
+    .header-title h5 { font-size: 1rem;}
+    .header-title p { font-size: 0.75rem;}
+    .dashboard-container { padding: 15px;}
+    .footer { padding: 10px 15px;}
+}
+.irp-score-circle {
+    /* ... altri stili ... */
+    background: var(--warning); /* Colore default (Medio) */
+    /* ... altri stili ... */
+}
+ /* Sovrascrive il default se la classe specifica è presente */
+ .irp-score-circle.risk-low { background: radial-gradient(circle, #6bc571, #4CAF50) !important; } /* Verde */
+ .irp-score-circle.risk-medium { background: radial-gradient(circle, #ffd54f, #FFC107) !important; } /* Giallo/Arancio */
+ .irp-score-circle.risk-high { background: radial-gradient(circle, #f6685e, #F44336) !important; } /* Rosso */
+

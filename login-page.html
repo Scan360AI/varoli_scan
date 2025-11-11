@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - SCAN360 | VAROLI GUIDO E FIGLIO S.R.L.</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <style>
+        /* Stili aggiuntivi specifici per login */
+        html, body { height: 100%; }
+        body { display: flex; align-items: center; padding-top: 40px; padding-bottom: 40px; background-color: #eef2f7; }
+        .login-container { max-width: 450px; margin: auto; }
+        .login-card-header { background-color: var(--primary); color: white; border-radius: 8px 8px 0 0 !important; padding: 1rem 1.5rem; }
+        .login-btn { background-color: var(--primary); border-color: var(--primary); padding: 0.75rem 1.5rem; font-weight: 600; color: white !important;}
+        .login-btn:hover { background-color: #13134f; border-color: #13134f; }
+        .powered-by img { max-height: 25px; filter: grayscale(50%);}
+        .watermark-login { text-align: center; margin-top: 20px; color: #6c757d; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+    <div class="login-container w-100">
+        <div class="card shadow-lg">
+            <div class="card-header text-center login-card-header">
+                <h4 class="mb-0">SCAN360</h4>
+                <small>Strategic Corporate Analysis Navigator</small>
+            </div>
+            <div class="card-body p-4 p-md-5">
+                <div class="text-center mb-4">
+                    <h5 class="fw-bold">Accesso Riservato</h5>
+                    <p class="text-muted small mb-0">Analisi Finanziaria VAROLI GUIDO E FIGLIO S.R.L.</p>
+                    <p class="text-muted small">Commercio all'ingrosso di legname</p>
+                </div>
+                <form id="loginForm" onsubmit="return handleLogin(event)">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <input type="text" class="form-control" id="username" placeholder="Inserisci username" required>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            <input type="password" class="form-control" id="password" placeholder="Inserisci password" required>
+                        </div>
+                    </div>
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn login-btn">Accedi <i class="fas fa-sign-in-alt ms-1"></i></button>
+                    </div>
+                </form>
+                <div class="powered-by d-flex justify-content-center align-items-center mt-4 pt-3 border-top">
+                    <span class="me-2 text-muted small">Powered by</span>
+                    <img src="assets/img/kitzanos_logo_scuro.png" alt="Kitzanos Logo">
+                </div>
+            </div>
+        </div>
+        <div class="watermark-login">
+            SCAN360 © 2025 Kitzanos Lab | Report elaborato il 29/09/2025
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="js/common.js"></script>
+    <script>
+        // Previeni il loop di reindirizzamento sulla pagina di login
+        // Rimuovi eventuali stati di login corrotti
+        if (window.location.pathname.endsWith('login-page.html')) {
+            try {
+                // Se siamo sulla pagina di login, assicuriamoci che l'utente non sia "loggato"
+                const isLoggedIn = localStorage.getItem('scanUserLoggedIn');
+                if (isLoggedIn === 'true') {
+                    // Se l'utente risulta loggato ma è sulla pagina di login, 
+                    // probabilmente c'è un problema, quindi facciamo un clean
+                    console.log('Pulizia stato login sulla pagina di login');
+                }
+            } catch (e) {
+                console.error('Errore controllo stato login:', e);
+            }
+        }
+    </script>
+    <scan-chat data-bot-id="a944ec72-81f6-4a0a-84da-a8ced9377979"></scan-chat>
+    <script src="./js/bundle.js"></script>
+</body>
+</html>

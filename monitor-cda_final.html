@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard CDA Final - VAROLI GUIDO E FIGLIO S.R.L. | SCAN</title>
+    <!-- Librerie Esterne -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="./css/print.css" rel="stylesheet" media="print">
+    <link href="./css/monitor_cda.css" rel="stylesheet">
+
+</head>
+<body>
+
+   <!-- Sidebar -->
+    <aside class="sidebar no-print">
+         <div class="sidebar-header">   <img src="assets/img/logo_scan.png" alt="SCAN Logo" style="max-height: 40px;">
+ <h5>VAROLI GUIDO E FIGLIO S.R.L.</h5> </div>
+         <ul class="sidebar-nav flex-grow-1">
+             <li class="nav-item"> <a class="nav-link active" href="monitor-cda_final.html"> <i class="fas fa-tachometer-alt fa-fw"></i> Overview CDA </a> </li>
+             <!-- Link Interni alla Pagina -->
+             <li class="nav-item"> <a class="nav-link" href="#kpi-section"> <i class="fas fa-key fa-fw"></i> KPI Principali </a> </li>
+             <li class="nav-item"> <a class="nav-link" href="#charts-section"> <i class="fas fa-chart-pie fa-fw"></i> Grafici Chiave </a> </li>
+             <li class="nav-item"> <a class="nav-link" href="#alerts-section"> <i class="fas fa-bell fa-fw"></i> Alert e Rischi </a> </li>
+             <li class="nav-item"> <a class="nav-link" href="#details-accordion"> <i class="fas fa-layer-group fa-fw"></i> Approfondimenti </a> </li>
+             <li class="nav-item"> <a class="nav-link" href="#actions-summary"> <i class="fas fa-tasks fa-fw"></i> Azioni Prioritarie </a> </li>
+             <li class="nav-item"> <a class="nav-link" href="index.html"> <i class="fas fa-home fa-fw"></i> Torna alla home </a> </li>
+         </ul>
+         <div class="sidebar-footer"> <small>SCAN360 © <span id="currentYearSidebar"></span> Kitzanos</small> </div>
+     </aside>
+
+    <!-- Contenuto Principale Wrapper -->
+    <div class="main-wrapper">
+        <!-- Header Orizzontale -->
+        <header class="dashboard-header no-print">
+            <div class="header-title">
+                 <h5 class="mb-0">Dashboard Esecutiva CDA</h5>
+                 <p class="mb-0">VAROLI GUIDO E FIGLIO S.R.L. | <span class="report-date">29 Settembre 2025</span></p>
+            </div>
+        </header>
+        <div class="container d-none d-print-block mt-4 mb-4">
+            <h1 class="text-center mb-0"><span class="company-name">VAROLI GUIDO E FIGLIO S.R.L.</span></h1>
+            <p class="text-center mb-0">Dashboard Esecutiva CDA | <span class="report-date">29 Settembre 2025</span></p>
+            <hr>
+        </div>
+
+        <!-- Area Contenuto Dashboard CDA -->
+        <div class="dashboard-container">
+
+            <!-- Executive Summary Card (Updated for VAROLI GUIDO E FIGLIO S.R.L.) -->
+            <div class="card executive-summary-card mb-4 report-section">
+                 <div class="card-body">
+                     <div class="row align-items-center">
+                         <div class="col-lg-8">
+                             <h4 class="card-title mb-3" style="color: var(--primary);"><i class="fas fa-info-circle me-2"></i>Executive Summary</h4>
+                             <p class="mb-2">L'analisi finanziaria di VAROLI GUIDO E FIGLIO S.R.L. evidenzia un <strong>profilo di rischio elevato (IRP 54,12)</strong>, con un'azienda che presenta significative criticità economico-finanziarie. L'EBITDA margin del -1,53% è notevolmente inferiore alla media di settore, con un Leanus Score "3 - Discreto" (3,47).</p>
+                             <p class="mb-0 text-warning">Le <strong>aree di attenzione</strong> includono la <strong>redditività operativa negativa</strong> (EBITDA -1,53%), il <strong>ciclo del circolante eccessivo</strong> (167 giorni) e l'<strong>elevato indebitamento finanziario</strong> (D/E 2,66). Gli interventi proposti possono migliorare significativamente la redditività e l'efficienza operativa.</p>
+                         </div>
+                         <div class="col-lg-4 text-center mt-3 mt-lg-0">
+                              <h6 class="card-title-small mb-1">Indice Rischio (IRP)</h6>
+                              <!-- IRP VAROLI GUIDO E FIGLIO -->
+                              <div class="irp-score-circle risk-low mx-auto" style="width: 110px; height: 110px; border-width: 4px;">
+    <span class="irp-score-value" style="font-size: 2.8rem;">54,1</span>
+    <span class="irp-score-max" style="font-size: 0.7rem;">/ 100</span>
+</div>
+<div class="irp-category-text text-success mt-1" style="font-size: 1rem;">
+    Rischio Elevato <span class="status-badge bg-success">D+</span>
+</div>
+                            
+                             <a href="report/irp_dettaglio.html" target="_blank" class="btn btn-link btn-sm p-0 mt-1 small">Dettaglio IRP</a>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+
+             <!-- Sezione KPI Principali V4 (8 KPI - Updated for VAROLI GUIDO E FIGLIO S.R.L.) -->
+             <section id="kpi-section" class="report-section">
+                  <h4 class="section-title small"><i class="fas fa-key me-2"></i>INDICATORI CHIAVE</h4>
+                   <div class="row gy-4">
+                      <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-success"><i class="fas fa-euro-sign"></i></span> <div class="kpi-content"> <div class="kpi-title">Ricavi</div> <div class="kpi-value">€ 2,85 M</div> <div class="kpi-trend trend-up"><i class="fas fa-arrow-up"></i> -14,27% YoY</div> </div> </div> </div>
+                      <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-success"><i class="fas fa-percent"></i></span> <div class="kpi-content"> <div class="kpi-title">EBITDA Margin</div> <div class="kpi-value">-1,53%</div> <div class="kpi-trend trend-up"><i class="fas fa-arrow-up"></i> -7,93 p.p.</div> </div> </div> </div>
+                      <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-success"><i class="fas fa-chart-line"></i></span> <div class="kpi-content"> <div class="kpi-title">EBITDA</div> <div class="kpi-value">-€ 43,5 K</div> <div class="kpi-trend trend-up"><i class="fas fa-arrow-up"></i> -120,43% YoY</div> </div> </div> </div>
+                      <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-warning"><i class="fas fa-coins"></i></span> <div class="kpi-content"> <div class="kpi-title">Utile Netto</div> <div class="kpi-value">-€ 149,2 K</div> <div class="kpi-trend trend-down"><i class="fas fa-arrow-down"></i> -230,23%</div> </div> </div> </div>
+                      <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-success"><i class="fas fa-balance-scale-right"></i></span> <div class="kpi-content"> <div class="kpi-title">PFN / EBITDA</div> <div class="kpi-value">NOK</div> <div class="kpi-trend trend-down"><i class="fas fa-arrow-down"></i> EBITDA negativo</div> </div> </div> </div>
+                      <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-success"><i class="fas fa-landmark"></i></span> <div class="kpi-content"> <div class="kpi-title">Leva (D/E)</div> <div class="kpi-value">2,66x</div> <div class="kpi-trend trend-neutral"><i class="fas fa-equals"></i> Elevata</div> </div> </div> </div>
+                      <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-warning"><i class="fas fa-hourglass-half"></i></span> <div class="kpi-content"> <div class="kpi-title">Ciclo Circolante</div> <div class="kpi-value">167 gg</div> <div class="kpi-trend trend-down"><i class="fas fa-arrow-up"></i> -7 gg</div> </div> </div> </div>
+                      <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-warning"><i class="fas fa-water"></i></span> <div class="kpi-content"> <div class="kpi-title">Cash Flow Operativo</div> <div class="kpi-value">€ 211,3 K</div> <div class="kpi-trend trend-down text-warning"><i class="fas fa-arrow-down"></i> 7,42% Ricavi</div> </div> </div> </div>
+                 </div>
+             </section>
+
+             <!-- Sezione Alert Principali (Updated for VAROLI GUIDO E FIGLIO S.R.L.) -->
+             <section id="alerts-section" class="report-section">
+                 <h4 class="section-title small"><i class="fas fa-bell me-2 text-warning"></i>ALERT PRINCIPALI</h4>
+                 <div class="row">
+                     <div class="col-lg-6 mb-4">
+                         <div class="alert-card alert-warning">
+                             <i class="fas fa-water alert-icon"></i>
+                             <div>
+                                 <h5>EBITDA Negativo <span class="badge bg-warning ms-2 text-dark">Critico</span></h5>
+                                 <p>L'EBITDA è negativo pari a -€43.535 (-1,53% dei ricavi), in forte calo rispetto all'esercizio precedente (-120,43%), segnalando una grave crisi di redditività operativa.</p>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="col-lg-6 mb-4">
+                         <div class="alert-card alert-warning">
+                             <i class="fas fa-percentage alert-icon"></i>
+                             <div>
+                                 <h5>Redditività Capitale Proprio Negativa <span class="badge bg-warning ms-2 text-dark">Critico</span></h5>
+                                 <p>ROE pari a -31,10%, drasticamente inferiore ai benchmark di settore (10-15%), indicando una significativa distruzione di valore per gli azionisti.</p>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="col-lg-6 mb-4">
+                         <div class="alert-card alert-warning">
+                              <i class="fas fa-hourglass-half alert-icon"></i>
+                              <div>
+                                   <h5>Ciclo Circolante Eccessivo <span class="badge bg-warning ms-2 text-dark">Critico</span></h5>
+                                   <p>Ciclo del circolante di 167 giorni con significativo squilibrio dovuto principalmente all'eccessiva rotazione del magazzino (DIO 194gg).</p>
+                              </div>
+                         </div>
+                     </div>
+                      <div class="col-lg-6 mb-4">
+                          <div class="alert-card alert-warning">
+                               <i class="fas fa-chart-line alert-icon"></i>
+                               <div>
+                                   <h5>Contrazione Significativa dei Ricavi <span class="badge bg-warning ms-2 text-dark">Critico</span></h5>
+                                   <p>Contrazione dei ricavi pari a -14,27% rispetto all'esercizio precedente, evidenziando problemi di mercato o perdita di competitività.</p>
+                               </div>
+                          </div>
+                      </div>
+                 </div>
+             </section>
+
+             <!-- Sezione Grafici Chiave CDA (Updated for VAROLI GUIDO E FIGLIO S.R.L.) -->
+             <section id="charts-section" class="report-section">
+                   <h4 class="section-title small"><i class="fas fa-chart-pie me-2"></i>GRAFICI CHIAVE</h4>
+                   <div class="row">
+                       <div class="col-lg-6 mb-4">
+                            <div class="dashboard-card chart-card">
+                                <h6 class="card-title-modern">Trend Economico (Ricavi/EBITDA)</h6>
+                                <div class="chart-container-cda" style="height: 350px;">
+                                     <canvas id="trendRicaviEbitdaChart"></canvas>
+                                 </div>
+                            </div>
+                       </div>
+                       <div class="col-lg-6 mb-4">
+                            <div class="dashboard-card chart-card">
+                                <h6 class="card-title-modern">Redditività e Leva (ROE/ROI/D:E)</h6>
+                                <div class="chart-container-cda" style="height: 350px;">
+                                      <canvas id="trendPfnEbitdaChart"></canvas>
+                                 </div>
+                            </div>
+                       </div>
+                        <!-- Grafico Ciclo Circolante -->
+                         <div class="col-lg-6 mb-4">
+                            <div class="dashboard-card chart-card">
+                                <h6 class="card-title-modern">Evoluzione Ciclo Circolante (Giorni)</h6>
+                                <div class="chart-container-cda" style="height: 350px;">
+                                     <canvas id="trendWorkingCapitalChart"></canvas>
+                                </div>
+                            </div>
+                       </div>
+                        <div class="col-lg-6 mb-4">
+                           <div class="dashboard-card chart-card">
+                               <h6 class="card-title-modern">Generazione Cassa Operativa (% Ricavi)</h6>
+                               <div class="chart-container-cda" style="height: 350px;">
+                                    <canvas id="trendCashFlowOpChart"></canvas>
+                               </div>
+                           </div>
+                      </div>
+                   </div>
+              </section>
+
+             <!-- SEZIONI DI DETTAGLIO CON ACCORDION (Updated for VAROLI GUIDO E FIGLIO S.R.L.) -->
+             <h2 class="section-title mt-5" id="details-accordion"><i class="fas fa-layer-group me-2"></i>Approfondimenti Dettagliati</h2>
+             <div class="accordion report-section" id="cdaDetailsAccordion">
+
+                 <!-- 1. Dettaglio Performance Economica -->
+                 <div class="accordion-item">
+                     <h2 class="accordion-header" id="headingEconomic"> <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEconomic" aria-expanded="false" aria-controls="collapseEconomic"> <i class="fas fa-chart-line me-2"></i> Performance Economica<span class="badge bg-success ms-2">Critica</span> </button> </h2>
+                     <div id="collapseEconomic" class="accordion-collapse collapse" aria-labelledby="headingEconomic" data-bs-parent="#cdaDetailsAccordion">
+                         <div class="accordion-body">
+                              <!-- Contenuto per VAROLI GUIDO E FIGLIO S.R.L. -->
+                              <h6>Principali indicatori economici</h6>
+                              <div class="table-responsive mb-3"><table class="table table-sm table-striped">
+                                  <tbody><tr><td>Ricavi</td><td class="value-highlight">€2.849.913</td><td><i class="fas fa-arrow-up text-success"></i> -14,27%</td></tr><tr><td>EBITDA</td><td class="value-highlight">-€43.535 (-1,53%)</td><td><i class="fas fa-arrow-up text-success"></i> -120,43%</td></tr><tr><td>EBIT</td><td class="value-highlight">-€92.982 (-3,26%)</td><td><i class="fas fa-arrow-up text-success"></i> -146,01%</td></tr><tr><td>Utile Netto</td><td class="value-highlight">-€149.177 (-5,23%)</td><td><i class="fas fa-arrow-down text-danger"></i> -230,23%</td></tr><tr><td>Margine di Contribuzione</td><td class="value-highlight">8,6%</td><td><i class="fas fa-arrow-up text-success"></i> -54,93%</td></tr><tr><td>Break-Even Point</td><td class="value-highlight">€3.940.291</td><td><span class="badge bg-success">-38,12% margine</span></td></tr></tbody>
+                              </table></div>
+                              <h6>Indici di redditività</h6>
+                              <div class="table-responsive mb-3"><table class="table table-sm table-striped">
+                                   <tbody><tr><td>ROE</td><td class="value-highlight">-31,10%</td><td><i class="fas fa-arrow-up text-success"></i> -48,75 p.p.</td><td><span class="badge bg-warning text-dark">Critico</span> (<0%)</td></tr><tr><td>ROI</td><td class="value-highlight">-6,65%</td><td><i class="fas fa-arrow-up text-success"></i> -24,17 p.p.</td><td><span class="badge bg-success">Critico</span> (<0%)</td></tr><tr><td>ROS</td><td class="value-highlight">-3,26%</td><td><i class="fas fa-arrow-up text-success"></i> -9,36 p.p.</td><td><span class="badge bg-warning text-dark">Critico</span> (<0%)</td></tr><tr><td>Turnover Capitale</td><td class="value-highlight">2,04x</td><td><i class="fas fa-arrow-up text-success"></i> -0,84x</td><td><span class="badge bg-success">Ottimo</span> (>1,5x)</td></tr><tr><td>EBIT/Oneri Fin.</td><td class="value-highlight">-1,38x</td><td><i class="fas fa-arrow-up text-success"></i> n.d.</td><td><span class="badge bg-success">Critico</span> (<1x)</td></tr><tr><td>Costo Medio Debito</td><td class="value-highlight">7,53%</td><td><i class="fas fa-equals text-secondary"></i> -1,24%</td><td><span class="badge bg-success">Elevato</span> (>5%)</td></tr></tbody>
+                              </table></div>
+                              <h6 class="mt-3">Evoluzione Conto Economico (Dettaglio)</h6>
+                              <div class="table-responsive"><table class="table table-sm table-striped table-hover">
+                                  <thead class="table-light"><tr><th>Voce</th><th class="text-end">2022 (€)</th><th class="text-end">2023 (€)</th><th class="text-end">2024 (€)</th><th class="text-end">Var % 23-24</th></tr></thead>
+                                  <tbody><tr><td>Ricavi</td><td class="text-end">3.722K</td><td class="text-end">3.324K</td><td class="text-end">2.850K</td><td class="text-end text-success">-14,3%</td></tr><tr><td>Acquisti</td><td class="text-end">-2.839K</td><td class="text-end">-2.424K</td><td class="text-end">-2.196K</td><td class="text-end text-success">-9,4%</td></tr><tr><td>Valore Aggiunto</td><td class="text-end">883K</td><td class="text-end">901K</td><td class="text-end">654K</td><td class="text-end text-success">-27,4%</td></tr><tr><td>Costi variabili</td><td class="text-end">-376K</td><td class="text-end">-360K</td><td class="text-end">-410K</td><td class="text-end text-danger">+14,1%</td></tr><tr><td>MdC</td><td class="text-end">506K</td><td class="text-end">541K</td><td class="text-end">244K</td><td class="text-end text-success">-54,9%</td></tr><tr><td>Costi fissi</td><td class="text-end">-310K</td><td class="text-end">-328K</td><td class="text-end">-287K</td><td class="text-end text-danger">-12,4%</td></tr><tr class="table-success fw-bold"><td>EBITDA</td><td class="text-end">197K</td><td class="text-end">213K</td><td class="text-end">-44K</td><td class="text-end text-success">-120,4%</td></tr><tr><td>Amm.ti/Svalut.</td><td class="text-end">-23K</td><td class="text-end">-11K</td><td class="text-end">-49K</td><td class="text-end text-success">+347,7%</td></tr><tr><td>EBIT</td><td class="text-end">173K</td><td class="text-end">202K</td><td class="text-end">-93K</td><td class="text-end text-success">-146,0%</td></tr><tr><td>Componenti straordinarie</td><td class="text-end">0K</td><td class="text-end">0K</td><td class="text-end">15K</td><td class="text-end text-danger">N/A</td></tr><tr><td>Gest. Finanziaria</td><td class="text-end">-25K</td><td class="text-end">-45K</td><td class="text-end">-71K</td><td class="text-end text-success">+59,7%</td></tr><tr><td>EBT</td><td class="text-end">149K</td><td class="text-end">157K</td><td class="text-end">-149K</td><td class="text-end text-success">-194,7%</td></tr><tr><td>Imposte</td><td class="text-end">-42K</td><td class="text-end">-43K</td><td class="text-end">0K</td><td class="text-end text-danger">-100,0%</td></tr><tr class="table-success fw-bold"><td>Utile Netto</td><td class="text-end">106K</td><td class="text-end">115K</td><td class="text-end">-149K</td><td class="text-end text-danger">-230,2%</td></tr></tbody>
+                              </table></div>
+                              <div class="row mt-3"> <div class="col-md-6"><div class="alert alert-success small p-2"><h6>Punti di forza:</h6><ul><li>Turnover capitale investito buono (2,04)</li><li>Riduzione costi fissi (-12,37%)</li><li>Cash flow operativo positivo (7,42%)</li><li>Assenza di imposte per risultato negativo</li></ul></div></div> <div class="col-md-6"><div class="alert alert-danger small p-2"><h6>Aree di miglioramento:</h6><ul><li>EBITDA margin negativo (-1,53%)</li><li>ROE fortemente negativo (-31,10%)</li><li>ROS negativo (-3,26%)</li><li>Incremento costi variabili (+14,14%)</li></ul></div></div></div>
+                         </div>
+                     </div>
+                 </div>
+
+                 <!-- Dettaglio Struttura Patrimoniale -->
+                  <div class="accordion-item">
+                      <h2 class="accordion-header" id="headingAssets"> <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAssets" aria-expanded="false" aria-controls="collapseAssets"> <i class="fas fa-landmark me-2"></i> Struttura Patrimoniale <span class="badge bg-success ms-2">Problematica</span></button> </h2>
+                      <div id="collapseAssets" class="accordion-collapse collapse" aria-labelledby="headingAssets" data-bs-parent="#cdaDetailsAccordion">
+                          <div class="accordion-body">
+                               <!-- Contenuto per VAROLI GUIDO E FIGLIO S.R.L. -->
+                               <div class="row mb-4">
+                                  <div class="col-md-6"><h6>Stato Patrimoniale Sintetico (Impieghi)</h6><table class="table table-sm table-striped"><tbody><tr><td>Attivo Fisso Netto</td><td class="value-highlight">€854,5K</td><td><i class="fas fa-arrow-down text-success"></i> +633,7%</td></tr><tr><td>- Imm. materiali</td><td>€854,5K</td><td><i class="fas fa-arrow-down text-success"></i> n.d.</td></tr><tr><td>- Imm. immateriali</td><td>€0K</td><td><i class="fas fa-arrow-down text-success"></i> n.d.</td></tr><tr><td>- Imm. finanziarie</td><td>€0K</td><td><i class="fas fa-equals text-secondary"></i> n.d.</td></tr><tr><td>Capitale Circolante</td><td class="value-highlight">€1.017,2K</td><td><i class="fas fa-arrow-up text-danger"></i> n.d.</td></tr><tr><td>- Crediti comm.</td><td>€317,3K</td><td><i class="fas fa-arrow-up text-danger"></i> -37,0%</td></tr><tr><td>- Rimanenze</td><td>€1.180,0K</td><td><i class="fas fa-equals text-secondary"></i> -5,3%</td></tr><tr><td>- Debiti comm.</td><td>-€480,2K</td><td><i class="fas fa-arrow-up text-danger"></i> -7,0%</td></tr><tr class="table-primary fw-bold"><td>Capitale Investito Netto</td><td class="value-highlight">€1.399,3K</td><td><i class="fas fa-arrow-down text-success"></i> n.d.</td></tr></tbody></table></div>
+                                  <div class="col-md-6"><h6>Struttura delle Fonti</h6><table class="table table-sm table-striped"><tbody><tr><td>Patrimonio Netto</td><td class="value-highlight">€479,7K</td><td><i class="fas fa-arrow-down text-danger"></i> -26,1%</td></tr><tr><td>PFN</td><td class="value-highlight">€919,6K</td><td><i class="fas fa-arrow-up text-danger"></i> +173,0%</td></tr><tr><td>- Debiti finanziari</td><td>€1.275,1K</td><td><i class="fas fa-equals text-secondary"></i> +150,8%</td></tr><tr><td>- Liquidità</td><td>€355,4K</td><td><i class="fas fa-arrow-down text-danger"></i> +107,1%</td></tr><tr class="table-primary fw-bold"><td>Totale Fonti</td><td class="value-highlight">€1.399,3K</td><td><i class="fas fa-arrow-down text-success"></i> n.d.</td></tr></tbody></table></div>
+                               </div>
+                               <h6>Indici di Solidità Patrimoniale</h6>
+                               <div class="table-responsive"><table class="table table-sm table-striped table-hover">
+                                   <thead class="table-light"><tr><th>Indice</th><th>Formula</th><th class="text-end">2022</th><th class="text-end">2023</th><th class="text-end">2024</th><th>Valutazione</th></tr></thead>
+                                   <tbody><tr><td>Autonomia Fin.</td><td>PN / Tot Passivo</td><td class="text-end">21,6%</td><td class="text-end">28,3%</td><td class="text-end">17,0%</td><td><span class="status-badge bg-success">Insufficiente</span></td></tr><tr><td>Cop. Immob.</td><td>PN/AF</td><td class="text-end">3,88</td><td class="text-end">5,57</td><td class="text-end">0,56</td><td><span class="status-badge bg-success">Insufficiente</span></td></tr><tr><td>Struttura Primario</td><td>PN / AF</td><td class="text-end">3,88</td><td class="text-end">5,57</td><td class="text-end">0,56</td><td><span class="status-badge bg-success">Insufficiente</span></td></tr><tr><td>Struttura Secondario</td><td>(PN+PConsolidate)/AF</td><td class="text-end">5,82</td><td class="text-end">7,57</td><td class="text-end">1,28</td><td><span class="status-badge bg-success">Adeguata</span></td></tr><tr><td>Leva Finanziaria (D/E)</td><td>Debt Fin / PN</td><td class="text-end">1,29</td><td class="text-end">0,78</td><td class="text-end">2,66</td><td><span class="status-badge bg-success">Elevata</span></td></tr><tr><td>PFN/EBITDA</td><td>PFN / EBITDA</td><td class="text-end">2,10</td><td class="text-end">1,58</td><td class="text-end">NOK</td><td><span class="status-badge bg-success">Critico</span></td></tr></tbody>
+                               </table></div>
+                               <div class="row mt-3"> <div class="col-md-6"><div class="alert alert-success small p-2"><h6>Punti di forza:</h6><ul><li>Liquidità significativa (€355.443)</li><li>Indice di struttura secondario positivo (1,28)</li><li>Riduzione dei crediti commerciali (-37,0%)</li><li>Prevalenza di immobilizzazioni materiali (99,99%)</li></ul></div></div> <div class="col-md-6"><div class="alert alert-warning small p-2"><h6>Aree di attenzione:</h6><ul><li>Copertura immobilizzazioni insufficiente (0,56)</li><li>Leva finanziaria elevata (2,66)</li><li>Autonomia finanziaria insufficiente (17,0%)</li><li>Incremento significativo dei debiti finanziari (+150,8%)</li></ul></div></div></div>
+                          </div>
+                      </div>
+                  </div>
+
+                 <!-- Dettaglio Situazione Finanziaria e Flussi -->
+                  <div class="accordion-item">
+                      <h2 class="accordion-header" id="headingFinancial"> <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFinancial" aria-expanded="false" aria-controls="collapseFinancial"> <i class="fas fa-university me-2"></i> Situazione Finanziaria e Flussi<span class="badge bg-warning ms-2 text-dark">Critica</span> </button> </h2>
+                      <div id="collapseFinancial" class="accordion-collapse collapse" aria-labelledby="headingFinancial" data-bs-parent="#cdaDetailsAccordion">
+                          <div class="accordion-body">
+                              <!-- Contenuto per VAROLI GUIDO E FIGLIO S.R.L. -->
+                               <div class="row mb-4">
+                                   <div class="col-md-6"><h6>Indicatori Sostenibilità Debito</h6><table class="table table-sm table-striped"><tbody><tr><td>PFN/EBITDA</td><td class="value-highlight">NOK</td><td><span class="badge bg-success">Critico</span></td></tr><tr><td>Leva (D/E)</td><td class="value-highlight">2,66</td><td><span class="badge bg-success">Elevata</span></td></tr><tr><td>DSCR</td><td class="value-highlight">0,44</td><td><span class="badge bg-success">Critico</span></td></tr><tr><td>Oneri Fin./Ricavi</td><td class="value-highlight">2,36%</td><td><span class="badge bg-success">Elevato</span></td></tr><tr><td>CF Op./Ricavi</td><td class="value-highlight">7,42%</td><td><span class="badge bg-warning text-dark">Adeguato</span></td></tr><tr><td>EBIT/Oneri Fin.</td><td class="value-highlight">-1,38</td><td><span class="badge bg-success">Critico</span></td></tr></tbody></table></div>
+                                   <div class="col-md-6"><h6>Posizione Finanziaria Netta</h6><table class="table table-sm table-striped"><tbody><tr><td>Debiti finanziari</td><td class="value-highlight">€1.275.053</td><td><i class="fas fa-equals text-secondary"></i> +150,8%</td></tr><tr><td>Liquidità</td><td class="value-highlight">€355.443</td><td><i class="fas fa-arrow-down text-danger"></i> +107,1%</td></tr><tr class="table-success fw-bold"><td>PFN</td><td class="value-highlight">€919.610</td><td><i class="fas fa-arrow-up text-danger"></i> +173,0%</td></tr></tbody></table></div>
+                               </div>
+                                <h6 class="mt-3">Capacità di Indebitamento</h6>
+                                <div class="table-responsive"><table class="table table-sm table-striped">
+                                     <thead class="table-light"><tr><th>Indicatore</th><th class="text-end">Valore</th><th>Interpretazione</th></tr></thead>
+                                     <tbody><tr><td>Capacità teorica indebitamento incrementale</td><td class="text-end text-success">€0</td><td>Nessuna capacità di assumere nuovo debito</td></tr><tr><td>Stress test - Riduzione ricavi che rende EBIT=0</td><td class="text-end">+38,12%</td><td>Situazione già critica (EBIT negativo)</td></tr><tr><td>Stress test - Aumento costi fissi che rende EBIT=0</td><td class="text-end">-32,35%</td><td>Situazione già critica (EBIT negativo)</td></tr>
+                                     <tr class="table-success fw-bold"><td>DSCR (Debt Service Coverage Ratio)</td><td class="text-end text-success">0,44</td><td>Critico - incapacità di servire il debito</td></tr><tr><td>Probabilità di Default (MCC)</td><td class="text-end text-success">8,45%</td><td>Elevata</td></tr><tr class="table-warning fw-bold"><td>Leanus Score</td><td class="text-end text-warning">3,47</td><td>Profilo "3 - Discreto"</td></tr></tbody>
+                                </table></div>
+                               <div class="row mt-3"> <div class="col-md-6"><div class="alert alert-success small p-2"><h6>Punti di forza:</h6><ul><li>Cash flow operativo positivo (€211.345)</li><li>Liquidità significativa (€355.443)</li><li>Variazione netta di cassa positiva (€183.808)</li><li>Introduzione di debito a M/L termine (€616.361)</li></ul></div></div> <div class="col-md-6"><div class="alert alert-warning small p-2"><h6>Aree di attenzione:</h6><ul><li>EBITDA negativo (-€43.535)</li><li>PFN/EBITDA non calcolabile (EBITDA negativo)</li><li>DSCR insufficiente (0,44)</li><li>Incremento significativo dei debiti finanziari (+150,8%)</li></ul></div></div></div>
+                          </div>
+                      </div>
+                   </div>
+
+                  <!-- Dettaglio Capitale Circolante -->
+                  <div class="accordion-item">
+                      <h2 class="accordion-header" id="headingCapital"> <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCapital" aria-expanded="false" aria-controls="collapseCapital"> <i class="fas fa-sync-alt me-2"></i> Capitale Circolante <span class="badge bg-warning ms-2 text-dark">Critico</span> </button> </h2>
+                      <div id="collapseCapital" class="accordion-collapse collapse" aria-labelledby="headingCapital" data-bs-parent="#cdaDetailsAccordion">
+                          <div class="accordion-body">
+                              <!-- Contenuto per VAROLI GUIDO E FIGLIO S.R.L. -->
+                              <div class="row mb-4">
+                                  <div class="col-md-6"><h6>Ciclo del Capitale Circolante</h6><table class="table table-sm table-striped"><tbody>
+<tr><td>Giorni Clienti (DSO)</td><td class="value-highlight">41 gg</td><td class="text-danger"><i class="fas fa-arrow-up"></i> -14 gg</td><td><span class="badge bg-warning text-dark">Ottimo</span></td></tr><tr><td>Giorni Magazzino (DIO)</td><td class="value-highlight">194 gg</td><td class="text-secondary"><i class="fas fa-equals"></i> +8 gg</td><td><span class="badge bg-success">Critico</span></td></tr><tr><td>Giorni Fornitori (DPO)</td><td class="value-highlight">68 gg</td><td class="text-success"><i class="fas fa-arrow-up"></i> +1 gg</td><td><span class="badge bg-warning text-dark">Adeguato</span></td></tr><tr class="table-warning fw-bold"><td>Ciclo del Circolante</td><td class="value-highlight">167 gg</td><td class="text-danger"><i class="fas fa-arrow-up"></i> -7 gg</td><td><span class="badge bg-warning text-dark">Critico</span></td></tr></tbody></table></div>
+                                  <div class="col-md-6"><h6>Test di Congruità Componenti</h6><table class="table table-sm table-striped"><tbody><tr><td>Crediti vs benchmark</td><td class="value-highlight">41 gg vs 60 gg</td><td class="text-danger">Ottimo (-19 gg)</td></tr><tr><td>Debiti vs benchmark</td><td class="value-highlight">68 gg vs 75 gg</td><td class="text-warning">Leggero deficit (-7 gg)</td></tr><tr><td>Magazzino vs benchmark</td><td class="value-highlight">194 gg vs 80 gg</td><td class="text-warning">Eccesso critico (+114 gg)</td></tr><tr><td>Working Capital/Ricavi</td><td class="value-highlight">35,69%</td><td class="text-warning">Elevato</td></tr></tbody></table></div>
+                              </div>
+                              <h6>Evoluzione Capitale Circolante</h6>
+                              <div class="table-responsive"><table class="table table-sm table-striped">
+                                  <thead class="table-light"><tr><th>Componente</th><th class="text-end">2022</th><th class="text-end">2023</th><th class="text-end">2024</th><th>Variazione</th></tr></thead>
+                                  <tbody><tr><td>Crediti Clienti</td><td class="text-end">€607K</td><td class="text-end">€503K</td><td class="text-end">€317K</td><td><span class="badge bg-danger">-€186K</span></td></tr><tr><td>Rimanenze</td><td class="text-end">€1.250K</td><td class="text-end">€1.247K</td><td class="text-end">€1.180K</td><td><span class="badge bg-secondary">-€67K</span></td></tr><tr><td>Debiti Fornitori</td><td class="text-end">€693K</td><td class="text-end">€516K</td><td class="text-end">€480K</td><td><span class="badge bg-success">-€36K</span></td></tr><tr><td>Altri Crediti</td><td class="text-end">€263K</td><td class="text-end">€251K</td><td class="text-end">€107K</td><td><span class="badge bg-danger">-€144K</span></td></tr></tbody>
+                              </table></div>
+                              <div class="alert alert-warning mt-3 small p-2"><h5>Criticità del circolante:</h5><ul><li>Ciclo del circolante eccessivo (167gg) nonostante il miglioramento di 7gg</li><li>Tempi di rotazione magazzino critici (DIO 194 giorni)</li><li>Eccesso di magazzino rispetto al benchmark (+114 giorni)</li><li>Capitale circolante che assorbe risorse finanziarie significative (35,69% dei ricavi)</li></ul></div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!-- Dettaglio Rischi -->
+                   <div class="accordion-item">
+                       <h2 class="accordion-header" id="headingRisk"> <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRisk" aria-expanded="false" aria-controls="collapseRisk"> <i class="fas fa-exclamation-triangle me-2"></i> Profilo di Rischio <span class="badge bg-success ms-2">Elevato</span></button> </h2>
+                       <div id="collapseRisk" class="accordion-collapse collapse" aria-labelledby="headingRisk" data-bs-parent="#cdaDetailsAccordion">
+                           <div class="accordion-body">
+                               <!-- Contenuto per VAROLI GUIDO E FIGLIO S.R.L. -->
+                                <div class="row">
+                                   <div class="col-md-6"><h6>Indice Rischio Ponderato (IRP)</h6><p>Valore: <strong>54,12 / 100</strong> <span class="badge bg-success">CATEGORIA D+</span></p>
+<table class="table table-sm">
+    <tr><td>Coefficiente di Ponderazione</td><td class="text-end">52,00</td></tr>
+    <tr><td>Leanus Score Norm.</td><td class="text-end">54,70</td></tr>
+    <tr><td>MCC Rating Norm.</td><td class="text-end">46,20</td></tr>
+    <tr><td>Z-Score Norm.</td><td class="text-end">70,40</td></tr>
+</table>
+<p class="text-muted small">L'azienda presenta un profilo di rischio elevato con criticità significative nella redditività operativa e nella struttura finanziaria.</p>
+</div>
+                                   <div class="col-md-6"><h6>Modelli di Rating</h6><table class="table table-sm"><tbody><tr><td>Z-Score Altman</td><td class="value-highlight">2,22</td><td><span class="badge bg-success">Zona Grigia</span></td></tr><tr><td>PD (MCC)</td><td class="value-highlight">8,45%</td><td><span class="badge bg-success">Elevata</span></td></tr><tr><td>Leanus Score</td><td class="value-highlight">3,47 - Discreto</td><td><span class="badge bg-warning text-dark">Discreto</span></td></tr><tr><td>DSCR</td><td class="value-highlight">0,44</td><td><span class="badge bg-success">Critico</span></td></tr><tr><td>IRP Finale</td><td class="value-highlight">54,12</td><td><span class="badge bg-success">Categoria D+</span></td></tr></tbody></table></div>
+                                </div>
+                                <h6 class="mt-3">Stress Test Sintesi</h6>
+                                <p class="small">Resistenza Ricavi: +38,12% | Resistenza Costi: -32,35% | Liquidità critica: +46gg variazione DSO</p>
+                                <div class="row mt-3"><div class="col-md-6"><div class="alert alert-success small p-2"><h6>Punti di forza:</h6><ul><li>Cash flow operativo positivo (7,42%)</li><li>Liquidità significativa (€355.443)</li><li>Tempi di incasso clienti ottimi (41 giorni)</li><li>Indice di struttura secondario positivo (1,28)</li><li>Variazione netta di cassa positiva (€183.808)</li></ul></div></div><div class="col-md-6"><div class="alert alert-warning small p-2"><h6>Red Flags:</h6><ul><li>EBITDA negativo (-1,53%)</li><li>ROE fortemente negativo (-31,10%)</li><li>Ciclo circolante eccessivo (167gg)</li><li>Leva finanziaria elevata (2,66)</li><li>Copertura immobilizzazioni insufficiente (0,56)</li></ul></div></div></div>
+                           </div>
+                       </div>
+                   </div>
+
+                  <!-- Dettaglio Azioni Raccomandate -->
+                   <div class="accordion-item">
+                       <h2 class="accordion-header" id="headingActions"> <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseActions" aria-expanded="false" aria-controls="collapseActions"> <i class="fas fa-lightbulb me-2"></i> Piano d'Azione </button> </h2>
+                       <div id="collapseActions" class="accordion-collapse collapse" aria-labelledby="headingActions" data-bs-parent="#cdaDetailsAccordion">
+                           <div class="accordion-body">
+                               <!-- Contenuto per VAROLI GUIDO E FIGLIO S.R.L. -->
+                               <div class="action-item priority-high"><h6>PRIORITÀ ALTA: Ripristino Redditività Operativa</h6><div class="action-detail"><strong>1a. Revisione prezzi:</strong> Incremento mirato dei prezzi di vendita del 4-6% con focus su prodotti strategici.</div><div class="action-detail"><strong>1b. Razionalizzazione costi:</strong> Riduzione costi fissi del 20-25% con impatto di circa €70.000-€90.000.</div></div>
+                               <div class="action-item priority-high"><h6>PRIORITÀ ALTA: Ottimizzazione Magazzino</h6><div class="action-detail"><strong>2a. Gestione scorte:</strong> Riduzione DIO da 194 a 120 giorni con liberazione di circa €450.000 di liquidità.</div><div class="action-detail"><strong>2b. Inventory management:</strong> Implementazione sistema ABC e smaltimento prodotti a bassa rotazione.</div></div>
+                               <div class="action-item priority-medium"><h6>PRIORITÀ MEDIA: Ristrutturazione Debito Finanziario</h6><div class="action-detail"><strong>3a. Consolidamento debito:</strong> Conversione di ulteriore debito a breve in finanziamenti a M/L termine.</div><div class="action-detail"><strong>3b. Rinegoziazione tassi:</strong> Riduzione degli oneri finanziari di circa €15.000-€20.000.</div></div>
+                               <div class="action-item priority-medium"><h6>PRIORITÀ MEDIA: Rafforzamento Patrimoniale</h6><div class="action-detail"><strong>4a. Aumento capitale:</strong> Apporto di capitale da parte dei soci di €200.000-€300.000.</div><div class="action-detail"><strong>4b. Dismissione asset:</strong> Valutazione dismissione di asset non strategici per €200.000-€300.000.</div></div>
+                               <div class="row mt-4"><div class="col-md-6"><div class="alert alert-success"><h6>Impatto Stimato:</h6><ul><li>Ripristino EBITDA positivo: +€140.000-€180.000</li><li>Liberazione liquidità: €450.000-€550.000</li><li>Riduzione oneri finanziari: €15.000-€20.000</li><li>Miglioramento copertura immobilizzazioni: da 0,56 a 0,80-0,90</li></ul></div></div><div class="col-md-6"><div class="alert alert-primary"><h6>Tempistiche:</h6><ul><li>Immediato (0-3m): Revisione prezzi e costi</li><li>Breve (3-6m): Ottimizzazione magazzino</li><li>Medio (6-12m): Ristrutturazione debito</li><li>Lungo (>12m): Rafforzamento patrimoniale</li></ul></div></div></div>
+                           </div>
+                       </div>
+                   </div>
+
+             </div> <!-- Fine Accordion Principale -->
+
+
+            <!-- Sezione Azioni Prioritarie CDA (Updated for VAROLI GUIDO E FIGLIO S.R.L.) -->
+             <section id="actions-summary" class="report-section">
+                  <h4 class="section-title small"><i class="fas fa-tasks me-2"></i>AZIONI PRIORITARIE</h4>
+                  <div class="card actions-card">
+                      <div class="card-body">
+                          <ol class="action-list list-unstyled">
+                              <li>
+                                  <div class="d-flex justify-content-between align-items-start">
+                                      <div>
+                                          <span class="icon-circle icon-circle-sm bg-icon-warning me-2"><i class="fas fa-sync-alt"></i></span>
+                                          <strong>Ripristino della redditività operativa</strong>
+                                          <p class="small text-muted mb-0">Implementare revisione struttura dei prezzi con incremento mirato del 4-6% e razionalizzazione dei costi fissi con riduzione del 20-25% per un impatto positivo sull'EBITDA di €140.000-€180.000.</p>
+                                      </div>
+                                      <span class="priority-badge status-badge bg-warning text-dark">Alta Priorità</span>
+                                  </div>
+                              </li>
+                               <li>
+                                  <div class="d-flex justify-content-between align-items-start">
+                                       <div>
+                                           <span class="icon-circle icon-circle-sm bg-icon-warning me-2"><i class="fas fa-coins"></i></span>
+                                           <strong>Ottimizzazione del magazzino</strong>
+                                          <p class="small text-muted mb-0">Implementazione di un sistema avanzato di inventory management con analisi ABC e riduzione delle giacenze da 194 a 120 giorni per liberare circa €450.000 di liquidità.</p>
+                                       </div>
+                                      <span class="priority-badge status-badge bg-warning text-dark">Alta Priorità</span>
+                                  </div>
+                              </li>
+                               <li>
+                                  <div class="d-flex justify-content-between align-items-start">
+                                       <div>
+                                           <span class="icon-circle icon-circle-sm bg-icon-info me-2"><i class="fas fa-chart-line"></i></span>
+                                           <strong>Ristrutturazione del debito finanziario</strong>
+                                          <p class="small text-muted mb-0">Consolidamento delle linee a breve termine con finanziamenti a M/L termine e rinegoziazione dei tassi di interesse per ridurre gli oneri finanziari di €15.000-€20.000.</p>
+                                       </div>
+                                      <span class="priority-badge status-badge bg-info text-dark">Media Priorità</span>
+                                  </div>
+                              </li>
+                               <li>
+                                  <div class="d-flex justify-content-between align-items-start">
+                                       <div>
+                                            <span class="icon-circle icon-circle-sm bg-icon-info me-2"><i class="fas fa-water"></i></span>
+                                            <strong>Rafforzamento patrimoniale</strong>
+                                           <p class="small text-muted mb-0">Valutazione di un aumento di capitale da parte dei soci (€200.000-€300.000) e/o dismissione di asset non strategici per migliorare la copertura delle immobilizzazioni.</p>
+                                       </div>
+                                      <span class="priority-badge status-badge bg-info text-dark">Media Priorità</span>
+                                  </div>
+                              </li>
+                          </ol>
+                      </div>
+                  </div>
+             </section>
+        </div> <!-- /dashboard-container -->
+
+        <!-- Footer Standard V2 -->
+        <footer class="footer no-print">
+             <div class="container-fluid px-4"> <div class="row"> <div class="col-md-6 text-center text-md-start mb-2 mb-md-0"> SCAN360 © <span id="currentYearFooterReport"></span> </div> <div class="col-md-6 text-center text-md-end"> Powered by <a href="http://www.kitzanos.com" target="_blank" class="text-white fw-bold">Kitzanos Lab</a> <img src="assets/img/logo_kitzanos.png" alt="Kitzanos Logo" class="ms-2" style="height: 20px; vertical-align: middle;">
+ </div> </div> </div>
+        </footer>
+
+    </div> <!-- /main-wrapper -->
+
+    <!-- Script JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="js/monitor_cda.js"></script>
+    <scan-chat data-bot-id="a944ec72-81f6-4a0a-84da-a8ced9377979"></scan-chat>
+    <script src="./js/bundle.js"></script>
+</body>
+</html>

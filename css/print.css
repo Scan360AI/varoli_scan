@@ -1,0 +1,201 @@
+/* ======================================
+ * SCAN - Stili di Stampa Ottimizzati v2.0
+ * Approccio migliorato per window.print()
+ * ======================================
+ */
+
+@media print {
+
+    /* ====== IMPOSTAZIONI PAGINA ====== */
+    @page {
+        size: A4 portrait; /* Formato standard */
+        margin: 1.5cm; /* Margini ridotti ma presenti */
+    }
+
+    body {
+        font-family: 'Titillium Web', sans-serif !important; /* Usa il font corretto */
+        font-size: 9pt !important; /* Dimensione leggermente ridotta per far entrare più contenuto */
+        line-height: 1.3 !important;
+        color: #000 !important; /* Testo nero */
+        background: #fff !important; /* Sfondo bianco */
+        margin: 0 !important; /* Rimuove margini body */
+        padding: 0 !important;
+        width: 100% !important; /* Forza larghezza */
+        -webkit-print-color-adjust: exact !important; /* Forza colori */
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+    }
+
+    /* ====== ELEMENTI DA NASCONDERE ASSOLUTAMENTE ====== */
+    .no-print,
+    .sidebar,
+    .dashboard-header:not(.d-print-block), /* Nasconde header web */
+    .footer:not(.d-print-block),       /* Nasconde footer web */
+    .navbar,
+    .print-button,
+    .ms-auto.d-flex .btn, /* Pulsanti navbar */
+    .dropdown, /* Tutti i dropdown */
+    script, /* Nasconde script, inclusi quelli di terze parti come ChatNode */
+    iframe,
+    button, /* Nasconde TUTTI i bottoni, inclusi quelli accordion */
+    a[href^="#"], /* Link interni pagina */
+    a.kpi-link, /* Link "Vedi Dettaglio" */
+    .modal /* Eventuali modali */
+    {
+        display: none !important;
+        visibility: hidden !important;
+        width: 0 !important;
+        height: 0 !important;
+        overflow: hidden !important;
+        position: absolute !important; /* Rimuove dal flusso */
+        left: -9999px !important;
+    }
+
+     /* ====== ELEMENTI DA MOSTRARE SOLO IN STAMPA ====== */
+     .d-print-block { display: block !important; }
+     .d-print-table { display: table !important; }
+     .d-print-table-row { display: table-row !important; }
+     .d-print-table-cell { display: table-cell !important; }
+
+    /* ====== LAYOUT GENERALE PER STAMPA ====== */
+    .main-wrapper {
+        margin-left: 0 !important; /* Rimuove spazio sidebar */
+        width: 100% !important;
+        padding-top: 0 !important; /* Rimuove spazio header */
+    }
+    .dashboard-container {
+        padding: 0 !important; /* Rimuove padding contenitore principale */
+    }
+    .container, .container-fluid {
+         width: 100% !important;
+         max-width: none !important;
+         padding: 0 !important;
+         margin: 0 !important;
+    }
+     .row {
+         display: block !important; /* Semplifica layout a blocchi */
+         margin-right: 0 !important;
+         margin-left: 0 !important;
+     }
+     .col, [class*="col-"] {
+         display: block !important;
+         width: 100% !important; /* Forza elementi ad occupare tutta larghezza e andare a capo */
+         padding: 0 !important;
+         margin-bottom: 0.5rem !important; /* Piccolo spazio tra blocchi impilati */
+         max-width: 100% !important;
+         flex: none !important;
+     }
+
+    /* ====== STILI ELEMENTI SPECIFICI ====== */
+    h1, h2, h3, h4, h5, h6 {
+        color: #000 !important;
+        font-weight: bold !important;
+        page-break-after: avoid !important;
+    }
+    .section-title {
+        page-break-before: auto !important; /* Evita interruzione SEMPRE prima del titolo */
+        page-break-after: avoid !important;
+        margin-top: 1.5rem !important;
+        margin-bottom: 1rem !important;
+        border-bottom: 1px solid #000 !important; /* Bordo nero semplice */
+        font-size: 14pt !important;
+    }
+    p {
+        orphans: 3;
+        widows: 3;
+        font-size: 9pt !important;
+        color: #333 !important;
+    }
+    a { color: #000 !important; text-decoration: none !important; }
+    hr { border-top: 1px solid #ccc !important; }
+
+    /* Card */
+    .card, .dashboard-card, .kpi-card-v4, .alert-box, .irp-visual-section, .component-card, .swot-card-v4 {
+        border: 1px solid #ccc !important; /* Bordo leggero visibile */
+        box-shadow: none !important;
+        margin-bottom: 1rem !important;
+        padding: 0.75rem !important; /* Padding ridotto */
+        background: #fff !important;
+        page-break-inside: avoid !important;
+    }
+    .card-header, .card-footer {
+        background: #fff !important;
+        border: none !important; /* Rimuove bordi interni card */
+        padding: 0.5rem 0.75rem !important;
+    }
+    .card-header h5, .card-header h6 { font-size: 11pt !important; font-weight: bold; margin-bottom: 0.5rem;}
+
+    /* Tabelle */
+    .table { border-collapse: collapse !important; width: 100% !important; margin-top: 0.5rem; border: 1px solid #aaa !important; }
+    .table th, .table td { border: 1px solid #bbb !important; padding: 0.3rem 0.4rem !important; font-size: 8pt !important; text-align: left !important; vertical-align: top; word-wrap: break-word; }
+    .table thead th { background-color: #eee !important; color: #000 !important; font-weight: bold !important; border-bottom: 2px solid #888 !important; }
+    .table tfoot { font-style: italic; color: #555; }
+    .table-striped tbody tr:nth-child(odd) { background-color: #f9f9f9 !important; } /* Manteniamo righe alternate leggere */
+    .table .text-end { text-align: right !important; }
+
+    /* Badge e Indicatori Colore (Forza stampa colori) */
+    .status-badge, .badge, .irp-category-text .status-badge {
+        border: 1px solid #000 !important; /* Bordo nero per visibilità */
+        padding: 2px 5px !important;
+        font-size: 7pt !important;
+        color: #000 !important; /* Testo nero su sfondo bianco */
+        background-color: #fff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+    }
+     /* Opzionale: Aggiungi testo descrittivo invece del colore per i badge */
+     .status-badge.bg-success::after { content: " (OK)"; }
+     .status-badge.bg-warning::after { content: " (Att.)"; }
+     .status-badge.bg-danger::after { content: " (Crit.)"; }
+     .status-badge.bg-info::after { content: " (Info)"; }
+
+    /* Grafici */
+    .chart-container {
+        border: 1px solid #ccc !important;
+        padding: 5px !important;
+        height: auto !important; /* Altezza automatica */
+        width: 95% !important; /* Leggermente meno del 100% per evitare tagli */
+        margin: 0.5rem auto !important; /* Centrato con meno margine */
+        page-break-inside: avoid !important;
+    }
+     canvas {
+         max-width: 100%;
+         max-height: 250px; /* Limita altezza per pagina */
+         height: auto !important;
+     }
+
+    /* Accordion (Mostra contenuto sempre aperto) */
+    .accordion-button { display: block !important; font-weight: bold !important; padding: 0.5rem 0 !important; background: none !important; color: black !important; border-bottom: 1px solid #ccc !important; }
+    .accordion-button::after { display: none !important; } /* Nasconde freccia */
+    .accordion-collapse { display: block !important; visibility: visible !important; } /* Forza visibilità */
+    .accordion-body { padding: 0.5rem 0 1rem 0 !important; } /* Padding ridotto */
+
+    /* Stili specifici IRP per stampa */
+    .irp-visual-section { border: none !important; padding: 0.5rem 0 !important; margin-bottom: 1rem !important;}
+    .irp-gradient-bar { display: none; } /* Nasconde barra gradiente, poco utile in B/N */
+    .irp-marker { display: none; } /* Nasconde marker */
+    .irp-scale-labels { display: none; } /* Nasconde etichette scala */
+    .irp-score-circle { display: none; } /* Nasconde cerchio colorato */
+    .irp-category-text { text-align: left !important; font-size: 10pt !important; margin-top: 0;}
+    /* Mostra IRP e categoria come testo semplice */
+    #irp-summary-section::before {
+        content: "Indice Rischio Ponderato (IRP): 62,64 / 100 (Rischio Medio)"; /* Aggiunge testo IRP */
+        display: block;
+        font-weight: bold;
+        font-size: 11pt;
+        margin-bottom: 0.5rem;
+        padding: 0.5rem;
+        border: 1px solid #888;
+        background-color: #eee !important;
+    }
+
+    /* Nascondi link inutili in stampa */
+     a[href]:not([href^="http"]):not([href^="mailto"]) { /* Nasconde link interni ma non esterni/mail */
+         /* Potrebbe essere troppo aggressivo, commentato */
+         /* display: none !important; */
+     }
+     a::after { /* Non mostrare URL dei link */
+        content: "" !important;
+     }
+}
