@@ -110,7 +110,7 @@
              </div>
             <div class="header-controls d-flex align-items-center">
                 <!-- Updated Date -->
-                <span class="me-3 small text-muted">Aggiornamento: 29 Set 2025</span>
+                <span class="me-3 small text-muted">Aggiornamento: 12 Nov 2025</span>
                  <button class="btn btn-sm btn-outline-secondary me-2 print-button" onclick="printDocument()">
                     <i class="fas fa-print"></i> Stampa
                  </button>
@@ -149,12 +149,12 @@
                          <div class="kpi-card-v2 border-left-success"> 
                               <i class="fas fa-shield-alt kpi-icon-modern-bg"></i>
                               <h4 class="card-title-modern">IRP - Indice Rischio</h4>
-                              <div class="kpi-value-modern">54,12</div> <!-- Updated IRP Value -->
+                              <div class="kpi-value-modern">51,42</div> <!-- Updated IRP Value -->
                              <div class="kpi-trend-modern">
                                  <span class="status-badge bg-success">Categoria D+</span> <!-- Updated IRP Category -->
                                  <span class="text-muted ms-2">(Rischio elevato)</span>
                              </div>
-                             <p class="kpi-description-modern">Criticità nella redditività operativa.</p> <!-- Updated description -->
+                             <p class="kpi-description-modern">Vulnerabilità finanziarie significative.</p> <!-- Updated description -->
                          </div>
                      </div>
                      <!-- KPI Card: Ricavi -->
@@ -182,7 +182,7 @@
                                  <i class="fas fa-arrow-up trend-icon"></i>
                                  <span class="trend-value">-7,93 p.p.</span> <span class="text-muted small">vs 2023</span> <!-- Updated trend value -->
                               </div>
-                             <p class="kpi-description-modern">Critico (benchmark >5%).</p> <!-- Updated description -->
+                             <p class="kpi-description-modern">Critico (benchmark >2,5%).</p> <!-- Updated description -->
                          </div>
                      </div>
                        <!-- KPI Card: PFN/EBITDA -->
@@ -210,7 +210,7 @@
                                   <i class="fas fa-arrow-down trend-icon"></i>
                                   <span class="trend-value">-14 gg</span> <span class="text-muted small">vs 2023</span> <!-- Updated trend value -->
                                </div>
-                               <p class="kpi-description-modern">Ottimo (benchmark 60-70 gg).</p> <!-- Updated description -->
+                               <p class="kpi-description-modern">Ottimo (benchmark 50-60 gg).</p> <!-- Updated description -->
                            </div>
                        </div>
                         <!-- KPI Card: Cash Flow Op -->
@@ -224,7 +224,7 @@
                                    <i class="fas fa-arrow-down trend-icon"></i>
                                    <span class="trend-value">7,42%</span> <span class="text-muted small">dei Ricavi</span> <!-- Updated trend value -->
                                 </div>
-                               <p class="kpi-description-modern">Buono (benchmark >6%).</p> <!-- Updated description -->
+                               <p class="kpi-description-modern">Adeguato (benchmark >5%).</p> <!-- Updated description -->
                             </div>
                         </div>
                          <!-- KPI Card: Leanus Score -->
@@ -236,9 +236,9 @@
                                   <div class="kpi-value-modern">3,47</div> <!-- Updated Leanus Score Value -->
                                   <div class="kpi-trend-modern">
                                        <span class="status-badge bg-warning me-2">Discreto (3)</span> <!-- Updated Leanus Score Category -->
-                                       <span class="status-badge bg-info">STABLE</span> <!-- Updated Leanus Category -->
+                                       <span class="status-badge bg-info">TRADER</span> <!-- Updated Leanus Category -->
                                   </div>
-                                 <p class="kpi-description-modern">Equilibrio patrimoniale senza crescita.</p> <!-- Updated description -->
+                                 <p class="kpi-description-modern">Fragilità moderata con rischio elevato.</p> <!-- Updated description -->
                               </div>
                           </div>
                           <!-- KPI Card: Prossime Azioni -->
@@ -247,11 +247,11 @@
                                <div class="kpi-card-v2 border-left-warning">
                                    <i class="fas fa-tasks kpi-icon-modern-bg"></i>
                                    <h4 class="card-title-modern">Azione Prioritaria</h4>
-                                   <div class="kpi-value-modern" style="font-size: 1.5rem;">Ripristino Redditività</div> <!-- Updated Text -->
+                                   <div class="kpi-value-modern" style="font-size: 1.5rem;">Ottimizzazione Magazzino</div> <!-- Updated Text -->
                                    <div class="kpi-trend-modern">
                                         <span class="status-badge bg-warning">Urgente</span>
                                    </div>
-                                  <p class="kpi-description-modern">Recupero EBITDA positivo (+4-6%).</p> <!-- Updated description -->
+                                  <p class="kpi-description-modern">Ridurre giorni magazzino (194 giorni).</p> <!-- Updated description -->
                                    <!-- Updated link target -->
                                    <a href="report/parte6_rischi-raccomandazioni.html" class="btn btn-outline-primary btn-sm btn-pill mt-2">Vedi Piano</a>
                                </div>
@@ -418,8 +418,8 @@
                 datasets: [{
                     label: 'PFN/EBITDA',
                     data: pfnEbitdaData,
-                    backgroundColor: pfnEbitdaData.map(val => val < 0 ? 'rgba(40, 167, 69, 0.8)' : 'rgba(220, 53, 69, 0.8)'),
-                    borderColor: pfnEbitdaData.map(val => val < 0 ? 'rgba(40, 167, 69, 1)' : 'rgba(220, 53, 69, 1)'),
+                    backgroundColor: pfnEbitdaData.map(val => val < 0 ? 'rgba(220, 53, 69, 0.8)' : 'rgba(255, 193, 7, 0.8)'),
+                    borderColor: pfnEbitdaData.map(val => val < 0 ? 'rgba(220, 53, 69, 1)' : 'rgba(255, 193, 7, 1)'),
                     borderWidth: 1
                 }]
             },

@@ -2,61 +2,49 @@
  * SCAN - Initializzazione Grafici Report Dettagliati (report/parteX_*.html)
  * 
  * Questo script gestisce l'inizializzazione di tutti i grafici presenti nei report dettagliati.
- * Ogni grafico viene inizializzato solo se l'elemento corrispondente è presente nella pagina.
+ * Utilizza Chart.js e funzioni di configurazione definite in charts_config.js.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Inizializzazione grafici report (se presenti)...");
     
-    // Mappa dei grafici con le loro configurazioni
+    // Mappa di configurazione dei grafici per migliorare manutenibilità e ridurre duplicazione
     const chartConfigs = {
         // --- PARTE 1: Sintesi ---
         'mainMetricsChart': {
             type: 'bar',
             dataFn: getMainMetricsData,
             options: {
-                ...commonChartOptions,
                 scales: { 
                     y: { 
-                        ...commonChartOptions.scales.y, 
                         title: { display: true, text: 'Valori in €000' }, 
                         ticks: { callback: (v) => v.toLocaleString('it-IT') } 
                     } 
                 },
-                plugins: { 
-                    ...commonChartOptions.plugins, 
-                    title: { display: true, text: 'Evoluzione Ricavi, EBITDA e Patrimonio Netto' } 
-                }
+                plugins: { title: { display: true, text: 'Evoluzione Ricavi, EBITDA e Patrimonio Netto' } }
             }
         },
         'currentAssetsLiabilitiesChart': {
             type: 'bar',
             dataFn: getCurrentAssetsLiabilitiesData,
             options: {
-                ...commonChartOptions,
                 scales: { 
                     y: { 
-                        ...commonChartOptions.scales.y, 
                         title: { display: true, text: 'Valore (€)' }, 
                         ticks: { callback: (v) => formatCurrency(v) } 
                     } 
                 },
-                plugins: { 
-                    ...commonChartOptions.plugins, 
-                    title: { display: true, text: 'Andamento Attivo e Passivo Corrente' } 
-                }
+                plugins: { title: { display: true, text: 'Andamento Attivo e Passivo Corrente' } }
             }
         },
-
+        
         // --- PARTE 2: Economico ---
         'economicTrendChart': {
-            type: 'bar', // Tipo base, i dataset possono avere tipi specifici
+            type: 'bar', // Tipo base, i dataset possono specificare tipi diversi
             dataFn: getEconomicTrendData,
             options: {
-                ...commonChartOptions,
                 scales: {
                     y: { 
-                        ...commonChartOptions.scales.y, 
                         title: { display: true, text: 'Valori in €000' }, 
                         ticks: { callback: (v) => v.toLocaleString('it-IT') } 
                     },
@@ -69,70 +57,52 @@ document.addEventListener('DOMContentLoaded', () => {
                         ticks: { callback: (v) => `${v}%` } 
                     }
                 },
-                plugins: { 
-                    ...commonChartOptions.plugins, 
-                    title: { display: true, text: 'Andamento Ricavi ed EBITDA 2022-2024' } 
-                }
+                plugins: { title: { display: true, text: 'Andamento Ricavi ed EBITDA 2022-2024' } }
             }
         },
         'marginalityChart': {
             type: 'line',
             dataFn: getMarginalityData,
             options: {
-                ...commonChartOptions,
                 scales: { 
                     y: { 
-                        ...commonChartOptions.scales.y, 
                         title: { display: true, text: 'Percentuale sui Ricavi (%)' }, 
                         suggestedMax: 25, 
                         ticks: { callback: (v) => `${v}%` } 
                     } 
                 },
-                plugins: { 
-                    ...commonChartOptions.plugins, 
-                    title: { display: true, text: 'Evoluzione delle Marginalità' } 
-                }
+                plugins: { title: { display: true, text: 'Evoluzione delle Marginalità' } }
             }
         },
         'profitabilityIndicesChart': {
             type: 'line',
             dataFn: getProfitabilityIndicesData,
             options: {
-                ...commonChartOptions,
                 scales: { 
                     y: { 
-                        ...commonChartOptions.scales.y, 
                         title: { display: true, text: 'Percentuale (%)' }, 
                         suggestedMin: 0, 
                         suggestedMax: 40, 
                         ticks: { callback: (v) => `${v}%` } 
                     } 
                 },
-                plugins: { 
-                    ...commonChartOptions.plugins, 
-                    title: { display: true, text: 'Andamento Indici di Redditività' } 
-                }
+                plugins: { title: { display: true, text: 'Andamento Indici di Redditività' } }
             }
         },
         'leverageChart': {
             type: 'bar',
             dataFn: getLeverageData,
             options: {
-                ...commonChartOptions,
                 scales: { 
                     y: { 
-                        ...commonChartOptions.scales.y, 
                         title: { display: true, text: 'Percentuale (%)' }, 
                         ticks: { callback: (v) => `${v}%` } 
                     } 
                 },
-                plugins: { 
-                    ...commonChartOptions.plugins, 
-                    title: { display: true, text: 'Confronto ROI vs ROE' } 
-                }
+                plugins: { title: { display: true, text: 'Confronto ROI vs ROE' } }
             }
         },
-
+        
         // --- PARTE 3: Patrimoniale ---
         'assetsChart': {
             type: 'pie',
@@ -148,7 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
             type: 'bar',
             dataFn: getInvestmentsStructureData,
             options: {
-                ...commonChartOptions,
                 scales: { 
                     x: { stacked: true }, 
                     y: { 
@@ -157,10 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         ticks: { callback: (v) => formatCurrency(v) } 
                     } 
                 },
-                plugins: { 
-                    ...commonChartOptions.plugins, 
-                    title: { display: true, text: 'Evoluzione Struttura Investimenti' } 
-                }
+                plugins: { title: { display: true, text: 'Evoluzione Struttura Investimenti' } }
             }
         },
         'equityCompositionChart': {
@@ -174,10 +140,9 @@ document.addEventListener('DOMContentLoaded', () => {
             options: doughnutChartOptions
         },
         'pfnTrendChart': {
-            type: 'bar', // Tipo base, modificato per dataset specifici
+            type: 'bar',
             dataFn: getPfnTrendData,
             options: {
-                ...commonChartOptions,
                 scales: { 
                     x: { stacked: true }, 
                     y: { 
@@ -186,10 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         ticks: { callback: (v) => formatCurrency(v) } 
                     } 
                 },
-                plugins: { 
-                    ...commonChartOptions.plugins, 
-                    title: { display: true, text: 'Andamento Posizione Finanziaria Netta (Stack: Debiti vs Liquidità)' } 
-                }
+                plugins: { title: { display: true, text: 'Andamento Posizione Finanziaria Netta (Stack: Debiti vs Liquidità)' } }
             },
             preProcess: (data) => {
                 // Modifica tipo per PFN in linea, sovrapposto a barre stacked
@@ -199,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return data;
             }
         },
-
+        
         // --- PARTE 4: Bancabilità ---
         'debtSustainabilityChart': {
             type: 'radar',
@@ -207,13 +169,11 @@ document.addEventListener('DOMContentLoaded', () => {
             options: radarChartOptions
         },
         'debtCostChart': {
-            type: 'bar', // Tipo base, i dataset possono avere tipi specifici
+            type: 'bar',
             dataFn: getDebtCostData,
             options: {
-                ...commonChartOptions,
                 scales: {
                     y: { 
-                        ...commonChartOptions.scales.y, 
                         type: 'linear', 
                         position: 'left', 
                         title: { display: true, text: 'Valore (€000)' }, 
@@ -228,45 +188,34 @@ document.addEventListener('DOMContentLoaded', () => {
                         ticks: { callback: (v) => v.toLocaleString('it-IT') } 
                     }
                 },
-                plugins: { 
-                    ...commonChartOptions.plugins, 
-                    title: { display: true, text: 'EBITDA e Capacità di Indebitamento' } 
-                }
+                plugins: { title: { display: true, text: 'EBITDA e Capacità di Indebitamento' } }
             }
         },
-
+        
         // --- PARTE 5: Circolante e Flussi ---
         'workingCapitalCycleChart': {
             type: 'bar',
             dataFn: getWorkingCapitalCycleData,
             options: {
-                ...commonChartOptions,
                 scales: { 
                     y: { 
-                        ...commonChartOptions.scales.y, 
                         title: { display: true, text: 'Giorni' } 
                     } 
                 },
-                plugins: { 
-                    ...commonChartOptions.plugins, 
-                    title: { display: true, text: 'Ciclo del Capitale Circolante vs Benchmark' } 
-                }
+                plugins: { title: { display: true, text: 'Ciclo del Capitale Circolante vs Benchmark' } }
             }
         },
         'cashFlowWaterfallChart': {
             type: 'bar',
             dataFn: getCashFlowWaterfallData,
             options: {
-                ...commonChartOptions,
                 scales: { 
                     y: { 
-                        ...commonChartOptions.scales.y, 
                         title: { display: true, text: 'Euro' }, 
                         ticks: { callback: (v) => formatCurrency(v) } 
                     } 
                 },
                 plugins: { 
-                    ...commonChartOptions.plugins, 
                     title: { display: true, text: 'Composizione Flussi di Cassa 2024' }, 
                     legend: { display: false } 
                 }
@@ -276,28 +225,21 @@ document.addEventListener('DOMContentLoaded', () => {
             type: 'line',
             dataFn: getCashFlowTrendData,
             options: {
-                ...commonChartOptions,
                 scales: { 
                     y: { 
-                        ...commonChartOptions.scales.y, 
                         title: { display: true, text: 'Euro' }, 
                         ticks: { callback: (v) => formatCurrency(v) } 
                     } 
                 },
-                plugins: { 
-                    ...commonChartOptions.plugins, 
-                    title: { display: true, text: 'Evoluzione Flussi di Cassa' } 
-                }
+                plugins: { title: { display: true, text: 'Evoluzione Flussi di Cassa' } }
             }
         },
         'cashFlowProjectionChart': {
-            type: 'bar', // Tipo base, i dataset possono avere tipi specifici
+            type: 'bar',
             dataFn: getCashFlowProjectionData,
             options: {
-                ...commonChartOptions,
                 scales: {
                     y: { 
-                        ...commonChartOptions.scales.y, 
                         type: 'linear', 
                         position: 'left', 
                         title: { display: true, text: 'Flussi (€)' }, 
@@ -311,31 +253,23 @@ document.addEventListener('DOMContentLoaded', () => {
                         ticks: { callback: (v) => formatCurrency(v) } 
                     }
                 },
-                plugins: { 
-                    ...commonChartOptions.plugins, 
-                    title: { display: true, text: 'Proiezioni Finanziarie 2024-2028' } 
-                }
+                plugins: { title: { display: true, text: 'Proiezioni Finanziarie 2024-2028' } }
             }
         },
-
+        
         // --- PARTE 6: Rischi ---
         'zscoreChart': {
             type: 'line',
             dataFn: getZscoreData,
             options: {
-                ...commonChartOptions,
                 scales: { 
                     y: { 
-                        ...commonChartOptions.scales.y, 
                         title: { display: true, text: 'Z-Score' }, 
                         suggestedMin: 0, 
                         suggestedMax: 4 
                     } 
                 },
-                plugins: { 
-                    ...commonChartOptions.plugins, 
-                    title: { display: true, text: 'Evoluzione Z-Score e Soglie di Riferimento' } 
-                }
+                plugins: { title: { display: true, text: 'Evoluzione Z-Score e Soglie di Riferimento' } }
             }
         },
         'riskIndicatorsChart': {
@@ -347,18 +281,13 @@ document.addEventListener('DOMContentLoaded', () => {
             type: 'bar',
             dataFn: getSensitivityData,
             options: {
-                ...commonChartOptions,
                 scales: { 
                     y: { 
-                        ...commonChartOptions.scales.y, 
                         title: { display: true, text: 'Variazione percentuale critica (%)' }, 
                         ticks: { callback: (v) => `${v}%` } 
                     } 
                 },
-                plugins: { 
-                    ...commonChartOptions.plugins, 
-                    title: { display: true, text: 'Analisi di Sensitività - Variazioni Critiche' } 
-                }
+                plugins: { title: { display: true, text: 'Analisi di Sensitività - Variazioni Critiche' } }
             }
         }
     };
@@ -379,22 +308,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            // Ottiene i dati dal provider configurato
+            // Ottieni i dati dalla funzione di configurazione
             let data = config.dataFn();
             
-            // Applica pre-processing se definito
+            // Applica eventuali pre-elaborazioni ai dati
             if (config.preProcess && typeof config.preProcess === 'function') {
                 data = config.preProcess(data);
             }
             
-            // Inizializza il grafico con i dati elaborati
-            initChart(chartId, config.type, data, config.options);
+            // Combina le opzioni specifiche con quelle comuni
+            const options = {
+                ...commonChartOptions,
+                ...config.options,
+                plugins: {
+                    ...commonChartOptions.plugins,
+                    ...(config.options.plugins || {})
+                }
+            };
+            
+            // Inizializza il grafico
+            initChart(chartId, config.type, data, options);
         } catch (error) {
             console.error(`Errore nell'inizializzazione del grafico ${chartId}:`, error);
         }
     };
 
-    // Inizializza tutti i grafici configurati (solo se presenti nel DOM)
+    // Inizializza tutti i grafici configurati
     Object.keys(chartConfigs).forEach(initializeChartIfExists);
 
     console.log("Inizializzazione grafici report completata (per elementi presenti).");

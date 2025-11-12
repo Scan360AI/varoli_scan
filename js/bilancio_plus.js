@@ -1,12 +1,11 @@
 // ======================================
 // HELPER FUNCTIONS
 // ======================================
-
 /**
- * Formatta un valore numerico come valuta (EUR)
+ * Formatta un valore numerico come valuta in formato italiano
  * @param {number} value - Valore da formattare
  * @param {number} decimals - Numero di decimali da visualizzare
- * @returns {string} - Valore formattato come valuta
+ * @return {string} Valore formattato come valuta
  */
 function formatCurrency(value, decimals = 0) {
     if (isNaN(value)) return value;
@@ -19,10 +18,10 @@ function formatCurrency(value, decimals = 0) {
 }
 
 /**
- * Formatta un valore numerico con separatore di migliaia
+ * Formatta un valore numerico in formato italiano
  * @param {number} value - Valore da formattare
  * @param {number} decimals - Numero di decimali da visualizzare
- * @returns {string} - Valore formattato
+ * @return {string} Valore formattato
  */
 function formatNumber(value, decimals = 0) {
     if (isNaN(value)) return value;
@@ -34,9 +33,9 @@ function formatNumber(value, decimals = 0) {
 }
 
 /**
- * Formatta un valore numerico come percentuale
+ * Formatta un valore numerico come percentuale in formato italiano
  * @param {number} value - Valore da formattare
- * @returns {string} - Valore formattato come percentuale
+ * @return {string} Valore formattato come percentuale
  */
 function formatPercentage(value) {
     if (isNaN(value)) return value;
@@ -50,10 +49,10 @@ function formatPercentage(value) {
 /**
  * Inizializza un grafico Chart.js
  * @param {string} canvasId - ID dell'elemento canvas
- * @param {string} type - Tipo di grafico (bar, line, ecc.)
- * @param {Object} data - Dati per il grafico
- * @param {Object} options - Opzioni di configurazione
- * @returns {Chart|null} - Istanza del grafico o null in caso di errore
+ * @param {string} type - Tipo di grafico
+ * @param {Object} data - Dati del grafico
+ * @param {Object} options - Opzioni del grafico
+ * @return {Chart|null} Istanza del grafico o null in caso di errore
  */
 function initChart(canvasId, type, data, options) {
     const canvas = document.getElementById(canvasId);
@@ -101,80 +100,12 @@ function initChart(canvasId, type, data, options) {
     }
 }
 
-// ======================================
-// CHART DATA (Bilancio Plus - VAROLI GUIDO E FIGLIO S.R.L.)
-// ======================================
-
-// Definizione colori consistenti per i grafici
-const CHART_COLORS = {
-    attuale: {
-        fill: 'rgba(74, 105, 189, 0.7)',
-        border: 'rgba(74, 105, 189, 1)'
-    },
-    ottimizzato: {
-        fill: 'rgba(76, 175, 80, 0.7)',
-        border: 'rgba(76, 175, 80, 1)'
-    }
-};
-
-// Dati EBITDA
-const ebitdaData = {
-    labels: ['Attuale (2024)', 'Post Ottimizzazione'],
-    datasets: [{
-        label: 'EBITDA (€)', 
-        data: [-43535, 145000],
-        backgroundColor: [CHART_COLORS.attuale.fill, CHART_COLORS.ottimizzato.fill],
-        borderColor: [CHART_COLORS.attuale.border, CHART_COLORS.ottimizzato.border], 
-        borderWidth: 1
-    }]
-};
-
-// Dati EBITDA Margin
-const ebitdaMarginData = {
-    labels: ['Attuale (2024)', 'Post Ottimizzazione'],
-    datasets: [{
-        label: 'EBITDA Margin (%)', 
-        data: [-1.53, 5.0],
-        backgroundColor: [CHART_COLORS.attuale.fill, CHART_COLORS.ottimizzato.fill],
-        borderColor: [CHART_COLORS.attuale.border, CHART_COLORS.ottimizzato.border], 
-        borderWidth: 1
-    }]
-};
-
-// Dati PFN/EBITDA
-const pfnEbitdaData = {
-    labels: ['Attuale (2024)', 'Post Ottimizzazione'],
-    datasets: [{
-        label: 'PFN/EBITDA', 
-        data: [null, 6.5],
-        backgroundColor: [CHART_COLORS.attuale.fill, CHART_COLORS.ottimizzato.fill],
-        borderColor: [CHART_COLORS.attuale.border, CHART_COLORS.ottimizzato.border], 
-        borderWidth: 1
-    }]
-};
-
-// Dati Leanus Score
-const leanusScoreData = {
-    labels: ['Attuale (2024)', 'Post Ottimizzazione'],
-    datasets: [{
-        label: 'Leanus Score', 
-        data: [3.47, 4.75],
-        backgroundColor: [CHART_COLORS.attuale.fill, CHART_COLORS.ottimizzato.fill],
-        borderColor: [CHART_COLORS.attuale.border, CHART_COLORS.ottimizzato.border], 
-        borderWidth: 1
-    }]
-};
-
-// ======================================
-// CHART OPTIONS
-// ======================================
-
 /**
- * Funzione di callback per le etichette dei tooltip
+ * Crea un tooltip formatter per i grafici
  * @param {Object} context - Contesto del tooltip
- * @returns {string} - Etichetta formattata
+ * @return {string} Label formattata
  */
-function tooltipLabelCallback(context) {
+function formatTooltipLabel(context) {
     let label = context.dataset.label || ''; 
     if (label) label += ': '; 
     
@@ -192,8 +123,70 @@ function tooltipLabelCallback(context) {
     }
 }
 
-// Opzioni di base per i grafici a barre
-const barChartOptions = {
+// ======================================
+// CHART DATA (Bilancio Plus - VAROLI GUIDO E FIGLIO S.R.L.)
+// ======================================
+// Colori Consistenti
+const CHART_COLORS = {
+    attuale: {
+        background: 'rgba(74, 105, 189, 0.7)',
+        border: 'rgba(74, 105, 189, 1)'
+    },
+    ottimizzato: {
+        background: 'rgba(76, 175, 80, 0.7)',
+        border: 'rgba(76, 175, 80, 1)'
+    }
+};
+
+// Dati per i grafici
+const CHART_DATA = {
+    ebitda: {
+        labels: ['Attuale (2024)', 'Post Ottimizzazione'],
+        datasets: [{
+            label: 'EBITDA (€)', 
+            data: [-43535, 175000],
+            backgroundColor: [CHART_COLORS.attuale.background, CHART_COLORS.ottimizzato.background],
+            borderColor: [CHART_COLORS.attuale.border, CHART_COLORS.ottimizzato.border], 
+            borderWidth: 1
+        }]
+    },
+    ebitdaMargin: {
+        labels: ['Attuale (2024)', 'Post Ottimizzazione'],
+        datasets: [{
+            label: 'EBITDA Margin (%)', 
+            data: [-1.53, 6.15],
+            backgroundColor: [CHART_COLORS.attuale.background, CHART_COLORS.ottimizzato.background],
+            borderColor: [CHART_COLORS.attuale.border, CHART_COLORS.ottimizzato.border], 
+            borderWidth: 1
+        }]
+    },
+    pfnEbitda: {
+        labels: ['Attuale (2024)', 'Post Ottimizzazione'],
+        datasets: [{
+            label: 'PFN/EBITDA', 
+            data: [null, 3.25],
+            backgroundColor: [CHART_COLORS.attuale.background, CHART_COLORS.ottimizzato.background],
+            borderColor: [CHART_COLORS.attuale.border, CHART_COLORS.ottimizzato.border], 
+            borderWidth: 1
+        }]
+    },
+    leanusScore: {
+        labels: ['Attuale (2024)', 'Post Ottimizzazione'],
+        datasets: [{
+            label: 'Leanus Score', 
+            data: [3.47, 5.50],
+            backgroundColor: [CHART_COLORS.attuale.background, CHART_COLORS.ottimizzato.background],
+            borderColor: [CHART_COLORS.attuale.border, CHART_COLORS.ottimizzato.border], 
+            borderWidth: 1
+        }]
+    }
+};
+
+// ======================================
+// CHART OPTIONS
+// ======================================
+// Opzioni base per tutti i grafici a barre
+const baseBarChartOptions = {
     responsive: true, 
     maintainAspectRatio: false, 
     indexAxis: 'x',
@@ -203,78 +196,99 @@ const barChartOptions = {
             ticks: {} 
         }, 
         x: { 
-            grid: { display: false }
+            grid: { 
+                display: false 
+            }
         } 
     },
     plugins: { 
-        legend: { display: false }, 
-        title: { display: false },
+        legend: { 
+            display: false 
+        }, 
+        title: { 
+            display: false 
+        },
         tooltip: {
             callbacks: {
-                label: tooltipLabelCallback
+                label: formatTooltipLabel
             }
         }
     },
-    animation: { duration: 400 }
+    animation: { 
+        duration: 400 
+    }
 };
+
+// Funzione per creare opzioni specifiche per ogni tipo di grafico
+function createChartOptions(type, customOptions = {}) {
+    const options = { ...baseBarChartOptions };
+    
+    // Merge delle scale personalizzate
+    if (customOptions.scales) {
+        options.scales = {
+            ...options.scales,
+            ...customOptions.scales
+        };
+        
+        // Merge delle proprietà y se presenti
+        if (customOptions.scales.y) {
+            options.scales.y = {
+                ...options.scales.y,
+                ...customOptions.scales.y
+            };
+        }
+    }
+    
+    return options;
+}
 
 // Opzioni specifiche per ogni grafico
-const ebitdaOptions = { 
-    ...barChartOptions, 
-    scales: { 
-        ...barChartOptions.scales, 
-        y: { 
-            ...barChartOptions.scales.y, 
-            ticks: { 
-                callback: value => formatCurrency(value, 0)
-            } 
-        } 
-    } 
-};
-
-const ebitdaMarginOptions = { 
-    ...barChartOptions, 
-    scales: { 
-        ...barChartOptions.scales, 
-        y: { 
-            ...barChartOptions.scales.y, 
-            suggestedMin: -2, 
-            suggestedMax: 6, 
-            ticks: { 
-                callback: value => formatPercentage(value)
-            } 
-        } 
-    } 
-};
-
-const pfnEbitdaOptions = { 
-    ...barChartOptions, 
-    scales: { 
-        ...barChartOptions.scales, 
-        y: { 
-            ...barChartOptions.scales.y, 
-            suggestedMin: 0, 
-            suggestedMax: 8, 
-            ticks: { 
-                callback: value => formatNumber(value, 2)
-            } 
-        } 
-    } 
-};
-
-const leanusScoreOptions = { 
-    ...barChartOptions, 
-    scales: { 
-        ...barChartOptions.scales, 
-        y: { 
-            ...barChartOptions.scales.y, 
-            suggestedMin: 0, 
-            suggestedMax: 10, 
-            ticks: { 
-                callback: value => formatNumber(value, 1)
-            } 
-        } 
-    } 
+const CHART_OPTIONS = {
+    ebitda: createChartOptions('ebitda', {
+        scales: {
+            y: {
+                ticks: {
+                    callback: v => formatCurrency(v, 0)
+                }
+            }
+        }
+    }),
+    
+    ebitdaMargin: createChartOptions('ebitdaMargin', {
+        scales: {
+            y: {
+                suggestedMin: -2,
+                suggestedMax: 7,
+                ticks: {
+                    callback: v => formatPercentage(v)
+                }
+            }
+        }
+    }),
+    
+    pfnEbitda: createChartOptions('pfnEbitda', {
+        scales: {
+            y: {
+                suggestedMin: 0,
+                suggestedMax: 4,
+                ticks: {
+                    callback: v => formatNumber(v, 2)
+                }
+            }
+        }
+    }),
+    
+    leanusScore: createChartOptions('leanusScore', {
+        scales: {
+            y: {
+                suggestedMin: 0,
+                suggestedMax: 6,
+                ticks: {
+                    callback: v => formatNumber(v, 1)
+                }
+            }
+        }
+    })
 };
 
 // ======================================
@@ -283,16 +297,16 @@ const leanusScoreOptions = {
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Initializing scripts for Bilancio Plus VAROLI GUIDO E FIGLIO S.R.L. (Embedded)...");
     
-    // Definizione dei grafici da inizializzare
-    const charts = [
-        { id: 'ebitdaChart', type: 'bar', data: ebitdaData, options: ebitdaOptions },
-        { id: 'ebitdaMarginChart', type: 'bar', data: ebitdaMarginData, options: ebitdaMarginOptions },
-        { id: 'pfnEbitdaChart', type: 'bar', data: pfnEbitdaData, options: pfnEbitdaOptions },
-        { id: 'leanusScoreChart', type: 'bar', data: leanusScoreData, options: leanusScoreOptions }
+    // Configurazione dei grafici da inizializzare
+    const chartsConfig = [
+        { id: 'ebitdaChart', type: 'bar', data: CHART_DATA.ebitda, options: CHART_OPTIONS.ebitda },
+        { id: 'ebitdaMarginChart', type: 'bar', data: CHART_DATA.ebitdaMargin, options: CHART_OPTIONS.ebitdaMargin },
+        { id: 'pfnEbitdaChart', type: 'bar', data: CHART_DATA.pfnEbitda, options: CHART_OPTIONS.pfnEbitda },
+        { id: 'leanusScoreChart', type: 'bar', data: CHART_DATA.leanusScore, options: CHART_OPTIONS.leanusScore }
     ];
     
-    // Inizializzazione dei grafici
-    charts.forEach(chart => {
+    // Inizializza tutti i grafici con gestione errori
+    chartsConfig.forEach(chart => {
         try { 
             initChart(chart.id, chart.type, chart.data, chart.options); 
         } catch(e) { 
@@ -300,54 +314,65 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Aggiornamento anno corrente nei footer e sidebar
-    const currentYear = new Date().getFullYear();
-    ['currentYearSidebar', 'currentYearFooter'].forEach(id => {
-        const element = document.getElementById(id);
-        if (element) element.textContent = currentYear;
-    });
+    // Aggiorna l'anno corrente negli elementi della pagina
+    updateYearElements();
+    
+    // Gestione badge IRP
+    updateIRPBadge();
 
-    // Configurazione badge IRP
-    updateIRPBadge(54.12); // VAROLI GUIDO E FIGLIO S.R.L. IRP
-
-    // Definizione funzioni di fallback
-    defineBackupFunctions();
+    // Definisci funzioni globali se non esistono
+    defineGlobalFunctions();
     
     console.log("All scripts initialization complete (Embedded).");
 });
 
 /**
- * Aggiorna il badge IRP con il valore e il colore appropriato
- * @param {number} irpScoreValue - Valore IRP
+ * Aggiorna gli elementi dell'anno corrente nella pagina
  */
-function updateIRPBadge(irpScoreValue) {
-    const irpHeaderBadge = document.getElementById('irp-header-badge');
-    if (!irpHeaderBadge) return;
+function updateYearElements() {
+    const currentYear = new Date().getFullYear();
+    const yearElements = ['currentYearSidebar', 'currentYearFooter'];
     
-    let badgeClass = 'bg-danger';
-    if (irpScoreValue >= 60) {
-        badgeClass = 'bg-success';
-    } else if (irpScoreValue >= 40) {
-        badgeClass = 'bg-warning text-dark';
-    }
-    
-    irpHeaderBadge.className = `badge ${badgeClass} me-3`;
-    irpHeaderBadge.textContent = `IRP: ${irpScoreValue.toFixed(1)}`;
+    yearElements.forEach(elementId => {
+        const element = document.getElementById(elementId);
+        if (element) element.textContent = currentYear;
+    });
 }
 
 /**
- * Definisce funzioni di fallback per funzionalità potenzialmente mancanti
+ * Aggiorna il badge IRP nell'header
  */
-function defineBackupFunctions() {
+function updateIRPBadge() {
+    const irpScoreValue = 51.42; // VAROLI GUIDO E FIGLIO S.R.L. IRP
+    const irpHeaderBadge = document.getElementById('irp-header-badge');
+    
+    if (irpHeaderBadge) {
+        let badgeClass = 'bg-danger';
+        
+        if (irpScoreValue >= 60) {
+            badgeClass = 'bg-success';
+        } else if (irpScoreValue >= 40) {
+            badgeClass = 'bg-warning text-dark';
+        }
+        
+        irpHeaderBadge.className = `badge ${badgeClass} me-3`;
+        irpHeaderBadge.textContent = `IRP: ${irpScoreValue.toFixed(1)}`;
+    }
+}
+
+/**
+ * Definisce le funzioni globali necessarie se non esistono
+ */
+function defineGlobalFunctions() {
     if (typeof window.logout !== 'function') { 
         window.logout = function() { 
             console.log("Logout placeholder"); 
-        };
+        }; 
     }
     
     if (typeof window.printDocument !== 'function') { 
         window.printDocument = function() { 
             window.print(); 
-        };
+        }; 
     }
 }

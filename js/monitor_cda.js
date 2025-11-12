@@ -3,10 +3,10 @@
 // ======================================
 
 /**
- * Formats a number as currency with Euro symbol
+ * Formats a number as currency with the specified number of decimal places
  * @param {number} value - The value to format
- * @param {number} decimals - Number of decimal places
- * @returns {string} Formatted currency string
+ * @param {number} decimals - Number of decimal places (default: 0)
+ * @return {string} Formatted currency string
  */
 function formatCurrency(value, decimals = 0) {
     if (isNaN(value)) return value;
@@ -19,9 +19,9 @@ function formatCurrency(value, decimals = 0) {
 }
 
 /**
- * Formats a number as percentage with 1 decimal place
+ * Formats a number as percentage with one decimal place
  * @param {number} value - The value to format
- * @returns {string} Formatted percentage string
+ * @return {string} Formatted percentage string
  */
 function formatPercentage(value) {
     if (isNaN(value)) return value;
@@ -33,12 +33,12 @@ function formatPercentage(value) {
 }
 
 /**
- * Initializes or updates a chart
+ * Initializes or updates a chart on the specified canvas
  * @param {string} canvasId - The ID of the canvas element
- * @param {string} type - Chart type (bar, line, etc.)
- * @param {Object} data - Chart data
- * @param {Object} options - Chart options
- * @returns {Object|null} Chart instance or null if error
+ * @param {string} type - The chart type
+ * @param {Object} data - The chart data
+ * @param {Object} options - The chart options
+ * @return {Object|null} The chart instance or null if initialization failed
  */
 function initChart(canvasId, type, data, options) {
     const canvas = document.getElementById(canvasId);
@@ -87,45 +87,101 @@ function initChart(canvasId, type, data, options) {
 }
 
 /**
- * Formats tooltip labels based on dataset type
- * @param {Object} context - Chart.js tooltip context
- * @returns {string} Formatted label
+ * Updates the IRP display elements based on the score value
+ * @param {number} irpScoreValue - The IRP score value
  */
-function formatTooltipLabel(context) {
-    let label = context.dataset.label || context.label || '';
-    if (label) label += ': ';
-    let value = context.parsed.y;
-    if (value === null || value === undefined) value = context.parsed.r;
+function updateIrpDisplay(irpScoreValue) {
+    const irpHeaderBadge = document.getElementById('irp-header-badge');
+    const scoreCircle = document.querySelector('.irp-score-circle');
+    const categoryTextElement = document.querySelector('.irp-category-text');
+    const categoryBadge = categoryTextElement ? categoryTextElement.querySelector('.status-badge') : null;
 
-    if (value !== null && value !== undefined) {
-        const axisID = context.dataset.yAxisID;
-        const labelText = context.label;
-        const datasetLabel = context.dataset.label || '';
+    // Default values for high risk (score < 55)
+    const config = {
+        badgeHeaderClass: 'bg-danger',
+        circleClass: 'risk-high',
+        categoryText: 'Elevato',
+        categoryTextColor: 'text-danger',
+        badgeClass: 'bg-danger',
+        categoryBadgeText: 'D+',
+        categoryBadgeTextColor: ''
+    };
 
-        // Determine format based on dataset label or axis
-        if (datasetLabel.includes('%') || (axisID === 'y1' && context.chart.options.scales?.y1?.title?.text.includes('%'))) {
-            label += formatPercentage(value);
-        } else if (datasetLabel.includes('(gg)') || labelText?.includes('(gg)') || 
-                  ['DSO', 'DIO', 'DPO', 'Ciclo Circolante'].some(term => datasetLabel.includes(term))) {
-            label += value.toFixed(0) + ' gg';
-        } else if (datasetLabel.includes('(x)') || labelText?.includes('(x)') || 
-                  ['PFN/EBITDA', 'D/E', 'Z-Score'].some(term => datasetLabel.includes(term))) {
-            label += value.toFixed(2) + (datasetLabel.includes('Z-Score') ? '' : 'x');
-        } else if (datasetLabel.includes('Score') && !datasetLabel.includes('Z-Score')) {
-            label += value.toFixed(2);
-        } else if (datasetLabel.includes('Variazione Critica')) {
-            label += value.toFixed(2) + (labelText.includes('(gg)') ? ' gg' : '%');
-        } else if (Math.abs(value) >= 1000000) {
-            label += formatCurrency(value / 1000000, 1) + ' M';
-        } else if (Math.abs(value) >= 1000) {
-            label += formatCurrency(value / 1000, 0) + ' K';
-        } else {
-            label += formatCurrency(value, (Math.abs(value) < 10 && value !== 0 ? 2 : 0));
-        }
-    } else {
-        label += 'N/D';
+    // Determine configuration based on score
+    if (irpScoreValue >= 80) {
+        Object.assign(config, {
+            badgeHeaderClass: 'bg-success',
+            circleClass: 'risk-low',
+            categoryText: 'Basso',
+            categoryTextColor: 'text-success',
+            badgeClass: 'bg-success',
+            categoryBadgeText: 'B+'
+        });
+    } else if (irpScoreValue >= 75) {
+        Object.assign(config, {
+            badgeHeaderClass: 'bg-success',
+            circleClass: 'risk-low',
+            categoryText: 'Moderato-Basso',
+            categoryTextColor: 'text-success',
+            badgeClass: 'bg-success',
+            categoryBadgeText: 'B'
+        });
+    } else if (irpScoreValue >= 65) {
+        Object.assign(config, {
+            badgeHeaderClass: 'bg-warning',
+            circleClass: 'risk-medium',
+            categoryText: 'Moderato',
+            categoryTextColor: 'text-warning',
+            badgeClass: 'bg-warning',
+            categoryBadgeText: 'C+',
+            categoryBadgeTextColor: 'text-dark'
+        });
+    } else if (irpScoreValue >= 55) {
+        Object.assign(config, {
+            badgeHeaderClass: 'bg-warning',
+            circleClass: 'risk-medium',
+            categoryText: 'Moderato-Alto',
+            categoryTextColor: 'text-warning',
+            badgeClass: 'bg-warning',
+            categoryBadgeText: 'C',
+            categoryBadgeTextColor: 'text-dark'
+        });
     }
-    return label;
+
+    // Update header badge
+    if (irpHeaderBadge) {
+        irpHeaderBadge.className = `badge ${config.badgeHeaderClass} me-3`;
+        irpHeaderBadge.textContent = `IRP: ${irpScoreValue.toFixed(1)}`;
+    }
+
+    // Update score circle
+    if (scoreCircle) {
+        scoreCircle.classList.remove('risk-low', 'risk-medium', 'risk-high');
+        scoreCircle.classList.add(config.circleClass);
+    }
+
+    // Update category text and badge
+    if (categoryTextElement && categoryBadge) {
+        // Reset classes first
+        categoryTextElement.classList.remove('text-success', 'text-warning', 'text-danger');
+        categoryTextElement.classList.add(config.categoryTextColor);
+        
+        // Update text content
+        categoryTextElement.textContent = '';
+        categoryTextElement.appendChild(document.createTextNode(`Rischio ${config.categoryText} `));
+        
+        // Update badge
+        categoryBadge.className = `status-badge ${config.badgeClass}`;
+        categoryBadge.textContent = config.categoryBadgeText;
+        
+        if (config.categoryBadgeTextColor) {
+            categoryBadge.classList.add(config.categoryBadgeTextColor);
+        } else {
+            categoryBadge.classList.remove('text-dark');
+        }
+        
+        categoryTextElement.appendChild(categoryBadge);
+    }
 }
 
 // ======================================
@@ -197,7 +253,7 @@ const chartData = {
             },
             {
                 label: 'D/E (x)',
-                data: [1.29, 0.78, 2.66],
+                data: [1.95, 1.79, 2.66],
                 borderColor: 'rgb(74, 105, 189)',
                 backgroundColor: 'rgba(74, 105, 189, 0.2)',
                 tension: 0.1, 
@@ -211,17 +267,46 @@ const chartData = {
     trendWorkingCapital: {
         labels: ['2022', '2023', '2024'],
         datasets: [
-            { label: 'DSO', data: [59, 55, 41], borderColor: '#4CAF50', backgroundColor: 'rgba(76, 175, 80, 0.2)', fill: false, tension: 0.1 },
-            { label: 'DIO', data: [159, 186, 194], borderColor: '#FFC107', backgroundColor: 'rgba(255, 193, 7, 0.2)', fill: false, tension: 0.1 },
-            { label: 'DPO', data: [73, 67, 68], borderColor: '#4a69bd', backgroundColor: 'rgba(74, 105, 189, 0.2)', fill: false, tension: 0.1 },
-            { label: 'Ciclo Circolante', data: [145, 174, 167], borderColor: '#F44336', backgroundColor: 'rgba(244, 67, 54, 0.2)', fill: true, tension: 0.1, borderWidth: 2 }
+            { 
+                label: 'DSO', 
+                data: [59, 55, 41], 
+                borderColor: '#4CAF50', 
+                backgroundColor: 'rgba(76, 175, 80, 0.2)', 
+                fill: false, 
+                tension: 0.1 
+            },
+            { 
+                label: 'DIO', 
+                data: [159, 186, 194], 
+                borderColor: '#FFC107', 
+                backgroundColor: 'rgba(255, 193, 7, 0.2)', 
+                fill: false, 
+                tension: 0.1 
+            },
+            { 
+                label: 'DPO', 
+                data: [73, 67, 68], 
+                borderColor: '#4a69bd', 
+                backgroundColor: 'rgba(74, 105, 189, 0.2)', 
+                fill: false, 
+                tension: 0.1 
+            },
+            { 
+                label: 'Ciclo Circolante', 
+                data: [145, 174, 167], 
+                borderColor: '#F44336', 
+                backgroundColor: 'rgba(244, 67, 54, 0.2)', 
+                fill: true, 
+                tension: 0.1, 
+                borderWidth: 2 
+            }
         ]
     },
     trendCashFlowOp: {
         labels: ['2022', '2023', '2024'],
         datasets: [{
             label: 'Cash Flow Operativo / Ricavi (%)',
-            data: [-3.4, 2.9, 7.42],
+            data: [-3.37, 2.90, 7.42],
             borderColor: 'rgb(77, 140, 87)',
             backgroundColor: 'rgba(77, 140, 87, 0.2)',
             fill: true,
@@ -233,6 +318,48 @@ const chartData = {
 // ======================================
 // CHART OPTIONS
 // ======================================
+
+/**
+ * Tooltip callback function for formatting chart labels
+ * @param {Object} context - The chart context
+ * @return {string} Formatted label
+ */
+function formatTooltipLabel(context) {
+    let label = context.dataset.label || context.label || '';
+    if (label) label += ': ';
+    let value = context.parsed.y;
+    if (value === null || value === undefined) value = context.parsed.r;
+
+    if (value !== null && value !== undefined) {
+        const axisID = context.dataset.yAxisID;
+        const labelText = context.label;
+        const datasetLabel = context.dataset.label || '';
+
+        // Determine format based on label content
+        if (datasetLabel.includes('%') || (axisID === 'y1' && context.chart.options.scales?.y1?.title?.text.includes('%'))) {
+            label += formatPercentage(value);
+        } else if (datasetLabel.includes('(gg)') || labelText?.includes('(gg)') || 
+                  ['DSO', 'DIO', 'DPO', 'Ciclo Circolante'].some(term => datasetLabel.includes(term))) {
+            label += value.toFixed(0) + ' gg';
+        } else if (datasetLabel.includes('(x)') || labelText?.includes('(x)') || 
+                  ['PFN/EBITDA', 'D/E', 'Z-Score'].some(term => datasetLabel.includes(term))) {
+            label += value.toFixed(2) + (datasetLabel.includes('Z-Score') ? '' : 'x');
+        } else if (datasetLabel.includes('Score') && !datasetLabel.includes('Z-Score')) {
+            label += value.toFixed(2);
+        } else if (datasetLabel.includes('Variazione Critica')) {
+            label += value.toFixed(2) + (labelText.includes('(gg)') ? ' gg' : '%');
+        } else if (Math.abs(value) >= 1000000) {
+            label += formatCurrency(value / 1000000, 1) + ' M';
+        } else if (Math.abs(value) >= 1000) {
+            label += formatCurrency(value / 1000, 0) + ' K';
+        } else {
+            label += formatCurrency(value, (Math.abs(value) < 10 && value !== 0 ? 2 : 0));
+        }
+    } else {
+        label += 'N/D';
+    }
+    return label;
+}
 
 /**
  * Common chart options used as base for all charts
@@ -271,7 +398,9 @@ const commonChartOptions = {
     animation: { duration: 400 }
 };
 
-// Specific options for Ricavi/EBITDA chart
+/**
+ * Specific options for Revenue/EBITDA trend chart
+ */
 const trendRicEbitdaOptionsCda = {
     ...commonChartOptions,
     scales: {
@@ -297,8 +426,7 @@ const trendRicEbitdaOptionsCda = {
             ticks: {
                 callback: function(value) { return value.toFixed(1) + '%'; }
             }
-        },
-        x: { grid: { display: false } }
+        }
     },
     plugins: {
         ...commonChartOptions.plugins,
@@ -306,7 +434,9 @@ const trendRicEbitdaOptionsCda = {
     }
 };
 
-// Specific options for PFN/EBITDA chart
+/**
+ * Specific options for PFN/EBITDA trend chart
+ */
 const trendPfnEbitdaOptionsCda = {
     ...commonChartOptions,
     scales: {
@@ -324,7 +454,9 @@ const trendPfnEbitdaOptionsCda = {
     }
 };
 
-// Specific options for Working Capital chart
+/**
+ * Specific options for Working Capital trend chart
+ */
 const trendWorkingCapitalOptionsCda = {
     ...commonChartOptions,
     scales: {
@@ -342,7 +474,9 @@ const trendWorkingCapitalOptionsCda = {
     }
 };
 
-// Specific options for Cash Flow Op chart
+/**
+ * Specific options for Cash Flow Operations trend chart
+ */
 const trendCashFlowOpOptionsCda = {
     ...commonChartOptions,
     scales: {
@@ -363,120 +497,13 @@ const trendCashFlowOpOptionsCda = {
     }
 };
 
-/**
- * Updates IRP display elements based on score
- * @param {number} irpScoreValue - The IRP score value
- * @param {Object} elements - DOM elements to update
- */
-function updateIrpDisplay(irpScoreValue, elements) {
-    // Default values for risk display
-    let displayConfig = {
-        badgeHeaderClass: 'bg-danger',
-        circleClass: 'risk-high',
-        categoryText: 'Elevato',
-        categoryTextColor: 'text-danger',
-        badgeClass: 'bg-danger',
-        categoryBadgeText: 'D+',
-        categoryBadgeTextColor: ''
-    };
-
-    // Update display configuration based on IRP score
-    if (irpScoreValue >= 80) {
-        displayConfig = {
-            badgeHeaderClass: 'bg-success',
-            circleClass: 'risk-low',
-            categoryText: 'Basso',
-            categoryTextColor: 'text-success',
-            badgeClass: 'bg-success',
-            categoryBadgeText: 'B+',
-            categoryBadgeTextColor: ''
-        };
-    } else if (irpScoreValue >= 75) {
-        displayConfig = {
-            badgeHeaderClass: 'bg-success',
-            circleClass: 'risk-low',
-            categoryText: 'Moderato-Basso',
-            categoryTextColor: 'text-success',
-            badgeClass: 'bg-success',
-            categoryBadgeText: 'B',
-            categoryBadgeTextColor: ''
-        };
-    } else if (irpScoreValue >= 65) {
-        displayConfig = {
-            badgeHeaderClass: 'bg-warning',
-            circleClass: 'risk-medium',
-            categoryText: 'Moderato',
-            categoryTextColor: 'text-warning',
-            badgeClass: 'bg-warning',
-            categoryBadgeText: 'C+',
-            categoryBadgeTextColor: 'text-dark'
-        };
-    } else if (irpScoreValue >= 55) {
-        displayConfig = {
-            badgeHeaderClass: 'bg-warning',
-            circleClass: 'risk-medium',
-            categoryText: 'Medio-Alto',
-            categoryTextColor: 'text-warning',
-            badgeClass: 'bg-warning',
-            categoryBadgeText: 'C',
-            categoryBadgeTextColor: 'text-dark'
-        };
-    }
-
-    // Update header badge
-    if (elements.headerBadge) {
-        elements.headerBadge.className = `badge ${displayConfig.badgeHeaderClass} me-3`;
-        elements.headerBadge.textContent = `IRP: ${irpScoreValue.toFixed(1)}`;
-    }
-
-    // Update score circle
-    if (elements.scoreCircle) {
-        elements.scoreCircle.classList.remove('risk-low', 'risk-medium', 'risk-high');
-        elements.scoreCircle.classList.add(displayConfig.circleClass);
-    }
-
-    // Update category text and badge
-    if (elements.categoryTextElement && elements.categoryBadge) {
-        elements.categoryTextElement.classList.remove('text-success', 'text-warning', 'text-danger');
-        elements.categoryTextElement.textContent = '';
-        elements.categoryTextElement.appendChild(document.createTextNode(`Rischio ${displayConfig.categoryText} `));
-        elements.categoryTextElement.classList.add(displayConfig.categoryTextColor);
-        
-        elements.categoryBadge.className = `status-badge ${displayConfig.badgeClass}`;
-        elements.categoryBadge.textContent = displayConfig.categoryBadgeText;
-        
-        if (displayConfig.categoryBadgeTextColor) {
-            elements.categoryBadge.classList.add(displayConfig.categoryBadgeTextColor);
-        } else {
-            elements.categoryBadge.classList.remove('text-dark');
-        }
-        
-        elements.categoryTextElement.appendChild(elements.categoryBadge);
-    }
-}
-
-/**
- * Updates year elements in the document
- */
-function updateYearElements() {
-    const currentYear = new Date().getFullYear();
-    const yearElements = [
-        document.getElementById('currentYearSidebar'),
-        document.getElementById('currentYearFooterReport')
-    ];
-    
-    yearElements.forEach(element => {
-        if (element) element.textContent = currentYear;
-    });
-}
-
 // ======================================
 // CHART INITIALIZATION LOGIC
 // ======================================
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Initializing CDA charts for VAROLI GUIDO E FIGLIO S.R.L.");
 
-    // Initialize all charts
+    // Define all charts configuration in a single array for easier maintenance
     const charts = [
         { id: 'trendRicaviEbitdaChart', type: 'bar', data: chartData.trendRicaviEbitda, options: trendRicEbitdaOptionsCda },
         { id: 'trendPfnEbitdaChart', type: 'line', data: chartData.trendPfnEbitda, options: trendPfnEbitdaOptionsCda },
@@ -489,22 +516,21 @@ document.addEventListener('DOMContentLoaded', function() {
         initChart(chart.id, chart.type, chart.data, chart.options);
     });
 
-    // Update year elements
-    updateYearElements();
+    console.log("CDA charts initialization complete.");
 
-    // Set up IRP score display
-    const irpScoreValue = 54.12; // VAROLI GUIDO E FIGLIO S.R.L. IRP score
-    const irpElements = {
-        headerBadge: document.getElementById('irp-header-badge'),
-        scoreCircle: document.querySelector('.irp-score-circle'),
-        categoryTextElement: document.querySelector('.irp-category-text'),
-        categoryBadge: document.querySelector('.irp-category-text')?.querySelector('.status-badge')
-    };
+    // Update year in sidebar and footer
+    const currentYear = new Date().getFullYear();
+    const yearElements = document.querySelectorAll('#currentYearSidebar, #currentYearFooterReport');
+    
+    yearElements.forEach(element => {
+        if (element) element.textContent = currentYear;
+    });
 
-    // Update IRP display
-    updateIrpDisplay(irpScoreValue, irpElements);
+    // IRP Score handling
+    const irpScoreValue = 51.42;
+    updateIrpDisplay(irpScoreValue);
 
-    // Define utility functions if not already defined
+    // Define global functions if not already defined
     if (typeof window.logout !== 'function') {
         window.logout = function() {
             console.log("Logout action triggered (placeholder)");
@@ -516,6 +542,4 @@ document.addEventListener('DOMContentLoaded', function() {
             window.print();
         };
     }
-
-    console.log("CDA charts initialization complete.");
 });
