@@ -158,21 +158,18 @@
     <div class="row align-items-center">
         <div class="col-md-4 text-center mb-4 mb-md-0">
             <h6 class="card-title-small mb-3"><i class="fas fa-shield-alt me-1"></i> Indice Rischio Ponderato</h6>
-            <div class="irp-score-circle risk-high"> <span class="irp-score-value">51,42</span> <span class="irp-score-max">/ 100</span> </div>
-            <div class="irp-category-text text-danger mt-2"> Rischio elevato <span class="status-badge bg-danger">D+</span> </div>
+            <div class="irp-score-circle risk-high" id="irp-score-circle"> <span class="irp-score-value" data-kpi="irp"></span> <span class="irp-score-max">/ 100</span> </div>
+            <div class="irp-category-text text-danger mt-2" id="irp-category-text"> <span data-value="irpCategoryLabel"></span> <span class="status-badge bg-danger" data-value="irpCategory"></span> </div>
             <a href="irp_dettaglio.html" class="btn btn-sm btn-outline-primary mt-3 btn-pill">Vedi Dettaglio IRP</a>
         </div>
         <div class="col-md-8">
             <h4 class="mb-3 fw-bold" style="color: var(--primary);">Valutazione Generale</h4>
-            <p class="mb-3">Profilo di rischio <strong>elevato con criticità significative</strong>. L'azienda presenta una redditività operativa negativa (EBITDA margin -1,53%) e una posizione finanziaria deteriorata (PFN €919.610), con un incremento dell'indebitamento finanziario del 173,03%. Si evidenziano criticità nella generazione di cassa operativa (7,42% dei ricavi, insufficiente) e nello squilibrio del ciclo del circolante (167 giorni), con tempi di magazzino particolarmente elevati (194 giorni) e tempi di pagamento (68 giorni) inferiori ai tempi di incasso (41 giorni).</p>
+            <p class="mb-3" data-value="irpDescription">Profilo di rischio <strong>elevato con criticità significative</strong>. L'azienda presenta una redditività operativa negativa e una posizione finanziaria deteriorata, con criticità nella generazione di cassa operativa e nello squilibrio del ciclo del circolante.</p>
             <a href="#crisis-framework" class="btn btn-danger btn-sm mb-3 btn-pill"> <i class="fas fa-exclamation-circle me-1"></i> Verifica Crisi d'Impresa (2 su 6) </a>
             <div class="other-ratings border-top pt-3 mt-3">
                 <h6 class="card-title-small mb-2">Altri Indicatori di Supporto:</h6>
-                <ul class="list-unstyled mb-0 row gx-3 gy-2">
-                    <li class="col-sm-6 d-flex align-items-center"><span class="icon-circle icon-circle-sm bg-icon-warning me-2"><i class="fas fa-chart-bar"></i></span><strong>Leanus Score:</strong> 3 <span class="badge bg-warning ms-1">Discreto</span></li>
-                    <li class="col-sm-6 d-flex align-items-center"><span class="icon-circle icon-circle-sm bg-icon-warning me-2"><i class="fas fa-building"></i></span><strong>Business Cat.:</strong> <span class="badge stable-badge ms-1">TRADER</span></li>
-                    <li class="col-sm-6 d-flex align-items-center"><span class="icon-circle icon-circle-sm bg-icon-danger me-2"><i class="fas fa-university"></i></span><strong>Rating MCC:</strong> n.d. <span class="badge bg-danger ms-1">Elevato</span></li>
-                    <li class="col-sm-6 d-flex align-items-center"><span class="icon-circle icon-circle-sm bg-icon-danger me-2"><i class="fas fa-calculator"></i></span><strong>Z-Score:</strong> n.d. <span class="badge bg-danger ms-1">Critico</span></li>
+                <ul class="list-unstyled mb-0 row gx-3 gy-2" id="support-indicators-list">
+                    <!-- Populated by JavaScript -->
                 </ul>
             </div>
         </div>
@@ -184,15 +181,15 @@
                  <div class="card-body">
                       <div class="row gy-4">
                           <!-- Riga 1 -->
-                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-danger"><i class="fas fa-euro-sign"></i></span> <div class="kpi-content"> <div class="kpi-title">Ricavi</div> <div class="kpi-value">€ 2,85 M</div> <div class="kpi-trend trend-down"><i class="fas fa-arrow-down"></i> -14,27% YoY</div> </div> </div> </div>
-                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-danger"><i class="fas fa-chart-line"></i></span> <div class="kpi-content"> <div class="kpi-title">EBITDA</div> <div class="kpi-value">€ -43.535</div> <div class="kpi-trend trend-down"><i class="fas fa-arrow-down"></i> -120,43% YoY</div> </div> </div> </div>
-                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-danger"><i class="fas fa-percentage"></i></span> <div class="kpi-content"> <div class="kpi-title">EBITDA Margin</div> <div class="kpi-value">-1,53%</div> <div class="kpi-trend trend-down"><i class="fas fa-arrow-down"></i> -7,93 p.p. YoY</div> </div> </div> </div>
-                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-danger"><i class="fas fa-coins"></i></span> <div class="kpi-content"> <div class="kpi-title">Utile Netto</div> <div class="kpi-value">€ -149.177</div> <div class="kpi-trend trend-down"><i class="fas fa-arrow-down"></i> -230,23% YoY</div> </div> </div> </div>
+                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-danger"><i class="fas fa-euro-sign"></i></span> <div class="kpi-content"> <div class="kpi-title">Ricavi</div> <div class="kpi-value" data-kpi="revenue"></div> <div class="kpi-trend" data-kpi-trend="revenue"></div> </div> </div> </div>
+                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-danger"><i class="fas fa-chart-line"></i></span> <div class="kpi-content"> <div class="kpi-title">EBITDA</div> <div class="kpi-value" data-kpi="ebitda"></div> <div class="kpi-trend" data-kpi-trend="ebitda"></div> </div> </div> </div>
+                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-danger"><i class="fas fa-percentage"></i></span> <div class="kpi-content"> <div class="kpi-title">EBITDA Margin</div> <div class="kpi-value" data-kpi="ebitdaMargin"></div> <div class="kpi-trend" data-kpi-trend="ebitdaMargin"></div> </div> </div> </div>
+                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-danger"><i class="fas fa-coins"></i></span> <div class="kpi-content"> <div class="kpi-title">Utile Netto</div> <div class="kpi-value" data-kpi="netIncome"></div> <div class="kpi-trend" data-kpi-trend="netIncome"></div> </div> </div> </div>
                           <!-- Riga 2 -->
-                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-danger"><i class="fas fa-landmark"></i></span> <div class="kpi-content"> <div class="kpi-title">Patrimonio Netto</div> <div class="kpi-value">€ 479.666</div> <div class="kpi-trend trend-down"><i class="fas fa-arrow-down"></i> -26,08% YoY</div> </div> </div> </div>
-                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-success"><i class="fas fa-tint"></i></span> <div class="kpi-content"> <div class="kpi-title">Liquidità</div> <div class="kpi-value">€ 355.443</div> <div class="kpi-trend trend-up"><i class="fas fa-arrow-up"></i> +107,1% YoY</div> </div> </div> </div>
-                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-danger"><i class="fas fa-balance-scale-right"></i></span> <div class="kpi-content"> <div class="kpi-title">PFN / EBITDA</div> <div class="kpi-value">n.a.</div> <div class="kpi-trend trend-neutral"><i class="fas fa-minus"></i> Critico</div> </div> </div> </div>
-                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-danger"><i class="fas fa-money-bill-wave"></i></span> <div class="kpi-content"> <div class="kpi-title">Leva Finanziaria (D/E)</div> <div class="kpi-value">2,66</div> <div class="kpi-trend trend-neutral"><i class="fas fa-minus"></i> Elevata</div> </div> </div> </div>
+                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-danger"><i class="fas fa-landmark"></i></span> <div class="kpi-content"> <div class="kpi-title">Patrimonio Netto</div> <div class="kpi-value" data-kpi="equity"></div> <div class="kpi-trend" data-kpi-trend="equity"></div> </div> </div> </div>
+                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-success"><i class="fas fa-tint"></i></span> <div class="kpi-content"> <div class="kpi-title">Liquidità</div> <div class="kpi-value" data-kpi="liquidity"></div> <div class="kpi-trend" data-kpi-trend="liquidity"></div> </div> </div> </div>
+                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-danger"><i class="fas fa-balance-scale-right"></i></span> <div class="kpi-content"> <div class="kpi-title">PFN / EBITDA</div> <div class="kpi-value" data-kpi="pfnEbitda"></div> <div class="kpi-trend" data-kpi-trend="pfnEbitda"></div> </div> </div> </div>
+                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-danger"><i class="fas fa-money-bill-wave"></i></span> <div class="kpi-content"> <div class="kpi-title">Leva Finanziaria (D/E)</div> <div class="kpi-value" data-kpi="leverageDE"></div> <div class="kpi-trend" data-kpi-trend="leverageDE"></div> </div> </div> </div>
                       </div>
                  </div>
             </div>
@@ -223,10 +220,10 @@
 
             <h2 class="section-title mt-5" id="swot-summary"><i class="fas fa-sitemap me-2"></i>Analisi SWOT</h2>
              <div class="row">
-                 <div class="col-md-6 col-lg-3 mb-4"> <div class="swot-card-restored strength h-100"> <div class="card-header"><i class="fas fa-thumbs-up"></i> Forza</div> <div class="card-body"><ul><li>Longevità aziendale: Presenza sul mercato dal 1985</li><li>Discreta liquidità disponibile: €355.443, pari al 12,47% dei ricavi</li><li>Buona capacità di copertura degli investimenti a lungo termine: Rapporto di copertura dell'attivo fisso pari a 1,28</li><li>Miglioramento nella gestione dei crediti commerciali: Riduzione dei giorni clienti da 55 a 41 giorni (-25,45%)</li><li>Cash Flow operativo positivo: €211.345, pari al 7,42% dei ricavi</li></ul></div> </div> </div>
-                 <div class="col-md-6 col-lg-3 mb-4"> <div class="swot-card-restored weakness h-100"> <div class="card-header"><i class="fas fa-thumbs-down"></i> Debolezza</div> <div class="card-body"><ul><li>Redditività operativa negativa: EBITDA margin del -1,53%, in netto peggioramento</li><li>Utile netto fortemente negativo: -€149.177, con un calo del 230,23%</li><li>Elevato indebitamento finanziario: Debiti finanziari per €1.275.053, in aumento del 150,77%</li><li>Ciclo del circolante inefficiente: 167 giorni, sebbene in miglioramento</li><li>Incapacità di coprire gli oneri finanziari: Rapporto EBIT/Oneri finanziari di -1,38</li></ul></div> </div> </div>
-                 <div class="col-md-6 col-lg-3 mb-4"> <div class="swot-card-restored opportunity h-100"> <div class="card-header"><i class="fas fa-lightbulb"></i> Opportunità</div> <div class="card-body"><ul><li>Ottimizzazione del magazzino: Le rimanenze ruotano con un tempo medio di 194 giorni</li><li>Rinegoziazione delle condizioni con i fornitori: I tempi di pagamento sono diminuiti a 68 giorni</li><li>Diversificazione dell'offerta: Possibilità di ampliare la gamma prodotti</li><li>Digitalizzazione dei processi: Potenziale miglioramento dell'efficienza operativa</li><li>Espansione territoriale: Possibilità di sviluppare nuovi mercati geografici</li></ul></div> </div> </div>
-                 <div class="col-md-6 col-lg-3 mb-4"> <div class="swot-card-restored threat h-100"> <div class="card-header"><i class="fas fa-exclamation-triangle"></i> Minacce</div> <div class="card-body"><ul><li>Contrazione significativa dei ricavi: -14,27% rispetto al 2023</li><li>Deterioramento della redditività: Passaggio da un EBITDA positivo ad un EBITDA negativo</li><li>Aumento significativo dell'indebitamento: Incremento PFN del 173,03%</li><li>Dipendenza dal settore edilizio: Vulnerabilità alle fluttuazioni cicliche</li><li>Rating di rischio elevato: La classificazione D+ nell'IRP segnala una probabilità di default significativa</li></ul></div> </div> </div>
+                 <div class="col-md-6 col-lg-3 mb-4"> <div class="swot-card-restored strength h-100"> <div class="card-header"><i class="fas fa-thumbs-up"></i> Forza</div> <div class="card-body"><ul id="swot-strengths-list"><!-- Populated by JavaScript --></ul></div> </div> </div>
+                 <div class="col-md-6 col-lg-3 mb-4"> <div class="swot-card-restored weakness h-100"> <div class="card-header"><i class="fas fa-thumbs-down"></i> Debolezza</div> <div class="card-body"><ul id="swot-weaknesses-list"><!-- Populated by JavaScript --></ul></div> </div> </div>
+                 <div class="col-md-6 col-lg-3 mb-4"> <div class="swot-card-restored opportunity h-100"> <div class="card-header"><i class="fas fa-lightbulb"></i> Opportunità</div> <div class="card-body"><ul id="swot-opportunities-list"><!-- Populated by JavaScript --></ul></div> </div> </div>
+                 <div class="col-md-6 col-lg-3 mb-4"> <div class="swot-card-restored threat h-100"> <div class="card-header"><i class="fas fa-exclamation-triangle"></i> Minacce</div> <div class="card-body"><ul id="swot-threats-list"><!-- Populated by JavaScript --></ul></div> </div> </div>
              </div>
 
             <!-- Sezione Crisi d'Impresa -->
@@ -245,16 +242,12 @@
                  <div class="card-header"><h5 class="mb-0"><i class="fas fa-tasks me-1"></i>Azioni Raccomandate Prioritarie (Sintesi)</h5></div>
                  <div class="card-body">
                      <div class="table-responsive">
-                         <table class="table table-sm table-hover action-table">
+                         <table class="table table-sm table-hover action-table" id="priority-actions-table">
                               <thead class="table-light">
                                   <tr><th>Area</th><th>Azione Prioritaria</th><th>Impatto Atteso</th><th>Priorità</th></tr>
                               </thead>
                               <tbody>
-                                  <tr><td><span class="icon-circle icon-circle-sm bg-icon-danger"><i class="fas fa-chart-line"></i></span> Redditività Operativa</td><td>Revisione struttura dei costi e pricing strategico</td><td>Miglioramento EBITDA di circa €120.000-€150.000</td><td><span class="status-badge bg-danger">Alta</span></td></tr>
-                                  <tr><td><span class="icon-circle icon-circle-sm bg-icon-danger"><i class="fas fa-sync-alt"></i></span> Gestione Magazzino</td><td>Implementare sistema di gestione scorte con modello EOQ</td><td>Liberazione di circa €250.000 di capitale circolante</td><td><span class="status-badge bg-danger">Alta</span></td></tr>
-                                  <tr><td><span class="icon-circle icon-circle-sm bg-icon-danger"><i class="fas fa-money-bill-wave"></i></span> Indebitamento Finanziario</td><td>Ristrutturazione debito e valorizzazione asset non strategici</td><td>Riduzione PFN a €700.000</td><td><span class="status-badge bg-danger">Alta</span></td></tr>
-                                  <tr><td><span class="icon-circle icon-circle-sm bg-icon-warning"><i class="fas fa-store"></i></span> Diversificazione</td><td>Espansione gamma con prodotti complementari ad alta marginalità</td><td>Investimento di €70.000-€100.000 con ROI >15%</td><td><span class="status-badge bg-warning text-dark">Media</span></td></tr>
-                                  <tr><td><span class="icon-circle icon-circle-sm bg-icon-warning"><i class="fas fa-gavel"></i></span> Governance</td><td>Formalizzare "adeguati assetti" e sistema di monitoraggio</td><td>Mitigazione rischi e conformità normativa</td><td><span class="status-badge bg-warning text-dark">Media</span></td></tr>
+                                  <!-- Populated by JavaScript -->
                               </tbody>
                          </table>
                      </div>
@@ -326,7 +319,13 @@
                      }
                  }
 
-                 // Render charts
+                 // Populate dynamic content
+                populateKPICards();
+                populateSupportIndicators();
+                populateSWOT();
+                populatePriorityActions();
+
+                // Render charts
                  renderCharts();
 
                  console.log('✅ Report Parte 1 inizializzato con successo');
@@ -334,6 +333,173 @@
                  console.error('❌ Errore inizializzazione Report Parte 1:', error);
              }
          });
+
+         // =============================================
+         // POPULATE FUNCTIONS
+         // =============================================
+
+         function populateKPICards() {
+             // Populate KPI card values
+             document.querySelectorAll('[data-kpi]').forEach(el => {
+                 const kpiKey = el.dataset.kpi;
+                 const kpi = window.dataManager.getKPI(kpiKey);
+                 if (kpi) {
+                     el.textContent = kpi.displayValue;
+                 }
+             });
+
+             // Populate KPI trends
+             document.querySelectorAll('[data-kpi-trend]').forEach(el => {
+                 const kpiKey = el.dataset.kpiTrend;
+                 const kpi = window.dataManager.getKPI(kpiKey);
+                 if (kpi && kpi.trend) {
+                     const icon = kpi.trend.direction === 'up' ? 'fa-arrow-up' :
+                                  kpi.trend.direction === 'down' ? 'fa-arrow-down' : 'fa-minus';
+                     const colorClass = kpi.trend.direction === 'up' ? 'trend-up' :
+                                        kpi.trend.direction === 'down' ? 'trend-down' : 'trend-neutral';
+                     el.className = `kpi-trend ${colorClass}`;
+                     el.innerHTML = `<i class="fas ${icon}"></i> ${kpi.trend.displayValue}${kpi.trend.label ? ' ' + kpi.trend.label : ''}`;
+                 }
+             });
+
+             // Populate standalone data values
+             document.querySelectorAll('[data-value]').forEach(el => {
+                 const valueKey = el.dataset.value;
+                 const irpSummary = window.dataManager.getTable('parte1_sintesi', 'irpSummary');
+
+                 if (valueKey === 'irpCategoryLabel' && irpSummary) {
+                     el.textContent = irpSummary.status || 'Rischio elevato';
+                 } else if (valueKey === 'irpCategory') {
+                     const irpKPI = window.dataManager.getKPI('irp');
+                     if (irpKPI) {
+                         el.textContent = irpKPI.category;
+                     }
+                 }
+             });
+         }
+
+         function populateSupportIndicators() {
+             const supportTable = window.dataManager.getTable('parte1_sintesi', 'supportIndicators');
+             if (!supportTable || !supportTable.rows) return;
+
+             const listEl = document.getElementById('support-indicators-list');
+             if (!listEl) return;
+
+             listEl.innerHTML = '';
+
+             // Map indicators to icons and colors
+             const indicatorConfig = {
+                 'Leanus Score': { icon: 'fa-chart-bar', color: 'warning' },
+                 'Business Category': { icon: 'fa-building', color: 'info' },
+                 'Rating MCC': { icon: 'fa-university', color: 'danger' },
+                 'Z-Score': { icon: 'fa-calculator', color: 'danger' }
+             };
+
+             supportTable.rows.forEach(row => {
+                 const indicator = row.indicator;
+                 const value = row.value;
+                 const assessment = row.assessment;
+                 const config = indicatorConfig[indicator] || { icon: 'fa-info-circle', color: 'secondary' };
+
+                 const li = document.createElement('li');
+                 li.className = 'col-sm-6 d-flex align-items-center';
+                 li.innerHTML = `
+                     <span class="icon-circle icon-circle-sm bg-icon-${config.color} me-2"><i class="fas ${config.icon}"></i></span>
+                     <strong>${indicator}:</strong> ${value} ${assessment ? `<span class="badge bg-${config.color} ms-1">${assessment}</span>` : ''}
+                 `;
+                 listEl.appendChild(li);
+             });
+         }
+
+         function populateSWOT() {
+             const swotData = window.dataManager.getTable('parte1_sintesi', 'swot');
+             if (!swotData) return;
+
+             // Populate Strengths
+             const strengthsList = document.getElementById('swot-strengths-list');
+             if (strengthsList && swotData.strengths) {
+                 strengthsList.innerHTML = '';
+                 swotData.strengths.forEach(item => {
+                     const li = document.createElement('li');
+                     li.textContent = item;
+                     strengthsList.appendChild(li);
+                 });
+             }
+
+             // Populate Weaknesses
+             const weaknessesList = document.getElementById('swot-weaknesses-list');
+             if (weaknessesList && swotData.weaknesses) {
+                 weaknessesList.innerHTML = '';
+                 swotData.weaknesses.forEach(item => {
+                     const li = document.createElement('li');
+                     li.textContent = item;
+                     weaknessesList.appendChild(li);
+                 });
+             }
+
+             // Populate Opportunities
+             const opportunitiesList = document.getElementById('swot-opportunities-list');
+             if (opportunitiesList && swotData.opportunities) {
+                 opportunitiesList.innerHTML = '';
+                 swotData.opportunities.forEach(item => {
+                     const li = document.createElement('li');
+                     li.textContent = item;
+                     opportunitiesList.appendChild(li);
+                 });
+             }
+
+             // Populate Threats
+             const threatsList = document.getElementById('swot-threats-list');
+             if (threatsList && swotData.threats) {
+                 threatsList.innerHTML = '';
+                 swotData.threats.forEach(item => {
+                     const li = document.createElement('li');
+                     li.textContent = item;
+                     threatsList.appendChild(li);
+                 });
+             }
+         }
+
+         function populatePriorityActions() {
+             const actionsTable = window.dataManager.getTable('parte1_sintesi', 'priorityActions');
+             if (!actionsTable || !actionsTable.rows) return;
+
+             const tbody = document.querySelector('#priority-actions-table tbody');
+             if (!tbody) return;
+
+             tbody.innerHTML = '';
+
+             // Map areas to icons
+             const areaIcons = {
+                 'Redditività Operativa': 'fa-chart-line',
+                 'Gestione Magazzino': 'fa-sync-alt',
+                 'Indebitamento Finanziario': 'fa-money-bill-wave',
+                 'Diversificazione': 'fa-store',
+                 'Governance': 'fa-gavel'
+             };
+
+             actionsTable.rows.forEach(row => {
+                 const area = row.area;
+                 const action = row.action;
+                 const impact = row.impact;
+                 const priority = row.priority;
+
+                 const icon = areaIcons[area] || 'fa-tasks';
+                 const badgeClass = priority === 'Alta' ? 'bg-danger' :
+                                   priority === 'Media' ? 'bg-warning text-dark' : 'bg-info';
+                 const iconColor = priority === 'Alta' ? 'bg-icon-danger' :
+                                   priority === 'Media' ? 'bg-icon-warning' : 'bg-icon-info';
+
+                 const tr = document.createElement('tr');
+                 tr.innerHTML = `
+                     <td><span class="icon-circle icon-circle-sm ${iconColor}"><i class="fas ${icon}"></i></span> ${area}</td>
+                     <td>${action}</td>
+                     <td>${impact}</td>
+                     <td><span class="status-badge ${badgeClass}">${priority}</span></td>
+                 `;
+                 tbody.appendChild(tr);
+             });
+         }
 
          function renderCharts() {
              // Grafico 1.1: Main Metrics (Ricavi, EBITDA, Patrimonio Netto)

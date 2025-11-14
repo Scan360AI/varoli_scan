@@ -128,14 +128,11 @@
 
                      <h6 class="mt-4 card-title-small">TREND CICLO CIRCOLANTE 2022-2024 (GIORNI - VAROLI GUIDO E FIGLIO S.R.L.)</h6>
                      <div class="table-responsive">
-                         <table class="table table-sm table-striped table-hover caption-top">
+                         <table class="table table-sm table-striped table-hover caption-top" id="table-parte5-trend-ciclo">
                              <caption class="small text-muted"></caption>
                              <thead class="table-light"><tr><th>Componente</th><th class="text-end">12/2022</th><th class="text-end">12/2023</th><th class="text-end">12/2024</th><th>Trend</th></tr></thead>
                              <tbody>
-                                 <tr><td>DSO (giorni)</td><td class="text-end">59</td><td class="text-end">55</td><td class="text-end">41</td><td class="text-warning">Miglioramento ↓</td></tr>
-                                 <tr><td>DIO (giorni)</td><td class="text-end">159</td><td class="text-end">186</td><td class="text-end">194</td><td class="text-success">Peggioramento ↑</td></tr>
-                                 <tr><td>DPO (giorni)</td><td class="text-end">73</td><td class="text-end">67</td><td class="text-end">68</td><td class="text-warning">Miglioramento ↑</td></tr>
-                                 <tr class="table-warning fw-bold"><td>Ciclo Circolante</td><td class="text-end">145</td><td class="text-end">174</td><td class="text-end">167</td><td class="text-warning">Miglioramento ↓</td></tr>
+                                 <!-- Populated dynamically from tables.json -->
                              </tbody>
                          </table>
                      </div>
@@ -274,17 +271,10 @@
                         <div class="col-lg-5">
                              <h6 class="mt-1">Tabella 5.1: Dettaglio Flussi 2024 (€ - VAROLI GUIDO E FIGLIO S.R.L.)</h6>
                              <div class="table-responsive">
-                                 <table class="table table-sm table-striped table-hover">
+                                 <table class="table table-sm table-striped table-hover" id="table-parte5-flussi-2024">
                                       <thead class="table-light"><tr><th>Voce</th><th class="text-end">Valore</th><th class="text-end">% Ricavi</th></tr></thead>
                                       <tbody>
-                                          <tr><td>EBITDA</td><td class="text-end text-success">-43.535</td><td class="text-end">-1,53%</td></tr>
-                                          <tr><td><i class="fas fa-minus-circle text-danger fa-fw me-1"></i> Imposte</td><td class="text-end text-danger">-5.720</td><td class="text-end">-0,20%</td></tr>
-                                          <tr><td><i class="fas fa-plus-circle text-success fa-fw me-1"></i> Variazione CCN</td><td class="text-end text-success">108.427</td><td class="text-end">3,80%</td></tr>
-                                          <tr class="table-warning fw-bold"><td><i class="fas fa-equals fa-fw me-1"></i> Cash Flow Operativo</td><td class="text-end text-success">211.345</td><td class="text-end">7,42%</td></tr>
-                                          <tr><td><i class="fas fa-minus-circle text-danger fa-fw me-1"></i> Investimenti</td><td class="text-end text-danger">-774.136</td><td class="text-end">-27,16%</td></tr>
-                                          <tr class="table-success fw-bold"><td><i class="fas fa-equals fa-fw me-1"></i> Free Cash Flow (FCF)</td><td class="text-end text-success">-562.791</td><td class="text-end">-19,75%</td></tr>
-                                          <tr><td><i class="fas fa-minus-circle text-danger fa-fw me-1"></i> Operazioni finanziarie</td><td class="text-end text-danger">746.599</td><td class="text-end">26,20%</td></tr>
-                                          <tr class="table-danger fw-bold"><td><i class="fas fa-equals fa-fw me-1"></i> Variazione Netta Cassa</td><td class="text-end text-danger">183.808</td><td class="text-end">6,45%</td></tr>
+                                          <!-- Populated dynamically from tables.json -->
                                       </tbody>
                                  </table>
                                  <p class="small text-muted mt-1 mb-0">*Fonte: Report Leanus 12/11/2025</p>
@@ -413,12 +403,99 @@
                     }
                 }
 
+                populateParte5Tables();
                 renderParte5Charts();
                 console.log('✅ Report Parte 5 inizializzato');
             } catch (error) {
                 console.error('❌ Errore inizializzazione Report Parte 5:', error);
             }
         });
+
+        // Helper functions
+        function formatNumber(num) {
+            return num ? num.toLocaleString('it-IT') : 'N/D';
+        }
+
+        function formatCurrency(num) {
+            return num ? '€' + num.toLocaleString('it-IT') : 'N/D';
+        }
+
+        function formatPercentage(num) {
+            return num !== null && num !== undefined ? num.toFixed(2) + '%' : 'N/D';
+        }
+
+        function getVariationClass(value) {
+            if (!value) return '';
+            return value > 0 ? 'text-success' : 'text-danger';
+        }
+
+        function populateParte5Tables() {
+            // Table 1: Trend Ciclo Circolante
+            const trendData = window.dataManager.getTable('parte5_circolante', 'trendCicloCircolante');
+            if (trendData && trendData.rows) {
+                const tbody = document.querySelector('#table-parte5-trend-ciclo tbody');
+                if (tbody) {
+                    tbody.innerHTML = '';
+                    trendData.rows.forEach(row => {
+                        const tr = document.createElement('tr');
+                        if (row.componente && row.componente.toLowerCase().includes('ciclo circolante')) {
+                            tr.classList.add('table-warning', 'fw-bold');
+                        }
+                        tr.innerHTML = `
+                            <td>${row.componente || ''}</td>
+                            <td class="text-end">${row['2022'] || row['12/2022'] || ''}</td>
+                            <td class="text-end">${row['2023'] || row['12/2023'] || ''}</td>
+                            <td class="text-end">${row['2024'] || row['12/2024'] || ''}</td>
+                            <td class="${row.trend && row.trend.toLowerCase().includes('miglioramento') ? 'text-warning' : 'text-success'}">${row.trend || ''}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+            }
+
+            // Table 2: Flussi Cassa 2024
+            const flussiData = window.dataManager.getTable('parte5_circolante', 'flussiCassa2024');
+            if (flussiData && flussiData.rows) {
+                const tbody = document.querySelector('#table-parte5-flussi-2024 tbody');
+                if (tbody) {
+                    tbody.innerHTML = '';
+                    flussiData.rows.forEach(row => {
+                        const tr = document.createElement('tr');
+
+                        // Add highlight for key rows
+                        if (row.highlight) {
+                            if (row.voce && row.voce.toLowerCase().includes('cash flow operativo')) {
+                                tr.classList.add('table-warning', 'fw-bold');
+                            } else if (row.voce && row.voce.toLowerCase().includes('free cash flow')) {
+                                tr.classList.add('table-success', 'fw-bold');
+                            } else if (row.voce && row.voce.toLowerCase().includes('variazione netta')) {
+                                tr.classList.add('table-danger', 'fw-bold');
+                            }
+                        }
+
+                        // Get icon based on voce
+                        let icon = '';
+                        if (row.voce) {
+                            if (row.voce.toLowerCase().includes('imposte') || row.voce.toLowerCase().includes('investimenti') || row.voce.toLowerCase().includes('operazioni finanziarie')) {
+                                icon = '<i class="fas fa-minus-circle text-danger fa-fw me-1"></i> ';
+                            } else if (row.voce.toLowerCase().includes('variazione ccn')) {
+                                icon = '<i class="fas fa-plus-circle text-success fa-fw me-1"></i> ';
+                            } else if (row.voce.toLowerCase().includes('cash flow') || row.voce.toLowerCase().includes('variazione netta')) {
+                                icon = '<i class="fas fa-equals fa-fw me-1"></i> ';
+                            }
+                        }
+
+                        const valueClass = row.valore < 0 ? 'text-danger' : 'text-success';
+                        tr.innerHTML = `
+                            <td>${icon}${row.voce || ''}</td>
+                            <td class="text-end ${valueClass}">${formatNumber(row.valore)}</td>
+                            <td class="text-end">${formatPercentage(row.pctRicavi)}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+            }
+        }
 
         function renderParte5Charts() {
             const chartsData = window.dataManager.getChartData('reports', 'parte5');

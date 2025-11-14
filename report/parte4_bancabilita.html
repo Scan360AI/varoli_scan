@@ -164,7 +164,7 @@
                     <p>La società presenta i seguenti indicatori chiave:</p>
                     
                     <div class="table-responsive">
-                        <table class="table table-sm table-striped">
+                        <table class="table table-sm table-striped" id="table-parte4-valutazione">
                             <thead>
                                 <tr>
                                     <th>Indicatore</th>
@@ -173,36 +173,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Leanus® Score</td>
-                                    <td class="text-end">3,47 ("3 - Discreto")</td>
-                                    <td>Stabile rispetto al periodo precedente</td>
-                                </tr>
-                                <tr>
-                                    <td>Indice di Rischio Ponderato (IRP)</td>
-                                    <td class="text-end">51,42/100</td>
-                                    <td>Classe di rischio ELEVATO</td>
-                                </tr>
-                                <tr>
-                                    <td>Rating Fondo Garanzia MCC</td>
-                                    <td class="text-end">FASCIA "4"</td>
-                                    <td>Probabilità di default 8,45%</td>
-                                </tr>
-                                <tr>
-                                    <td>Debiti Finanziari</td>
-                                    <td class="text-end">€1.275.053</td>
-                                    <td>44,74% dei ricavi</td>
-                                </tr>
-                                <tr>
-                                    <td>PFN</td>
-                                    <td class="text-end">€919.610</td>
-                                    <td>32,3% dei ricavi</td>
-                                </tr>
-                                <tr>
-                                    <td>DSCR</td>
-                                    <td class="text-end">2,463</td>
-                                    <td>Sufficiente</td>
-                                </tr>
+                                <!-- Populated dynamically from tables.json -->
                             </tbody>
                         </table>
                     </div>
@@ -243,15 +214,10 @@
                         <div class="col-lg-7 mb-3 mb-lg-0">
                             <h6>Tabella 4.1: Indicatori Sostenibilità Debito</h6>
                             <div class="table-responsive">
-                                <table class="table table-sm table-striped table-hover">
+                                <table class="table table-sm table-striped table-hover" id="table-parte4-sostenibilita">
                                     <thead class="table-light"><tr><th>Indicatore</th><th class="text-end">Valore</th><th>Valutazione</th></tr></thead>
                                     <tbody>
-                                        <tr><td>PFN/EBITDA</td><td class="text-end">NOK (EBITDA negativo)</td><td><span class="status-badge bg-danger">Critico</span></td></tr>
-                                        <tr><td>Leva Finanziaria (D/E)</td><td class="text-end">2,66</td><td><span class="status-badge bg-warning">Area di attenzione</span></td></tr>
-                                        <tr><td>EBITDA/Oneri Finanziari</td><td class="text-end">-0,65</td><td><span class="status-badge bg-danger">Critico</span></td></tr>
-                                        <tr><td>DSCR</td><td class="text-end">2,463</td><td><span class="status-badge bg-warning">Sufficiente</span></td></tr>
-                                        <tr><td>Cash Flow Operativo/Debiti Finanziari</td><td class="text-end">0,166</td><td><span class="status-badge bg-warning">Insufficiente</span></td></tr>
-                                        <tr><td>Liquidità/Ricavi</td><td class="text-end">12,47%</td><td><span class="status-badge bg-success">Buono</span></td></tr>
+                                        <!-- Populated dynamically from tables.json -->
                                     </tbody>
                                 </table>
                             </div>
@@ -483,16 +449,12 @@
                     <p>Sulla base dei dati finanziari analizzati, è possibile stimare la posizione dell'azienda rispetto ai principali indicatori di allerta del CCII:</p>
                     
                     <div class="table-responsive mb-3">
-                        <table class="table table-sm table-striped table-hover">
+                        <table class="table table-sm table-striped table-hover" id="table-parte4-ccii">
                             <thead class="table-light">
                                 <tr><th>Indicatore</th><th>Formula</th><th class="text-end">Valore stimato</th><th>Soglia di Allarme TRADER</th><th>Valutazione</th></tr>
                             </thead>
                             <tbody>
-                                <tr><td>Oneri Finanziari/Ricavi</td><td>Tot. Oneri Fin./Ricavi</td><td class="text-end">2,36%</td><td>> 8,0%</td><td><span class="status-badge bg-success">In linea</span></td></tr>
-                                <tr><td>Patrimonio Netto/Debiti Totali</td><td>PN/(Tot. Debiti)</td><td class="text-end">34,25%</td><td>< 8,0%</td><td><span class="status-badge bg-success">In linea</span></td></tr>
-                                <tr><td>Attività a Breve/Passività a Breve</td><td>Attivo Circolante/Passivo Corrente</td><td class="text-end">109,00%</td><td>< 90,0%</td><td><span class="status-badge bg-success">In linea</span></td></tr>
-                                <tr><td>Cash Flow/Totale Attivo</td><td>Cash Flow/Tot. Attivo</td><td class="text-end">10,96%</td><td>< 0,4%</td><td><span class="status-badge bg-success">Ampiamente in linea</span></td></tr>
-                                <tr><td>Indebitamento Prev. e Trib./Totale Attivo</td><td>(Debiti prev. + Debiti trib.)/Tot. Attivo</td><td class="text-end">N/D</td><td>> 5,5%</td><td><span class="status-badge bg-warning">N/D</span></td></tr>
+                                <!-- Populated dynamically from tables.json -->
                             </tbody>
                         </table>
                     </div>
@@ -640,12 +602,99 @@
                     }
                 }
 
+                populateParte4Tables();
                 renderParte4Charts();
                 console.log('✅ Report Parte 4 inizializzato');
             } catch (error) {
                 console.error('❌ Errore inizializzazione Report Parte 4:', error);
             }
         });
+
+        // Helper functions
+        function formatNumber(num) {
+            return num ? num.toLocaleString('it-IT') : 'N/D';
+        }
+
+        function formatCurrency(num) {
+            return num ? '€' + num.toLocaleString('it-IT') : 'N/D';
+        }
+
+        function formatPercentage(num) {
+            return num !== null && num !== undefined ? num.toFixed(2) + '%' : 'N/D';
+        }
+
+        function getStatusBadge(valutazione) {
+            if (!valutazione) return '';
+            const lower = valutazione.toLowerCase();
+            if (lower.includes('critico') || lower.includes('elevat')) {
+                return '<span class="status-badge bg-danger">' + valutazione + '</span>';
+            } else if (lower.includes('attenzione') || lower.includes('sufficiente') || lower.includes('insufficiente')) {
+                return '<span class="status-badge bg-warning">' + valutazione + '</span>';
+            } else if (lower.includes('buono') || lower.includes('linea')) {
+                return '<span class="status-badge bg-success">' + valutazione + '</span>';
+            }
+            return valutazione;
+        }
+
+        function populateParte4Tables() {
+            // Table 1: Valutazione Bancabilità
+            const valutazioneData = window.dataManager.getTable('parte4_bancabilita', 'valutazioneBancabilita');
+            if (valutazioneData && valutazioneData.rows) {
+                const tbody = document.querySelector('#table-parte4-valutazione tbody');
+                if (tbody) {
+                    tbody.innerHTML = '';
+                    valutazioneData.rows.forEach(row => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${row.indicatore || ''}</td>
+                            <td class="text-end">${row.valore || ''}</td>
+                            <td>${row.valutazione || ''}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+            }
+
+            // Table 2: Sostenibilità Debito
+            const sostenibilitaData = window.dataManager.getTable('parte4_bancabilita', 'sostenibilitaDebito');
+            if (sostenibilitaData && sostenibilitaData.rows) {
+                const tbody = document.querySelector('#table-parte4-sostenibilita tbody');
+                if (tbody) {
+                    tbody.innerHTML = '';
+                    sostenibilitaData.rows.forEach(row => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${row.indicatore || ''}</td>
+                            <td class="text-end">${row.valore || ''}</td>
+                            <td>${getStatusBadge(row.valutazione)}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+            }
+
+            // Table 3: CCII Indicators
+            const cciiData = window.dataManager.getTable('parte4_bancabilita', 'cciiIndicators');
+            if (cciiData && cciiData.rows) {
+                const tbody = document.querySelector('#table-parte4-ccii tbody');
+                if (tbody) {
+                    tbody.innerHTML = '';
+                    cciiData.rows.forEach(row => {
+                        const tr = document.createElement('tr');
+                        const valore = row.valore !== null && row.valore !== undefined ? formatPercentage(row.valore) : 'N/D';
+                        const soglia = row.soglia ? (row.soglia > 1 ? '> ' + row.soglia + '%' : '< ' + row.soglia + '%') : '';
+                        tr.innerHTML = `
+                            <td>${row.indicatore || ''}</td>
+                            <td>${row.formula || ''}</td>
+                            <td class="text-end">${valore}</td>
+                            <td>${soglia}</td>
+                            <td>${getStatusBadge(row.valutazione)}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+            }
+        }
 
         function renderParte4Charts() {
             const chartsData = window.dataManager.getChartData('reports', 'parte4');

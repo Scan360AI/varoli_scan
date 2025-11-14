@@ -81,32 +81,18 @@
 
                  <h6 class="mt-4">Tabella 3.1: Stato Patrimoniale Riclassificato 2022-2024 (valori in €)</h6>
                  <div class="table-responsive">
-                     <table class="table table-sm table-striped table-hover">
+                     <table class="table table-sm table-striped table-hover" id="table-parte3-stato-patrimoniale">
                          <thead class="table-light">
                              <tr><th>IMPIEGHI</th><th class="text-end">12/2022</th><th class="text-end">%</th><th class="text-end">12/2023</th><th class="text-end">%</th><th class="text-end">12/2024</th><th class="text-end">%</th><th class="text-end">Δ 2023-24</th></tr>
                          </thead>
-                         <tbody>
-                             <tr><td>Liquidità</td><td class="text-end">331.275</td><td class="text-end">13,6%</td><td class="text-end">424.881</td><td class="text-end">16,7%</td><td class="text-end">355.443</td><td class="text-end">15,6%</td><td class="text-end text-danger">-16,3%</td></tr>
-                             <tr><td>Crediti Clienti</td><td class="text-end">403.423</td><td class="text-end">16,6%</td><td class="text-end">422.112</td><td class="text-end">16,6%</td><td class="text-end">323.921</td><td class="text-end">14,2%</td><td class="text-end text-danger">-23,3%</td></tr>
-                             <tr><td>Rimanenze</td><td class="text-end">1.051.763</td><td class="text-end">43,2%</td><td class="text-end">1.081.429</td><td class="text-end">42,6%</td><td class="text-end">1.067.842</td><td class="text-end">46,8%</td><td class="text-end text-danger">-1,3%</td></tr>
-                             <tr><td>Altri Crediti</td><td class="text-end">83.265</td><td class="text-end">3,4%</td><td class="text-end">67.489</td><td class="text-end">2,7%</td><td class="text-end">81.242</td><td class="text-end">3,6%</td><td class="text-end text-success">+20,4%</td></tr>
-                             <tr><td><strong>Totale Attivo Circolante</strong></td><td class="text-end"><strong>1.869.726</strong></td><td class="text-end"><strong>76,8%</strong></td><td class="text-end"><strong>1.995.911</strong></td><td class="text-end"><strong>78,6%</strong></td><td class="text-end"><strong>1.828.448</strong></td><td class="text-end"><strong>80,2%</strong></td><td class="text-end text-danger"><strong>-8,4%</strong></td></tr>
-                             <tr><td>Immobilizzazioni Nette</td><td class="text-end">562.981</td><td class="text-end">23,2%</td><td class="text-end">542.153</td><td class="text-end">21,4%</td><td class="text-end">454.485</td><td class="text-end">19,8%</td><td class="text-end text-danger">-16,2%</td></tr>
-                             <tr class="table-primary fw-bold"><td>TOTALE IMPIEGHI</td><td class="text-end">2.432.707</td><td class="text-end">100,0%</td><td class="text-end">2.538.064</td><td class="text-end">100,0%</td><td class="text-end">2.282.933</td><td class="text-end">100,0%</td><td class="text-end text-danger">-10,1%</td></tr>
+                         <tbody id="tbody-impieghi">
+                             <!-- Populated by JS -->
                          </tbody>
                          <thead class="table-light">
                               <tr><th>FONTI</th><th class="text-end">12/2022</th><th class="text-end">%</th><th class="text-end">12/2023</th><th class="text-end">%</th><th class="text-end">12/2024</th><th class="text-end">%</th><th class="text-end">Δ 2023-24</th></tr>
                          </thead>
-                         <tbody>
-                             <tr><td>Debiti Fornitori</td><td class="text-end">418.943</td><td class="text-end">17,2%</td><td class="text-end">410.754</td><td class="text-end">16,2%</td><td class="text-end">388.221</td><td class="text-end">17,0%</td><td class="text-end text-danger">-5,5%</td></tr>
-                             <tr><td>Altri Debiti</td><td class="text-end">231.526</td><td class="text-end">9,5%</td><td class="text-end">252.291</td><td class="text-end">9,9%</td><td class="text-end">140.993</td><td class="text-end">6,2%</td><td class="text-end text-danger">-44,1%</td></tr>
-                             <tr><td><strong>Passività Correnti</strong></td><td class="text-end"><strong>650.469</strong></td><td class="text-end"><strong>26,7%</strong></td><td class="text-end"><strong>663.045</strong></td><td class="text-end"><strong>26,1%</strong></td><td class="text-end"><strong>529.214</strong></td><td class="text-end"><strong>23,2%</strong></td><td class="text-end text-danger"><strong>-20,2%</strong></td></tr>
-                             <tr><td>Fondi</td><td class="text-end">58.219</td><td class="text-end">2,4%</td><td class="text-end">60.839</td><td class="text-end">2,4%</td><td class="text-end">78.839</td><td class="text-end">3,5%</td><td class="text-end text-success">+29,6%</td></tr>
-                             <tr><td>Debiti Finanziari</td><td class="text-end">1.140.362</td><td class="text-end">46,9%</td><td class="text-end">1.163.776</td><td class="text-end">45,9%</td><td class="text-end">1.275.053</td><td class="text-end">55,8%</td><td class="text-end text-success">+9,6%</td></tr>
-                             <tr><td>di cui a M/L termine</td><td class="text-end">584.221</td><td class="text-end">24,0%</td><td class="text-end">588.742</td><td class="text-end">23,2%</td><td class="text-end">616.361</td><td class="text-end">27,0%</td><td class="text-end text-success">+4,7%</td></tr>
-                             <tr><td>di cui a Breve termine</td><td class="text-end">556.141</td><td class="text-end">22,9%</td><td class="text-end">575.034</td><td class="text-end">22,7%</td><td class="text-end">658.692</td><td class="text-end">28,8%</td><td class="text-end text-success">+14,5%</td></tr>
-                             <tr><td>Patrimonio Netto</td><td class="text-end">583.657</td><td class="text-end">24,0%</td><td class="text-end">650.404</td><td class="text-end">25,6%</td><td class="text-end">479.666</td><td class="text-end">17,5%</td><td class="text-end text-danger">-26,3%</td></tr>
-                             <tr class="table-primary fw-bold"><td>TOTALE FONTI</td><td class="text-end">2.432.707</td><td class="text-end">100,0%</td><td class="text-end">2.538.064</td><td class="text-end">100,0%</td><td class="text-end">2.282.933</td><td class="text-end">100,0%</td><td class="text-end text-danger">-10,1%</td></tr>
+                         <tbody id="tbody-fonti">
+                             <!-- Populated by JS -->
                          </tbody>
                      </table>
                  </div>
@@ -178,20 +164,12 @@
                     <div class="col-lg-7 mb-3 mb-lg-0">
                          <h6 class="mt-1">Tabella 4.1: Analisi PFN 2022-2024 (€)</h6>
                          <div class="table-responsive">
-                             <table class="table table-sm table-striped table-hover">
+                             <table class="table table-sm table-striped table-hover" id="table-parte3-pfn">
                                  <thead>
                                      <tr><th>Componente</th><th class="text-end">12/2022</th><th class="text-end">12/2023</th><th class="text-end">12/2024</th><th class="text-end">Var% 23-24</th></tr>
                                  </thead>
                                  <tbody>
-                                     <tr><td>Debiti finanziari a breve</td><td class="text-end">556.141</td><td class="text-end">575.034</td><td class="text-end">658.692</td><td class="text-end">+14,5%</td></tr>
-                                     <tr><td>Debiti finanziari a M/L termine</td><td class="text-end">584.221</td><td class="text-end">588.742</td><td class="text-end">616.361</td><td class="text-end">+4,7%</td></tr>
-                                     <tr class="table-secondary"><td>Totale Debiti Finanziari</td><td class="text-end">1.140.362</td><td class="text-end">1.163.776</td><td class="text-end">1.275.053</td><td class="text-end">+9,6%</td></tr>
-                                     <tr><td>(-) Liquidità</td><td class="text-end">331.275</td><td class="text-end">424.881</td><td class="text-end">355.443</td><td class="text-end text-danger">-16,3%</td></tr>
-                                     <tr class="table-danger fw-bold"><td>Posizione Finanziaria Netta (PFN)</td><td class="text-end">809.087</td><td class="text-end">738.895</td><td class="text-end">919.610</td><td class="text-end text-danger">+24,5%</td></tr>
-                                     <tr class="border-top"><td colspan="5"><em>Indicatori correlati:</em></td></tr>
-                                     <tr><td>EBITDA</td><td class="text-end">162.467</td><td class="text-end">193.166</td><td class="text-end">-43.535</td><td class="text-end text-danger">-122,5%</td></tr>
-                                     <tr><td>PFN/EBITDA (x)</td><td class="text-end">4,98</td><td class="text-end">3,82</td><td class="text-end">N/A</td><td class="text-end text-danger">N/A</td></tr>
-                                     <tr><td>PFN/PN (x)</td><td class="text-end">1,39</td><td class="text-end">1,14</td><td class="text-end">1,92</td><td class="text-end text-danger">+68,4%</td></tr>
+                                     <!-- Populated by JS -->
                                  </tbody>
                              </table>
                          </div>
@@ -219,15 +197,10 @@
                  <p>L'analisi degli indici di solidità patrimoniale fornisce ulteriori elementi per valutare l'equilibrio della struttura finanziaria dell'azienda nel medio-lungo termine.</p>
                   <h6 class="mt-4">Tabella 5.1: Principali Indici di Solidità 2022-2024 (VAROLI GUIDO E FIGLIO S.R.L.)</h6>
                   <div class="table-responsive">
-                     <table class="table table-sm table-striped table-hover">
+                     <table class="table table-sm table-striped table-hover" id="table-parte3-solidita">
                          <thead class="table-light"><tr><th>Indice</th><th class="text-end">2022</th><th class="text-end">2023</th><th class="text-end">2024</th><th>Valutazione 2024</th></tr></thead>
                          <tbody>
-                             <tr><td>Copertura Immobilizzazioni</td><td class="text-end">1,04</td><td class="text-end">1,20</td><td class="text-end">0,56</td><td><span class="status-badge bg-danger">Insufficiente</span></td></tr>
-                             <tr><td>Indice Autonomia Finanziaria</td><td class="text-end">24,0%</td><td class="text-end">25,6%</td><td class="text-end">17,5%</td><td><span class="status-badge bg-danger">Insufficiente</span></td></tr>
-                             <tr><td>Leva Finanziaria (D/E)</td><td class="text-end">1,95</td><td class="text-end">1,79</td><td class="text-end">2,66</td><td><span class="status-badge bg-danger">Critico</span></td></tr>
-                             <tr><td>Turnover (Ricavi/CIN)</td><td class="text-end">1,89</td><td class="text-end">1,92</td><td class="text-end">2,04</td><td><span class="status-badge bg-success">Ottimo</span></td></tr>
-                             <tr><td>Indice Struttura Secondario</td><td class="text-end">2,17</td><td class="text-end">2,40</td><td class="text-end">1,37</td><td><span class="status-badge bg-warning">Sufficiente</span></td></tr>
-                             <tr><td>PFN/EBITDA</td><td class="text-end">4,98</td><td class="text-end">3,82</td><td class="text-end">N/A</td><td><span class="status-badge bg-danger">Critico</span></td></tr>
+                             <!-- Populated by JS -->
                          </tbody>
                      </table>
                  </div>
@@ -309,12 +282,223 @@
                     }
                 }
 
+                // Populate tables
+                populateParte3Tables();
+
                 renderParte3Charts();
                 console.log('✅ Report Parte 3 inizializzato');
             } catch (error) {
                 console.error('❌ Errore inizializzazione Report Parte 3:', error);
             }
         });
+
+        // Helper functions for formatting
+        function formatNumber(value) {
+            if (value === null || value === undefined) return 'n.d.';
+            return value.toLocaleString('it-IT');
+        }
+
+        function formatPercentage(value) {
+            if (value === null || value === undefined) return 'n.d.';
+            return value.toFixed(2) + '%';
+        }
+
+        function formatDecimal(value, decimals = 2) {
+            if (value === null || value === undefined) return 'n.d.';
+            return value.toFixed(decimals);
+        }
+
+        function getBadgeClass(valutazione) {
+            if (!valutazione) return 'bg-secondary';
+            const lower = valutazione.toLowerCase();
+            if (lower.includes('critico')) return 'bg-danger';
+            if (lower.includes('insufficiente')) return 'bg-danger';
+            if (lower.includes('ottimo') || lower.includes('buon')) return 'bg-success';
+            if (lower.includes('sufficiente')) return 'bg-warning text-dark';
+            return 'bg-secondary';
+        }
+
+        // Populate Parte 3 Tables
+        function populateParte3Tables() {
+            // Table 3.1: Stato Patrimoniale - IMPIEGHI
+            const impieghiData = window.dataManager.getTable('parte3_patrimoniale', 'statoPatrimonialeImpieghi');
+            if (impieghiData && impieghiData.rows) {
+                const tbody = document.querySelector('#tbody-impieghi');
+                if (tbody) {
+                    tbody.innerHTML = '';
+                    impieghiData.rows.forEach(row => {
+                        const tr = document.createElement('tr');
+
+                        if (row.highlight) {
+                            tr.classList.add('table-primary', 'fw-bold');
+                        } else if (row.categoria && row.categoria.includes('Totale Attivo Circolante')) {
+                            tr.innerHTML = `<td><strong>${row.categoria}</strong></td>`;
+                        } else {
+                            tr.innerHTML = `<td>${row.categoria}</td>`;
+                        }
+
+                        const varClass = row.var !== null && row.var < 0 ? 'text-danger' : 'text-success';
+                        const isBold = row.highlight || (row.categoria && row.categoria.includes('Totale'));
+
+                        if (isBold && !tr.innerHTML) {
+                            tr.innerHTML = `<td><strong>${row.categoria}</strong></td>
+                                <td class="text-end"><strong>${formatNumber(row['2022'])}</strong></td>
+                                <td class="text-end"><strong>${formatPercentage(row.pct2022)}</strong></td>
+                                <td class="text-end"><strong>${formatNumber(row['2023'])}</strong></td>
+                                <td class="text-end"><strong>${formatPercentage(row.pct2023)}</strong></td>
+                                <td class="text-end"><strong>${formatNumber(row['2024'])}</strong></td>
+                                <td class="text-end"><strong>${formatPercentage(row.pct2024)}</strong></td>
+                                <td class="text-end ${varClass}"><strong>${row.var >= 0 ? '+' : ''}${formatPercentage(row.var)}</strong></td>`;
+                        } else if (!tr.innerHTML) {
+                            tr.innerHTML += `
+                                <td class="text-end">${formatNumber(row['2022'])}</td>
+                                <td class="text-end">${formatPercentage(row.pct2022)}</td>
+                                <td class="text-end">${formatNumber(row['2023'])}</td>
+                                <td class="text-end">${formatPercentage(row.pct2023)}</td>
+                                <td class="text-end">${formatNumber(row['2024'])}</td>
+                                <td class="text-end">${formatPercentage(row.pct2024)}</td>
+                                <td class="text-end ${varClass}">${row.var >= 0 ? '+' : ''}${formatPercentage(row.var)}</td>`;
+                        }
+
+                        tbody.appendChild(tr);
+                    });
+                }
+            }
+
+            // Table 3.1: Stato Patrimoniale - FONTI
+            const fontiData = window.dataManager.getTable('parte3_patrimoniale', 'statoPatrimonialeFonti');
+            if (fontiData && fontiData.rows) {
+                const tbody = document.querySelector('#tbody-fonti');
+                if (tbody) {
+                    tbody.innerHTML = '';
+                    fontiData.rows.forEach(row => {
+                        const tr = document.createElement('tr');
+
+                        if (row.highlight) {
+                            tr.classList.add('table-primary', 'fw-bold');
+                        }
+
+                        const varClass = row.var !== null && row.var < 0 ? 'text-danger' : 'text-success';
+                        const isBold = row.highlight || (row.categoria && row.categoria.includes('Passività Correnti'));
+
+                        if (isBold) {
+                            tr.innerHTML = `<td><strong>${row.categoria}</strong></td>
+                                <td class="text-end"><strong>${formatNumber(row['2022'])}</strong></td>
+                                <td class="text-end"><strong>${formatPercentage(row.pct2022)}</strong></td>
+                                <td class="text-end"><strong>${formatNumber(row['2023'])}</strong></td>
+                                <td class="text-end"><strong>${formatPercentage(row.pct2023)}</strong></td>
+                                <td class="text-end"><strong>${formatNumber(row['2024'])}</strong></td>
+                                <td class="text-end"><strong>${formatPercentage(row.pct2024)}</strong></td>
+                                <td class="text-end ${varClass}"><strong>${row.var >= 0 ? '+' : ''}${formatPercentage(row.var)}</strong></td>`;
+                        } else {
+                            tr.innerHTML = `<td>${row.categoria}</td>
+                                <td class="text-end">${formatNumber(row['2022'])}</td>
+                                <td class="text-end">${formatPercentage(row.pct2022)}</td>
+                                <td class="text-end">${formatNumber(row['2023'])}</td>
+                                <td class="text-end">${formatPercentage(row.pct2023)}</td>
+                                <td class="text-end">${formatNumber(row['2024'])}</td>
+                                <td class="text-end">${formatPercentage(row.pct2024)}</td>
+                                <td class="text-end ${varClass}">${row.var >= 0 ? '+' : ''}${formatPercentage(row.var)}</td>`;
+                        }
+
+                        tbody.appendChild(tr);
+                    });
+                }
+            }
+
+            // Table 4.1: PFN
+            const pfnData = window.dataManager.getTable('parte3_patrimoniale', 'pfn');
+            if (pfnData && pfnData.rows) {
+                const tbody = document.querySelector('#table-parte3-pfn tbody');
+                if (tbody) {
+                    tbody.innerHTML = '';
+                    let lastWasSeparator = false;
+
+                    pfnData.rows.forEach(row => {
+                        // Add separator row if needed
+                        if (row.componente === 'EBITDA' && !lastWasSeparator) {
+                            const separatorTr = document.createElement('tr');
+                            separatorTr.classList.add('border-top');
+                            separatorTr.innerHTML = '<td colspan="5"><em>Indicatori correlati:</em></td>';
+                            tbody.appendChild(separatorTr);
+                            lastWasSeparator = true;
+                        }
+
+                        const tr = document.createElement('tr');
+
+                        if (row.highlight) {
+                            tr.classList.add('table-danger', 'fw-bold');
+                        } else if (row.componente && row.componente.includes('Totale Debiti')) {
+                            tr.classList.add('table-secondary');
+                        }
+
+                        const varClass = row.var !== null && row.var < 0 ? 'text-danger' : 'text-success';
+
+                        // Format values based on component type
+                        let val2022, val2023, val2024, varVal;
+                        if (row.componente && row.componente.includes('/')) {
+                            // Ratio values
+                            val2022 = row['2022'] !== null ? formatDecimal(row['2022']) : 'N/A';
+                            val2023 = row['2023'] !== null ? formatDecimal(row['2023']) : 'N/A';
+                            val2024 = row['2024'] !== null ? formatDecimal(row['2024']) : 'N/A';
+                            varVal = row.var !== null ? (row.var >= 0 ? '+' : '') + formatPercentage(row.var) : 'N/A';
+                        } else {
+                            // Currency values
+                            val2022 = formatNumber(row['2022']);
+                            val2023 = formatNumber(row['2023']);
+                            val2024 = formatNumber(row['2024']);
+                            varVal = row.var !== null ? (row.var >= 0 ? '+' : '') + formatPercentage(row.var) : 'N/A';
+                        }
+
+                        tr.innerHTML = `
+                            <td>${row.componente}</td>
+                            <td class="text-end">${val2022}</td>
+                            <td class="text-end">${val2023}</td>
+                            <td class="text-end">${val2024}</td>
+                            <td class="text-end ${varClass}">${varVal}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+            }
+
+            // Table 5.1: Indici Solidità
+            const soliditaData = window.dataManager.getTable('parte3_patrimoniale', 'indiciSolidita');
+            if (soliditaData && soliditaData.rows) {
+                const tbody = document.querySelector('#table-parte3-solidita tbody');
+                if (tbody) {
+                    tbody.innerHTML = '';
+                    soliditaData.rows.forEach(row => {
+                        const tr = document.createElement('tr');
+
+                        // Format values
+                        let val2022, val2023, val2024;
+                        if (row.indice && (row.indice.includes('%') || row.indice.includes('Autonomia'))) {
+                            val2022 = row['2022'] !== null ? formatPercentage(row['2022']) : 'n.d.';
+                            val2023 = row['2023'] !== null ? formatPercentage(row['2023']) : 'n.d.';
+                            val2024 = row['2024'] !== null ? formatPercentage(row['2024']) : 'N/A';
+                        } else if (row.indice && row.indice.includes('PFN/EBITDA')) {
+                            val2022 = row['2022'] !== null ? formatDecimal(row['2022']) : 'n.d.';
+                            val2023 = row['2023'] !== null ? formatDecimal(row['2023']) : 'n.d.';
+                            val2024 = row['2024'] !== null ? formatDecimal(row['2024']) : 'N/A';
+                        } else {
+                            val2022 = row['2022'] !== null ? formatDecimal(row['2022']) : 'n.d.';
+                            val2023 = row['2023'] !== null ? formatDecimal(row['2023']) : 'n.d.';
+                            val2024 = row['2024'] !== null ? formatDecimal(row['2024']) : 'n.d.';
+                        }
+
+                        tr.innerHTML = `
+                            <td>${row.indice}</td>
+                            <td class="text-end">${val2022}</td>
+                            <td class="text-end">${val2023}</td>
+                            <td class="text-end">${val2024}</td>
+                            <td><span class="status-badge ${getBadgeClass(row.valutazione)}">${row.valutazione}</span></td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+            }
+        }
 
         function renderParte3Charts() {
             const chartsData = window.dataManager.getChartData('reports', 'parte3');

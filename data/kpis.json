@@ -191,5 +191,114 @@
       "impact": "268000",
       "impactUnit": "EUR"
     }
+  },
+  "ebitda": {
+    "title": "EBITDA",
+    "value": -43535,
+    "displayValue": "€ -43.535",
+    "status": "danger",
+    "borderClass": "border-left-danger",
+    "icon": "fa-chart-line",
+    "description": "Redditività operativa negativa.",
+    "trend": {
+      "direction": "down",
+      "value": -120.43,
+      "displayValue": "-120,43%",
+      "label": "YoY",
+      "iconClass": "fa-arrow-down",
+      "cssClass": "trend-down"
+    },
+    "metadata": {
+      "currency": "EUR",
+      "unit": "K",
+      "decimals": 0
+    }
+  },
+  "netIncome": {
+    "title": "Utile Netto",
+    "value": -149177,
+    "displayValue": "€ -149.177",
+    "status": "danger",
+    "borderClass": "border-left-danger",
+    "icon": "fa-coins",
+    "description": "Perdita significativa.",
+    "trend": {
+      "direction": "down",
+      "value": -230.23,
+      "displayValue": "-230,23%",
+      "label": "YoY",
+      "iconClass": "fa-arrow-down",
+      "cssClass": "trend-down"
+    },
+    "metadata": {
+      "currency": "EUR",
+      "unit": "K",
+      "decimals": 0
+    }
+  },
+  "equity": {
+    "title": "Patrimonio Netto",
+    "value": 479666,
+    "displayValue": "€ 479.666",
+    "status": "warning",
+    "borderClass": "border-left-warning",
+    "icon": "fa-landmark",
+    "description": "In erosione.",
+    "trend": {
+      "direction": "down",
+      "value": -26.08,
+      "displayValue": "-26,08%",
+      "label": "YoY",
+      "iconClass": "fa-arrow-down",
+      "cssClass": "trend-down"
+    },
+    "metadata": {
+      "currency": "EUR",
+      "unit": "K",
+      "decimals": 0
+    }
+  },
+  "liquidity": {
+    "title": "Liquidità",
+    "value": 355443,
+    "displayValue": "€ 355.443",
+    "status": "success",
+    "borderClass": "border-left-success",
+    "icon": "fa-tint",
+    "description": "Buona liquidità disponibile.",
+    "trend": {
+      "direction": "up",
+      "value": 107.1,
+      "displayValue": "+107,1%",
+      "label": "YoY",
+      "iconClass": "fa-arrow-up",
+      "cssClass": "trend-up"
+    },
+    "metadata": {
+      "currency": "EUR",
+      "unit": "K",
+      "decimals": 0
+    }
+  },
+  "leverageDE": {
+    "title": "Leva Finanziaria (D/E)",
+    "value": 2.66,
+    "displayValue": "2,66",
+    "status": "danger",
+    "borderClass": "border-left-danger",
+    "icon": "fa-money-bill-wave",
+    "description": "Elevato indebitamento.",
+    "trend": {
+      "direction": "none",
+      "value": null,
+      "displayValue": "Elevata",
+      "label": null,
+      "iconClass": "fa-minus",
+      "cssClass": "trend-neutral"
+    },
+    "metadata": {
+      "unit": "x",
+      "decimals": 2
+    }
   }
 }

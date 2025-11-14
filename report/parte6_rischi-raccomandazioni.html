@@ -138,19 +138,10 @@
                 <div class="card-body">
                     <p>L'analisi dei principali indicatori di rischio di VAROLI GUIDO E FIGLIO S.R.L. evidenzia un profilo complessivamente critico con significative aree di attenzione:</p>
                     <div class="table-responsive">
-                        <table class="table table-sm table-striped table-hover" id="table_6_1_1">
+                        <table class="table table-sm table-striped table-hover" id="table-parte6-indicatori-rischio">
                            <thead class="table-light"><tr><th>Indicatore</th><th class="text-end">12/2022</th><th class="text-end">12/2023</th><th class="text-end">12/2024</th><th>Trend</th><th>Valutazione</th></tr></thead>
                            <tbody>
-                               <tr><td>Variazione Ricavi</td><td class="text-end">N/D</td><td class="text-end">-10,69%</td><td class="text-end">-14,27%</td><td>↘</td><td class="text-danger">Forte contrazione del fatturato</td></tr>
-                               <tr><td>EBITDA Margin</td><td class="text-end">5,28%</td><td class="text-end">6,41%</td><td class="text-end">-1,53%</td><td>↘↘</td><td class="text-danger">Redditività operativa negativa</td></tr>
-                               <tr><td>PFN/EBITDA</td><td class="text-end">2,10</td><td class="text-end">1,58</td><td class="text-end">NOK</td><td>↘↘</td><td class="text-danger">Non sostenibile (EBITDA negativo)</td></tr>
-                               <tr><td>Leva Finanziaria (D/E)</td><td class="text-end">0,66</td><td class="text-end">0,54</td><td class="text-end">1,92</td><td>↗↗</td><td class="text-danger">Forte incremento dell'indebitamento</td></tr>
-                               <tr><td>Liquidità/Ricavi</td><td class="text-end">9,23%</td><td class="text-end">10,71%</td><td class="text-end">12,47%</td><td>↗</td><td class="text-warning">Liquidità sufficiente ma in contesto critico</td></tr>
-                               <tr><td>Cash Flow Operativo/Ricavi</td><td class="text-end">5,3%</td><td class="text-end">6,4%</td><td class="text-end">7,4%</td><td>↗</td><td class="text-warning">Generazione di cassa positiva ma insufficiente</td></tr>
-                               <tr><td>Equilibrio del circolante (giorni)</td><td class="text-end">153</td><td class="text-end">159</td><td class="text-end">167</td><td>↗</td><td class="text-danger">Ciclo del circolante molto elevato</td></tr>
-                               <tr><td>DSO (giorni crediti clienti)</td><td class="text-end">83</td><td class="text-end">85</td><td class="text-end">89</td><td>↗</td><td class="text-danger">Tempi di incasso molto elevati</td></tr>
-                               <tr><td>DPO (giorni debiti fornitori)</td><td class="text-end">116</td><td class="text-end">112</td><td class="text-end">116</td><td>↗</td><td class="text-warning">Tempi di pagamento elevati</td></tr>
-                               <tr><td>DIO (giorni magazzino)</td><td class="text-end">186</td><td class="text-end">186</td><td class="text-end">194</td><td>↗</td><td class="text-danger">Rotazione magazzino molto lenta</td></tr>
+                               <!-- Populated dynamically from tables.json -->
                            </tbody>
                         </table>
                     </div>
@@ -165,15 +156,10 @@
                      <div class="small">
                          <h6>Tabella 6.2.1: Z-Score e rating</h6>
                          <div class="table-responsive">
-                             <table class="table table-sm table-striped">
+                             <table class="table table-sm table-striped" id="table-parte6-zscore">
                                  <thead class="table-light"><tr><th>Indicatore</th><th class="text-end">Valore</th><th>Interpretazione</th></tr></thead>
                                  <tbody>
-                                     <tr><td>Z-Score di Altman</td><td class="text-end value-highlight">2,22</td><td><span class="badge bg-warning text-dark">Zona grigia (rischio moderato di default)</span></td></tr>
-                                     <tr><td>Probabilità di Default (MCC)</td><td class="text-end value-highlight">Elevata</td><td><span class="badge bg-danger">Rischio default elevato</span></td></tr>
-                                     <tr><td>Classe di Valutazione</td><td class="text-end value-highlight">D+</td><td><span class="badge bg-danger">Rischio elevato</span></td></tr>
-                                     <tr><td>Rating</td><td class="text-end value-highlight">8</td><td><span class="badge bg-danger">Default probabile</span></td></tr>
-                                     <tr><td>Leanus Score</td><td class="text-end value-highlight">54,70</td><td><span class="badge bg-warning text-dark">Fragilità moderata</span></td></tr>
-                                     <tr><td>IRP (Indice di Rischio Ponderato)</td><td class="text-end value-highlight">51,42</td><td><span class="badge bg-danger">Classe di rischio "ELEVATO"</span></td></tr>
+                                     <!-- Populated dynamically from tables.json -->
                                  </tbody>
                              </table>
                          </div>
@@ -190,17 +176,10 @@
                   <div class="card-body">
                       <h6>Tabella 6.3.1: Principali Red Flags identificate</h6>
                       <div class="table-responsive">
-                          <table class="table table-sm table-hover small">
+                          <table class="table table-sm table-hover small" id="table-parte6-redflags">
                              <thead class="table-light"><tr><th>Area</th><th>Segnale di allarme</th><th>Valore/Trend</th><th>Rischio potenziale</th></tr></thead>
                               <tbody>
-                                  <tr><td>Redditività</td><td>EBITDA negativo</td><td>-1,53% dei ricavi</td><td>Incapacità di generare margini operativi</td></tr>
-                                  <tr><td>Capitale Circolante</td><td>Ciclo circolante anomalo</td><td>167 giorni</td><td>Elevato assorbimento di liquidità</td></tr>
-                                  <tr><td>Magazzino</td><td>Rotazione molto lenta</td><td>194 giorni</td><td>Rischio obsolescenza e immobilizzazione risorse</td></tr>
-                                  <tr><td>Indebitamento</td><td>PFN/PN elevato</td><td>1,92x</td><td>Struttura finanziaria squilibrata</td></tr>
-                                  <tr><td>Sostenibilità debito</td><td>DSCR insufficiente</td><td>0,67</td><td>Rischio concreto di insolvenza</td></tr>
-                                  <tr><td>Redditività</td><td>ROE fortemente negativo</td><td>-31,10%</td><td>Erosione del capitale proprio</td></tr>
-                                  <tr><td>Fatturato</td><td>Contrazione significativa</td><td>-14,27%</td><td>Perdita di competitività sul mercato</td></tr>
-                                  <tr><td>Patrimonio</td><td>Erosione in corso</td><td>-23,72%</td><td>Rischio di sottocapitalizzazione</td></tr>
+                                  <!-- Populated dynamically from tables.json -->
                               </tbody>
                           </table>
                       </div>
@@ -277,15 +256,10 @@
                      <p>In base all'analisi svolta, si raccomandano le seguenti azioni prioritarie:</p>
                      <h6>Tabella 7.1.1: Piano d'azione e raccomandazioni operative</h6>
                      <div class="table-responsive small">
-                         <table class="table table-sm table-hover action-table" id="table_7_1_1">
+                         <table class="table table-sm table-hover action-table" id="table-parte6-piano-azione">
                              <thead class="table-light"><tr><th>Area</th><th>Situazione Attuale</th><th>Azione Raccomandata</th><th>Effetti Previsti</th><th>Priorità</th></tr></thead>
                              <tbody>
-                                 <tr><td><i class="fas fa-coins me-1"></i> Ristrutturazione debito</td><td>PFN: €919.610, DSCR: 0,67</td><td>Rinegoziare scadenze finanziamenti a medio-lungo termine</td><td>Miglioramento sostenibilità debito<br>DSCR target >1,0</td><td><span class="status-badge bg-danger">Alta</span></td></tr>
-                                 <tr><td><i class="fas fa-file-invoice me-1"></i> Gestione Magazzino</td><td>Rotazione: 194 giorni</td><td>Revisione politiche di gestione scorte e svalutazione prodotti a lenta rotazione</td><td>Riduzione magazzino del 30%<br>+€250.000-300.000 liquidità</td><td><span class="status-badge bg-danger">Alta</span></td></tr>
-                                 <tr><td><i class="fas fa-hand-holding-usd me-1"></i> Marginalità</td><td>EBITDA: -1,53%</td><td>Revisione politiche di pricing e mix prodotti</td><td>Incremento margine contribuzione<br>EBITDA target >3%</td><td><span class="status-badge bg-danger">Alta</span></td></tr>
-                                 <tr><td><i class="fas fa-percentage me-1"></i> Crediti Clienti</td><td>DSO: 89 giorni</td><td>Rafforzamento procedure credit management</td><td>Riduzione DSO a 70 giorni<br>+€100.000 liquidità</td><td><span class="status-badge bg-danger">Alta</span></td></tr>
-                                 <tr><td><i class="fas fa-boxes me-1"></i> Costi Operativi</td><td>Costi operativi elevati</td><td>Analisi ABC costi e implementazione piano di riduzione</td><td>Riduzione costi 8-10%<br>+€80.000-100.000 EBITDA</td><td><span class="status-badge bg-danger">Alta</span></td></tr>
-                                 <tr><td><i class="fas fa-calculator me-1"></i> Rafforzamento patrimoniale</td><td>PN/Totale Attivo: 17%</td><td>Valutare aumento di capitale o ingresso partner</td><td>Miglioramento equilibrio patrimoniale<br>Riduzione PFN/PN a <1,0</td><td><span class="status-badge bg-warning text-dark">Media</span></td></tr>
+                                 <!-- Populated dynamically from tables.json -->
                              </tbody>
                          </table>
                      </div>
@@ -313,21 +287,10 @@
                      <p class="small">Si raccomanda l'implementazione di una dashboard di controllo che monitori i seguenti KPI con cadenza mensile:</p>
                       <h6>Tabella 7.4.1: Dashboard di controllo con principali KPI</h6>
                       <div class="table-responsive">
-                         <table class="table table-sm table-bordered kpi-target-table">
+                         <table class="table table-sm table-bordered kpi-target-table" id="table-parte6-dashboard-kpi">
                             <thead class="table-light"><tr><th>Categoria</th><th>KPI</th><th>Frequenza</th><th>Target</th><th>Ultimo valore</th><th>Alert</th></tr></thead>
                             <tbody>
-                               <tr> <td rowspan="3">Redditività</td> <td>EBITDA margin</td> <td>Mensile</td> <td class="target-value">>3%</td> <td class="value-crit">-1,53%</td> <td><i class="fas fa-arrow-down text-danger"></i> < 0%</td> </tr>
-                               <tr> <td>Margine contribuzione</td> <td>Mensile</td> <td class="target-value">>10%</td> <td class="value-warn">8,56%</td> <td><i class="fas fa-arrow-down text-danger"></i> < 7%</td> </tr>
-                               <tr> <td>ROI</td> <td>Trimestrale</td> <td class="target-value">>5%</td> <td class="value-crit">-6,65%</td> <td><i class="fas fa-arrow-down text-danger"></i> < 0%</td> </tr>
-                               <tr> <td rowspan="3">Liquidità</td> <td>Cash Flow Operativo/Ricavi</td> <td>Mensile</td> <td class="target-value">>7%</td> <td class="value-ok">7,4%</td> <td><i class="fas fa-arrow-down text-danger"></i> < 5%</td> </tr>
-                               <tr> <td>DSCR</td> <td>Mensile</td> <td class="target-value">>1,0</td> <td class="value-crit">0,67</td> <td><i class="fas fa-arrow-down text-danger"></i> < 0,8</td> </tr>
-                               <tr> <td>Variazione netta di cassa</td> <td>Mensile</td> <td class="target-value">Positiva</td> <td class="value-crit">Negativa</td> <td><i class="fas fa-arrow-down text-danger"></i> Negativa per 2 mesi</td> </tr>
-                               <tr> <td rowspan="3">Capitale Circolante</td> <td>DSO (giorni crediti)</td> <td>Mensile</td> <td class="target-value">< 70 gg</td> <td class="value-crit">89 gg</td> <td><i class="fas fa-arrow-up text-danger"></i> > 90 gg</td> </tr>
-                               <tr> <td>DIO (giorni magazzino)</td> <td>Mensile</td> <td class="target-value">< 150 gg</td> <td class="value-crit">194 gg</td> <td><i class="fas fa-arrow-up text-danger"></i> > 200 gg</td> </tr>
-                               <tr> <td>Ciclo del circolante</td> <td>Mensile</td> <td class="target-value">< 120 gg</td> <td class="value-crit">167 gg</td> <td><i class="fas fa-arrow-up text-danger"></i> > 180 gg</td> </tr>
-                               <tr> <td rowspan="3">Solidità</td> <td>PFN/PN</td> <td>Trimestrale</td> <td class="target-value">< 1,5x</td> <td class="value-crit">1,92x</td> <td><i class="fas fa-arrow-up text-danger"></i> > 2,0x</td> </tr>
-                               <tr> <td>Patrimonio Netto/Totale Attivo</td> <td>Trimestrale</td> <td class="target-value">> 20%</td> <td class="value-crit">17,0%</td> <td><i class="fas fa-arrow-down text-danger"></i> < 15%</td> </tr>
-                               <tr> <td>Pipeline commerciale</td> <td>Mensile</td> <td class="target-value">> 120% budget</td> <td class="value-warn">n.d.</td> <td><i class="fas fa-arrow-down text-danger"></i> < 90% budget</td> </tr>
+                               <!-- Populated dynamically from tables.json -->
                             </tbody>
                          </table>
                       </div>
@@ -420,12 +383,202 @@
                     }
                 }
 
+                populateParte6Tables();
                 renderParte6Charts();
                 console.log('✅ Report Parte 6 inizializzato');
             } catch (error) {
                 console.error('❌ Errore inizializzazione Report Parte 6:', error);
             }
         });
+
+        // Helper functions
+        function formatNumber(num) {
+            return num ? num.toLocaleString('it-IT') : 'N/D';
+        }
+
+        function formatPercentage(num) {
+            if (num === null || num === undefined) return 'N/D';
+            if (typeof num === 'string' && num.includes('%')) return num;
+            return num.toFixed(2) + '%';
+        }
+
+        function getStatusBadge(interpretazione) {
+            if (!interpretazione) return interpretazione;
+            const lower = interpretazione.toLowerCase();
+            if (lower.includes('critico') || lower.includes('elevat') || lower.includes('default') || lower.includes('rischio')) {
+                return `<span class="badge bg-danger">${interpretazione}</span>`;
+            } else if (lower.includes('zona grigia') || lower.includes('moderato') || lower.includes('fragilit')) {
+                return `<span class="badge bg-warning text-dark">${interpretazione}</span>`;
+            }
+            return interpretazione;
+        }
+
+        function getValueClass(valore, categoria) {
+            if (categoria === 'Redditività' || categoria === 'Liquidità') {
+                const numVal = parseFloat(valore);
+                if (isNaN(numVal)) return 'value-warn';
+                if (numVal < 0) return 'value-crit';
+                if (numVal > 5) return 'value-ok';
+                return 'value-warn';
+            } else if (categoria === 'Capitale Circolante' || categoria === 'Solidità') {
+                return 'value-crit';
+            }
+            return '';
+        }
+
+        function getPriorityBadge(priority) {
+            if (!priority) return '';
+            const lower = priority.toLowerCase();
+            if (lower.includes('alta')) {
+                return '<span class="status-badge bg-danger">Alta</span>';
+            } else if (lower.includes('media')) {
+                return '<span class="status-badge bg-warning text-dark">Media</span>';
+            } else if (lower.includes('bassa')) {
+                return '<span class="status-badge bg-success">Bassa</span>';
+            }
+            return priority;
+        }
+
+        function populateParte6Tables() {
+            // Table 1: Indicatori Rischio
+            const indicatoriData = window.dataManager.getTable('parte6_rischi', 'indicatoriRischio');
+            if (indicatoriData && indicatoriData.rows) {
+                const tbody = document.querySelector('#table-parte6-indicatori-rischio tbody');
+                if (tbody) {
+                    tbody.innerHTML = '';
+                    indicatoriData.rows.forEach(row => {
+                        const tr = document.createElement('tr');
+                        const valClass = row.valutazione && row.valutazione.toLowerCase().includes('critico') ? 'text-danger' : 'text-warning';
+                        tr.innerHTML = `
+                            <td>${row.indicatore || ''}</td>
+                            <td class="text-end">${row['2022'] || row['12/2022'] || 'N/D'}</td>
+                            <td class="text-end">${row['2023'] || row['12/2023'] || 'N/D'}</td>
+                            <td class="text-end">${row['2024'] || row['12/2024'] || 'N/D'}</td>
+                            <td>${row.trend || ''}</td>
+                            <td class="${valClass}">${row.valutazione || ''}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+            }
+
+            // Table 2: Z-Score e Rating
+            const zScoreData = window.dataManager.getTable('parte6_rischi', 'zScoreRating');
+            if (zScoreData && zScoreData.rows) {
+                const tbody = document.querySelector('#table-parte6-zscore tbody');
+                if (tbody) {
+                    tbody.innerHTML = '';
+                    zScoreData.rows.forEach(row => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${row.indicatore || ''}</td>
+                            <td class="text-end value-highlight">${row.valore || ''}</td>
+                            <td>${getStatusBadge(row.interpretazione)}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+            }
+
+            // Table 3: Red Flags
+            const redFlagsData = window.dataManager.getTable('parte6_rischi', 'redFlags');
+            if (redFlagsData && redFlagsData.rows) {
+                const tbody = document.querySelector('#table-parte6-redflags tbody');
+                if (tbody) {
+                    tbody.innerHTML = '';
+                    redFlagsData.rows.forEach(row => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${row.area || ''}</td>
+                            <td>${row.segnale || ''}</td>
+                            <td>${row.valore || ''}</td>
+                            <td>${row.rischio || ''}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+            }
+
+            // Table 4: Piano Azione
+            const pianoData = window.dataManager.getTable('parte6_rischi', 'pianoAzione');
+            if (pianoData && pianoData.rows) {
+                const tbody = document.querySelector('#table-parte6-piano-azione tbody');
+                if (tbody) {
+                    tbody.innerHTML = '';
+                    pianoData.rows.forEach(row => {
+                        const tr = document.createElement('tr');
+                        let icon = '';
+                        if (row.area && row.area.toLowerCase().includes('ristrutturazione')) {
+                            icon = '<i class="fas fa-coins me-1"></i> ';
+                        } else if (row.area && row.area.toLowerCase().includes('magazzino')) {
+                            icon = '<i class="fas fa-file-invoice me-1"></i> ';
+                        } else if (row.area && row.area.toLowerCase().includes('marginalit')) {
+                            icon = '<i class="fas fa-hand-holding-usd me-1"></i> ';
+                        } else if (row.area && row.area.toLowerCase().includes('crediti')) {
+                            icon = '<i class="fas fa-percentage me-1"></i> ';
+                        } else if (row.area && row.area.toLowerCase().includes('costi')) {
+                            icon = '<i class="fas fa-boxes me-1"></i> ';
+                        } else if (row.area && row.area.toLowerCase().includes('patrimoniale')) {
+                            icon = '<i class="fas fa-calculator me-1"></i> ';
+                        }
+
+                        tr.innerHTML = `
+                            <td>${icon}${row.area || ''}</td>
+                            <td>${row.situazione || ''}</td>
+                            <td>${row.azione || ''}</td>
+                            <td>${row.effetti || ''}</td>
+                            <td>${getPriorityBadge(row.priorita)}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+            }
+
+            // Table 5: Dashboard KPI
+            const dashboardData = window.dataManager.getTable('parte6_rischi', 'dashboardKPI');
+            if (dashboardData && dashboardData.rows) {
+                const tbody = document.querySelector('#table-parte6-dashboard-kpi tbody');
+                if (tbody) {
+                    tbody.innerHTML = '';
+                    let currentCategoria = '';
+                    let rowspanCount = 0;
+
+                    // Group rows by categoria
+                    const grouped = {};
+                    dashboardData.rows.forEach(row => {
+                        if (!grouped[row.categoria]) {
+                            grouped[row.categoria] = [];
+                        }
+                        grouped[row.categoria].push(row);
+                    });
+
+                    // Render rows with rowspan
+                    Object.keys(grouped).forEach(categoria => {
+                        const rows = grouped[categoria];
+                        rows.forEach((row, index) => {
+                            const tr = document.createElement('tr');
+                            let html = '';
+
+                            if (index === 0) {
+                                html += `<td rowspan="${rows.length}">${categoria}</td>`;
+                            }
+
+                            const valueClass = getValueClass(row.valore, categoria);
+                            html += `
+                                <td>${row.kpi || ''}</td>
+                                <td>${row.frequenza || ''}</td>
+                                <td class="target-value">${row.target || ''}</td>
+                                <td class="${valueClass}">${row.valore || ''}</td>
+                                <td>${row.alert || ''}</td>
+                            `;
+
+                            tr.innerHTML = html;
+                            tbody.appendChild(tr);
+                        });
+                    });
+                }
+            }
+        }
 
         function renderParte6Charts() {
             const chartsData = window.dataManager.getChartData('reports', 'parte6');
