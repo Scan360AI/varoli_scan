@@ -666,7 +666,7 @@
                         tr.innerHTML = `
                             <td>${row.indicatore || ''}</td>
                             <td class="text-end">${row.valore || ''}</td>
-                            <td>${getStatusBadge(row.valutazione)}</td>
+                            <td>${row.badgeHTML || getStatusBadge(row.valutazione)}</td>
                         `;
                         tbody.appendChild(tr);
                     });
@@ -688,7 +688,7 @@
                             <td>${row.formula || ''}</td>
                             <td class="text-end">${valore}</td>
                             <td>${soglia}</td>
-                            <td>${getStatusBadge(row.valutazione)}</td>
+                            <td>${row.badgeHTML || getStatusBadge(row.valutazione)}</td>
                         `;
                         tbody.appendChild(tr);
                     });

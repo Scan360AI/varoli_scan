@@ -446,7 +446,7 @@
                             <td class="text-end">${row['2022'] || row['12/2022'] || ''}</td>
                             <td class="text-end">${row['2023'] || row['12/2023'] || ''}</td>
                             <td class="text-end">${row['2024'] || row['12/2024'] || ''}</td>
-                            <td class="${row.trend && row.trend.toLowerCase().includes('miglioramento') ? 'text-warning' : 'text-success'}">${row.trend || ''}</td>
+                            <td class="${row.trendClass || (row.trend && row.trend.toLowerCase().includes('miglioramento') ? 'text-warning' : 'text-success')}">${row.trend || ''}</td>
                         `;
                         tbody.appendChild(tr);
                     });
@@ -485,7 +485,7 @@
                             }
                         }
 
-                        const valueClass = row.valore < 0 ? 'text-danger' : 'text-success';
+                        const valueClass = row.valueClass || (row.valore < 0 ? 'text-danger' : 'text-success');
                         tr.innerHTML = `
                             <td>${icon}${row.voce || ''}</td>
                             <td class="text-end ${valueClass}">${formatNumber(row.valore)}</td>

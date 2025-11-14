@@ -552,7 +552,7 @@
                             tr.classList.add('table-primary', 'fw-bold');
                         }
 
-                        const scoreClass = row.punteggioNorm ? getScoreClass(row.punteggioNorm) : '';
+                        const scoreClass = row.scoreClass || (row.punteggioNorm ? getScoreClass(row.punteggioNorm) : '');
                         const icon = getComponentIcon(row.componente);
 
                         tr.innerHTML = `
@@ -575,7 +575,7 @@
                     tbody.innerHTML = '';
                     cpDetailData.rows.forEach(row => {
                         const tr = document.createElement('tr');
-                        const scoreClass = row.punteggio ? getScoreClass(row.punteggio) : '';
+                        const scoreClass = row.scoreClass || (row.punteggio ? getScoreClass(row.punteggio) : '');
 
                         tr.innerHTML = `
                             <td><small>${row.indicatore || ''}</small></td>

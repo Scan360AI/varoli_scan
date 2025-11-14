@@ -159,7 +159,7 @@
         <div class="col-md-4 text-center mb-4 mb-md-0">
             <h6 class="card-title-small mb-3"><i class="fas fa-shield-alt me-1"></i> Indice Rischio Ponderato</h6>
             <div class="irp-score-circle risk-high" id="irp-score-circle"> <span class="irp-score-value" data-kpi="irp"></span> <span class="irp-score-max">/ 100</span> </div>
-            <div class="irp-category-text text-danger mt-2" id="irp-category-text"> <span data-value="irpCategoryLabel"></span> <span class="status-badge bg-danger" data-value="irpCategory"></span> </div>
+            <div class="irp-category-text mt-2" id="irp-category-text"> <span data-value="irpCategoryLabel"></span> <span class="status-badge" data-irp-badge="irp" data-value="irpCategory"></span> </div>
             <a href="irp_dettaglio.html" class="btn btn-sm btn-outline-primary mt-3 btn-pill">Vedi Dettaglio IRP</a>
         </div>
         <div class="col-md-8">
@@ -181,15 +181,15 @@
                  <div class="card-body">
                       <div class="row gy-4">
                           <!-- Riga 1 -->
-                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-danger"><i class="fas fa-euro-sign"></i></span> <div class="kpi-content"> <div class="kpi-title">Ricavi</div> <div class="kpi-value" data-kpi="revenue"></div> <div class="kpi-trend" data-kpi-trend="revenue"></div> </div> </div> </div>
-                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-danger"><i class="fas fa-chart-line"></i></span> <div class="kpi-content"> <div class="kpi-title">EBITDA</div> <div class="kpi-value" data-kpi="ebitda"></div> <div class="kpi-trend" data-kpi-trend="ebitda"></div> </div> </div> </div>
-                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-danger"><i class="fas fa-percentage"></i></span> <div class="kpi-content"> <div class="kpi-title">EBITDA Margin</div> <div class="kpi-value" data-kpi="ebitdaMargin"></div> <div class="kpi-trend" data-kpi-trend="ebitdaMargin"></div> </div> </div> </div>
-                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-danger"><i class="fas fa-coins"></i></span> <div class="kpi-content"> <div class="kpi-title">Utile Netto</div> <div class="kpi-value" data-kpi="netIncome"></div> <div class="kpi-trend" data-kpi-trend="netIncome"></div> </div> </div> </div>
+                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle" data-kpi-icon="revenue"><i class="fas fa-euro-sign"></i></span> <div class="kpi-content"> <div class="kpi-title">Ricavi</div> <div class="kpi-value" data-kpi="revenue"></div> <div class="kpi-trend" data-kpi-trend="revenue"></div> </div> </div> </div>
+                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle" data-kpi-icon="ebitda"><i class="fas fa-chart-line"></i></span> <div class="kpi-content"> <div class="kpi-title">EBITDA</div> <div class="kpi-value" data-kpi="ebitda"></div> <div class="kpi-trend" data-kpi-trend="ebitda"></div> </div> </div> </div>
+                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle" data-kpi-icon="ebitdaMargin"><i class="fas fa-percentage"></i></span> <div class="kpi-content"> <div class="kpi-title">EBITDA Margin</div> <div class="kpi-value" data-kpi="ebitdaMargin"></div> <div class="kpi-trend" data-kpi-trend="ebitdaMargin"></div> </div> </div> </div>
+                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle" data-kpi-icon="netIncome"><i class="fas fa-coins"></i></span> <div class="kpi-content"> <div class="kpi-title">Utile Netto</div> <div class="kpi-value" data-kpi="netIncome"></div> <div class="kpi-trend" data-kpi-trend="netIncome"></div> </div> </div> </div>
                           <!-- Riga 2 -->
-                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-danger"><i class="fas fa-landmark"></i></span> <div class="kpi-content"> <div class="kpi-title">Patrimonio Netto</div> <div class="kpi-value" data-kpi="equity"></div> <div class="kpi-trend" data-kpi-trend="equity"></div> </div> </div> </div>
-                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-success"><i class="fas fa-tint"></i></span> <div class="kpi-content"> <div class="kpi-title">Liquidità</div> <div class="kpi-value" data-kpi="liquidity"></div> <div class="kpi-trend" data-kpi-trend="liquidity"></div> </div> </div> </div>
-                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-danger"><i class="fas fa-balance-scale-right"></i></span> <div class="kpi-content"> <div class="kpi-title">PFN / EBITDA</div> <div class="kpi-value" data-kpi="pfnEbitda"></div> <div class="kpi-trend" data-kpi-trend="pfnEbitda"></div> </div> </div> </div>
-                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle bg-icon-danger"><i class="fas fa-money-bill-wave"></i></span> <div class="kpi-content"> <div class="kpi-title">Leva Finanziaria (D/E)</div> <div class="kpi-value" data-kpi="leverageDE"></div> <div class="kpi-trend" data-kpi-trend="leverageDE"></div> </div> </div> </div>
+                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle" data-kpi-icon="equity"><i class="fas fa-landmark"></i></span> <div class="kpi-content"> <div class="kpi-title">Patrimonio Netto</div> <div class="kpi-value" data-kpi="equity"></div> <div class="kpi-trend" data-kpi-trend="equity"></div> </div> </div> </div>
+                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle" data-kpi-icon="liquidity"><i class="fas fa-tint"></i></span> <div class="kpi-content"> <div class="kpi-title">Liquidità</div> <div class="kpi-value" data-kpi="liquidity"></div> <div class="kpi-trend" data-kpi-trend="liquidity"></div> </div> </div> </div>
+                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle" data-kpi-icon="pfnEbitda"><i class="fas fa-balance-scale-right"></i></span> <div class="kpi-content"> <div class="kpi-title">PFN / EBITDA</div> <div class="kpi-value" data-kpi="pfnEbitda"></div> <div class="kpi-trend" data-kpi-trend="pfnEbitda"></div> </div> </div> </div>
+                          <div class="col-lg-3 col-md-6"> <div class="kpi-card-v4"> <span class="icon-circle" data-kpi-icon="leverageDE"><i class="fas fa-money-bill-wave"></i></span> <div class="kpi-content"> <div class="kpi-title">Leva Finanziaria (D/E)</div> <div class="kpi-value" data-kpi="leverageDE"></div> <div class="kpi-trend" data-kpi-trend="leverageDE"></div> </div> </div> </div>
                       </div>
                  </div>
             </div>
@@ -348,6 +348,16 @@
                  }
              });
 
+             // Populate KPI icon colors from JSON metadata
+             document.querySelectorAll('[data-kpi-icon]').forEach(el => {
+                 const kpiKey = el.dataset.kpiIcon;
+                 const kpi = window.dataManager.getKPI(kpiKey);
+                 if (kpi && kpi.status) {
+                     // Apply bg-icon-{status} class dynamically
+                     el.classList.add(`bg-icon-${kpi.status}`);
+                 }
+             });
+
              // Populate KPI trends
              document.querySelectorAll('[data-kpi-trend]').forEach(el => {
                  const kpiKey = el.dataset.kpiTrend;
@@ -361,6 +371,28 @@
                      el.innerHTML = `<i class="fas ${icon}"></i> ${kpi.trend.displayValue}${kpi.trend.label ? ' ' + kpi.trend.label : ''}`;
                  }
              });
+
+             // Populate IRP badge with dynamic color
+             document.querySelectorAll('[data-irp-badge]').forEach(el => {
+                 const kpiKey = el.dataset.irpBadge;
+                 const kpi = window.dataManager.getKPI(kpiKey);
+                 if (kpi && kpi.status) {
+                     // Apply bg-{status} class dynamically
+                     el.classList.add(`bg-${kpi.status}`);
+                     if (kpi.status === 'warning') {
+                         el.classList.add('text-dark');
+                     }
+                 }
+             });
+
+             // Populate IRP category text color
+             const irpCategoryText = document.getElementById('irp-category-text');
+             if (irpCategoryText) {
+                 const irpKPI = window.dataManager.getKPI('irp');
+                 if (irpKPI && irpKPI.status) {
+                     irpCategoryText.classList.add(`text-${irpKPI.status}`);
+                 }
+             }
 
              // Populate standalone data values
              document.querySelectorAll('[data-value]').forEach(el => {
@@ -387,25 +419,20 @@
 
              listEl.innerHTML = '';
 
-             // Map indicators to icons and colors
-             const indicatorConfig = {
-                 'Leanus Score': { icon: 'fa-chart-bar', color: 'warning' },
-                 'Business Category': { icon: 'fa-building', color: 'info' },
-                 'Rating MCC': { icon: 'fa-university', color: 'danger' },
-                 'Z-Score': { icon: 'fa-calculator', color: 'danger' }
-             };
-
              supportTable.rows.forEach(row => {
                  const indicator = row.indicator;
                  const value = row.value;
                  const assessment = row.assessment;
-                 const config = indicatorConfig[indicator] || { icon: 'fa-info-circle', color: 'secondary' };
+                 // Use metadata from JSON or fallback
+                 const icon = row.icon || 'fa-info-circle';
+                 const iconColor = row.iconColor || 'secondary';
+                 const badgeColor = row.badgeColor || 'secondary';
 
                  const li = document.createElement('li');
                  li.className = 'col-sm-6 d-flex align-items-center';
                  li.innerHTML = `
-                     <span class="icon-circle icon-circle-sm bg-icon-${config.color} me-2"><i class="fas ${config.icon}"></i></span>
-                     <strong>${indicator}:</strong> ${value} ${assessment ? `<span class="badge bg-${config.color} ms-1">${assessment}</span>` : ''}
+                     <span class="icon-circle icon-circle-sm bg-icon-${iconColor} me-2"><i class="fas ${icon}"></i></span>
+                     <strong>${indicator}:</strong> ${value} ${assessment ? `<span class="badge bg-${badgeColor} ms-1">${assessment}</span>` : ''}
                  `;
                  listEl.appendChild(li);
              });
@@ -469,26 +496,16 @@
 
              tbody.innerHTML = '';
 
-             // Map areas to icons
-             const areaIcons = {
-                 'Redditività Operativa': 'fa-chart-line',
-                 'Gestione Magazzino': 'fa-sync-alt',
-                 'Indebitamento Finanziario': 'fa-money-bill-wave',
-                 'Diversificazione': 'fa-store',
-                 'Governance': 'fa-gavel'
-             };
-
              actionsTable.rows.forEach(row => {
                  const area = row.area;
                  const action = row.action;
                  const impact = row.impact;
                  const priority = row.priority;
 
-                 const icon = areaIcons[area] || 'fa-tasks';
-                 const badgeClass = priority === 'Alta' ? 'bg-danger' :
-                                   priority === 'Media' ? 'bg-warning text-dark' : 'bg-info';
-                 const iconColor = priority === 'Alta' ? 'bg-icon-danger' :
-                                   priority === 'Media' ? 'bg-icon-warning' : 'bg-icon-info';
+                 // Use metadata from JSON or fallback
+                 const icon = row.icon || 'fa-tasks';
+                 const badgeClass = row.badgeClass || (priority === 'Alta' ? 'bg-danger' : priority === 'Media' ? 'bg-warning text-dark' : 'bg-info');
+                 const iconColor = row.iconColor || (priority === 'Alta' ? 'bg-icon-danger' : priority === 'Media' ? 'bg-icon-warning' : 'bg-icon-info');
 
                  const tr = document.createElement('tr');
                  tr.innerHTML = `

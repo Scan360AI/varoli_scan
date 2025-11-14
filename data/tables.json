@@ -24,10 +24,10 @@
     "supportIndicators": {
       "headers": ["Indicator", "Value", "Assessment"],
       "rows": [
-        {"indicator": "Leanus Score", "value": "3", "assessment": "Discreto (Fair)"},
-        {"indicator": "Business Category", "value": "TRADER", "assessment": ""},
-        {"indicator": "Rating MCC", "value": "n.d.", "assessment": "Elevato (High)"},
-        {"indicator": "Z-Score", "value": "n.d.", "assessment": "Critico (Critical)"}
+        {"indicator": "Leanus Score", "value": "3", "assessment": "Discreto (Fair)", "icon": "fa-chart-bar", "iconColor": "warning", "badgeColor": "warning"},
+        {"indicator": "Business Category", "value": "TRADER", "assessment": "", "icon": "fa-building", "iconColor": "info", "badgeColor": "info"},
+        {"indicator": "Rating MCC", "value": "n.d.", "assessment": "Elevato (High)", "icon": "fa-university", "iconColor": "danger", "badgeColor": "danger"},
+        {"indicator": "Z-Score", "value": "n.d.", "assessment": "Critico (Critical)", "icon": "fa-calculator", "iconColor": "danger", "badgeColor": "danger"}
       ]
     },
     "swot": {
@@ -67,31 +67,46 @@
           "area": "Redditività Operativa",
           "action": "Revisione struttura dei costi e pricing strategico",
           "impact": "Miglioramento EBITDA di circa €120.000-€150.000",
-          "priority": "Alta"
+          "priority": "Alta",
+          "icon": "fa-chart-line",
+          "iconColor": "bg-icon-danger",
+          "badgeClass": "bg-danger"
         },
         {
           "area": "Gestione Magazzino",
           "action": "Implementare sistema di gestione scorte con modello EOQ",
           "impact": "Liberazione di circa €250.000 di capitale circolante",
-          "priority": "Alta"
+          "priority": "Alta",
+          "icon": "fa-sync-alt",
+          "iconColor": "bg-icon-danger",
+          "badgeClass": "bg-danger"
         },
         {
           "area": "Indebitamento Finanziario",
           "action": "Ristrutturazione debito e valorizzazione asset non strategici",
           "impact": "Riduzione PFN a €700.000",
-          "priority": "Alta"
+          "priority": "Alta",
+          "icon": "fa-money-bill-wave",
+          "iconColor": "bg-icon-danger",
+          "badgeClass": "bg-danger"
         },
         {
           "area": "Diversificazione",
           "action": "Espansione gamma con prodotti complementari ad alta marginalità",
           "impact": "Investimento di €70.000-€100.000 con ROI >15%",
-          "priority": "Media"
+          "priority": "Media",
+          "icon": "fa-store",
+          "iconColor": "bg-icon-warning",
+          "badgeClass": "bg-warning text-dark"
         },
         {
           "area": "Governance",
           "action": "Formalizzare \"adeguati assetti\" e sistema di monitoraggio",
           "impact": "Mitigazione rischi e conformità normativa",
-          "priority": "Media"
+          "priority": "Media",
+          "icon": "fa-gavel",
+          "iconColor": "bg-icon-warning",
+          "badgeClass": "bg-warning text-dark"
         }
       ]
     }

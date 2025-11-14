@@ -448,7 +448,7 @@
                     tbody.innerHTML = '';
                     indicatoriData.rows.forEach(row => {
                         const tr = document.createElement('tr');
-                        const valClass = row.valutazione && row.valutazione.toLowerCase().includes('critico') ? 'text-danger' : 'text-warning';
+                        const valClass = row.valClass || (row.valutazione && row.valutazione.toLowerCase().includes('critico') ? 'text-danger' : 'text-warning');
                         tr.innerHTML = `
                             <td>${row.indicatore || ''}</td>
                             <td class="text-end">${row['2022'] || row['12/2022'] || 'N/D'}</td>
@@ -473,7 +473,7 @@
                         tr.innerHTML = `
                             <td>${row.indicatore || ''}</td>
                             <td class="text-end value-highlight">${row.valore || ''}</td>
-                            <td>${getStatusBadge(row.interpretazione)}</td>
+                            <td>${row.badgeHTML || getStatusBadge(row.interpretazione)}</td>
                         `;
                         tbody.appendChild(tr);
                     });
@@ -527,7 +527,7 @@
                             <td>${row.situazione || ''}</td>
                             <td>${row.azione || ''}</td>
                             <td>${row.effetti || ''}</td>
-                            <td>${getPriorityBadge(row.priorita)}</td>
+                            <td>${row.priorityHTML || getPriorityBadge(row.priorita)}</td>
                         `;
                         tbody.appendChild(tr);
                     });

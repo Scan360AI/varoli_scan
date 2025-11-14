@@ -522,7 +522,7 @@
                          const tr = document.createElement('tr');
                          if (row.highlight) tr.classList.add('table-success', 'fw-bold');
 
-                         const varClass = row.var !== null && row.var < 0 ? 'text-danger' : 'text-success';
+                         const varClass = row.varClass || (row.var !== null && row.var < 0 ? 'text-danger' : 'text-success');
 
                          tr.innerHTML = `
                              <td>${row.voce}</td>
@@ -547,7 +547,7 @@
                      tbody.innerHTML = '';
                      composizioneCostiData.rows.forEach(row => {
                          const tr = document.createElement('tr');
-                         const varClass = row.var !== null && row.var < 0 ? 'text-success' : 'text-danger';
+                         const varClass = row.varClass || (row.var !== null && row.var < 0 ? 'text-success' : 'text-danger');
 
                          tr.innerHTML = `
                              <td>${row.categoria}</td>
@@ -558,7 +558,7 @@
                              <td class="text-end">${row['2024'] !== null ? formatNumber(row['2024']) : 'n.d.'}</td>
                              <td class="text-end">${row.pct2024 !== null ? formatPercentage(row.pct2024) : 'n.d.'}</td>
                              <td class="${varClass}">${row.var !== null ? formatPercentage(row.var) : 'n.d.'}</td>
-                             <td><span class="status-badge ${getBadgeClass(row.valutazione)}">${row.valutazione || 'N/D'}</span></td>
+                             <td><span class="status-badge ${row.badgeClass || getBadgeClass(row.valutazione)}">${row.valutazione || 'N/D'}</span></td>
                          `;
                          tbody.appendChild(tr);
                      });
@@ -605,7 +605,7 @@
                              <td class="text-end">${row['2023'] !== null ? formatPercentage(row['2023']) : 'n.d.'}</td>
                              <td class="text-end">${row['2024'] !== null ? (row.indice === 'Turnover' ? formatDecimal(row['2024']) : formatPercentage(row['2024'])) : 'n.d.'}</td>
                              <td>> ${row.soglia}${row.indice === 'Turnover' ? '' : '%'}</td>
-                             <td><span class="status-badge ${getBadgeClass(row.valutazione)}">${row.valutazione}</span></td>
+                             <td><span class="status-badge ${row.badgeClass || getBadgeClass(row.valutazione)}">${row.valutazione}</span></td>
                          `;
                          tbody.appendChild(tr);
                      });
@@ -675,14 +675,14 @@
                              gapValue = (row.gap >= 0 ? '+' : '') + formatDecimal(row.gap, 2) + ' p.p.';
                          }
 
-                         const gapClass = row.gap < 0 && !row.indicatore.includes('Giorni Crediti') ? 'text-danger' : (row.gap > 0 && row.indicatore.includes('Giorni Crediti') ? 'text-success' : '');
+                         const gapClass = row.gapClass || (row.gap < 0 && !row.indicatore.includes('Giorni Crediti') ? 'text-danger' : (row.gap > 0 && row.indicatore.includes('Giorni Crediti') ? 'text-success' : ''));
 
                          tr.innerHTML = `
                              <td>${row.indicatore}</td>
                              <td>${varoliValue}</td>
                              <td>${settoreValue}</td>
                              <td class="${gapClass}">${gapValue}</td>
-                             <td><span class="status-badge ${getBadgeClass(row.valutazione)}">${row.valutazione}</span></td>
+                             <td><span class="status-badge ${row.badgeClass || getBadgeClass(row.valutazione)}">${row.valutazione}</span></td>
                          `;
                          tbody.appendChild(tr);
                      });

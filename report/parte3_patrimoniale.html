@@ -337,7 +337,7 @@
                             tr.innerHTML = `<td>${row.categoria}</td>`;
                         }
 
-                        const varClass = row.var !== null && row.var < 0 ? 'text-danger' : 'text-success';
+                        const varClass = row.varClass || (row.var !== null && row.var < 0 ? 'text-danger' : 'text-success');
                         const isBold = row.highlight || (row.categoria && row.categoria.includes('Totale'));
 
                         if (isBold && !tr.innerHTML) {
@@ -378,7 +378,7 @@
                             tr.classList.add('table-primary', 'fw-bold');
                         }
 
-                        const varClass = row.var !== null && row.var < 0 ? 'text-danger' : 'text-success';
+                        const varClass = row.varClass || (row.var !== null && row.var < 0 ? 'text-danger' : 'text-success');
                         const isBold = row.highlight || (row.categoria && row.categoria.includes('Passività Correnti'));
 
                         if (isBold) {
@@ -432,7 +432,7 @@
                             tr.classList.add('table-secondary');
                         }
 
-                        const varClass = row.var !== null && row.var < 0 ? 'text-danger' : 'text-success';
+                        const varClass = row.varClass || (row.var !== null && row.var < 0 ? 'text-danger' : 'text-success');
 
                         // Format values based on component type
                         let val2022, val2023, val2024, varVal;
@@ -492,7 +492,7 @@
                             <td class="text-end">${val2022}</td>
                             <td class="text-end">${val2023}</td>
                             <td class="text-end">${val2024}</td>
-                            <td><span class="status-badge ${getBadgeClass(row.valutazione)}">${row.valutazione}</span></td>
+                            <td><span class="status-badge ${row.badgeClass || getBadgeClass(row.valutazione)}">${row.valutazione}</span></td>
                         `;
                         tbody.appendChild(tr);
                     });
