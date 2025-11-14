@@ -603,93 +603,155 @@
     <!-- Script JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <script src="../js/common.js"></script>
-    <script src="../js/charts_config.js"></script>
-    <script src="../js/report_init.js"></script>
-     <script>
+    <script src="../js/data-manager.js"></script>
+
+    <script>
         document.getElementById('currentYearSidebar').textContent = new Date().getFullYear();
         document.getElementById('currentYearFooterReport').textContent = new Date().getFullYear();
 
-         // Script aggiornamento badge IRP header
-         document.addEventListener('DOMContentLoaded', function() {
-             const irpScoreValue = 51.42; // IRP Score value
-             let irpBadgeClass = 'bg-danger';
-             let irpCategory = 'D+';
-             
-             if (irpScoreValue >= 90) {
-                 irpBadgeClass = 'bg-success';
-                 irpCategory = 'A';
-             } else if (irpScoreValue >= 80) {
-                 irpBadgeClass = 'bg-success';
-                 irpCategory = 'B+';
-             } else if (irpScoreValue >= 75) {
-                 irpBadgeClass = 'bg-success';
-                 irpCategory = 'B';
-             } else if (irpScoreValue >= 60) {
-                 irpBadgeClass = 'bg-warning';
-                 irpCategory = 'C';
-             } else if (irpScoreValue >= 45) {
-                 irpBadgeClass = 'bg-danger';
-                 irpCategory = 'D';
-             } else {
-                 irpBadgeClass = 'bg-danger';
-                 irpCategory = 'E';
-             }
-             
-             document.getElementById('irp-header-badge').className = `badge ${irpBadgeClass} me-3`;
-             document.getElementById('irp-header-badge').innerHTML = `<i class="fas fa-shield-alt me-1"></i> IRP: ${irpScoreValue} (${irpCategory})`;
-         });
+        window.logout = function() { window.location.href = "../index.html"; };
+        window.printDocument = function() { window.print(); };
 
-        // Chart per sostenibilità debito
-        document.addEventListener('DOMContentLoaded', function() {
-            const ctx = document.getElementById('debtSustainabilityChart').getContext('2d');
-            const debtSustainabilityChart = new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: ['PFN/EBITDA', 'Leva (D/E)', 'DSCR', 'Autonomia', 'Liquidità', 'CFO/Ricavi'],
-                    datasets: [{
-                        label: '2023',
-                        data: [70, 65, 75, 60, 75, 70],
-                        borderColor: 'rgba(54, 162, 235, 0.8)',
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        borderWidth: 2
-                    }, {
-                        label: '2024',
-                        data: [20, 40, 65, 50, 70, 45],
-                        borderColor: 'rgba(255, 99, 132, 0.8)',
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                        borderWidth: 2
-                    }]
-                },
-                options: {
-                    scales: {
-                        r: {
-                            min: 0,
-                            max: 100,
-                            beginAtZero: true,
-                            ticks: {
-                                display: false
-                            }
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                await window.dataManager.loadAll();
+
+                // Populate company name
+                const companyName = window.dataManager.getCompanyName();
+                if (companyName) {
+                    document.querySelectorAll('.company-name, .sidebar-header h5, button[id="userMenuButton"]').forEach(el => {
+                        if (el.tagName === 'BUTTON') {
+                            el.innerHTML = `<i class="fas fa-user-circle me-1"></i> ${companyName}`;
+                        } else {
+                            el.textContent = companyName;
                         }
-                    },
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'bottom'
-                        }
+                    });
+                }
+
+                // Update IRP badge
+                const irpKPI = window.dataManager.getKPI('irp');
+                if (irpKPI) {
+                    const irpHeaderBadge = document.getElementById('irp-header-badge');
+                    if (irpHeaderBadge) {
+                        const badgeClass = irpKPI.status === 'danger' ? 'bg-danger' :
+                                         irpKPI.status === 'warning' ? 'bg-warning text-dark' : 'bg-success';
+                        irpHeaderBadge.className = `badge ${badgeClass} me-3`;
+                        irpHeaderBadge.textContent = `IRP: ${irpKPI.displayValue}`;
                     }
                 }
-            });
+
+                renderParte4Charts();
+                console.log('✅ Report Parte 4 inizializzato');
+            } catch (error) {
+                console.error('❌ Errore inizializzazione Report Parte 4:', error);
+            }
         });
 
-        function printDocument() {
-            window.print();
-        }
+        function renderParte4Charts() {
+            const chartsData = window.dataManager.getChartData('reports', 'parte4');
+            if (!chartsData) return;
 
-        function logout() {
-            window.location.href = "../index.html";
+            // Debt Sustainability Chart
+            if (chartsData.debtSustainabilityChart) {
+                const ctx = document.getElementById('debtSustainabilityChart');
+                if (ctx && !Chart.getChart(ctx)) {
+                    const data = chartsData.debtSustainabilityChart;
+                    new Chart(ctx, {
+                        type: 'radar',
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                label: data.datasets.company.label,
+                                data: data.datasets.company.data,
+                                borderColor: 'rgba(255, 99, 132, 0.8)',
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                borderWidth: 2
+                            }, {
+                                label: data.datasets.target.label,
+                                data: data.datasets.target.data,
+                                borderColor: 'rgba(54, 162, 235, 0.8)',
+                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                borderWidth: 2
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                r: {
+                                    min: 0,
+                                    max: 100,
+                                    beginAtZero: true,
+                                    ticks: { display: false }
+                                }
+                            },
+                            plugins: {
+                                legend: { display: true, position: 'bottom' }
+                            }
+                        }
+                    });
+                }
+            }
+
+            // Debt Cost Chart
+            if (chartsData.debtCostChart) {
+                const ctx = document.getElementById('debtCostChart');
+                if (ctx && !Chart.getChart(ctx)) {
+                    const data = chartsData.debtCostChart;
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                label: data.datasets.ebitda.label,
+                                data: data.datasets.ebitda.data,
+                                type: 'bar',
+                                backgroundColor: 'rgba(75, 192, 192, 0.8)'
+                            }, {
+                                label: data.datasets.debtCapacity.label,
+                                data: data.datasets.debtCapacity.data,
+                                type: 'line',
+                                borderColor: 'rgba(255, 99, 132, 1)',
+                                borderWidth: 2
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { position: 'bottom' }
+                            }
+                        }
+                    });
+                }
+            }
+
+            // Financial Debt Chart
+            if (chartsData.financialDebtChart) {
+                const ctx = document.getElementById('financialDebtChart');
+                if (ctx && !Chart.getChart(ctx)) {
+                    const data = chartsData.financialDebtChart;
+                    new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                data: data.datasets.values.data,
+                                backgroundColor: ['rgba(255, 99, 132, 0.8)', 'rgba(54, 162, 235, 0.8)']
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { position: 'bottom' }
+                            }
+                        }
+                    });
+                }
+            }
         }
-     </script>
+    </script>
 <scan-chat data-bot-id="a944ec72-81f6-4a0a-84da-a8ced9377979"></scan-chat>
 <script src="../js/bundle.js"></script>
 </body>

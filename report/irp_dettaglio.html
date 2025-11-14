@@ -405,81 +405,128 @@
 
     <!-- Script JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <!-- Chart.js non serve qui -->
-    <script src="../js/common.js"></script> <!-- Adjusted Path -->
-    <!-- Non servono scripts grafici -->
-     <script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="../js/data-manager.js"></script>
+
+    <script>
         document.getElementById('currentYearSidebar').textContent = new Date().getFullYear();
         document.getElementById('currentYearFooterReport').textContent = new Date().getFullYear();
 
-         // Script aggiornamento badge IRP header e colori sezione IRP
-         document.addEventListener('DOMContentLoaded', function() {
-             const irpScoreValue = 51.42; // Updated IRP Value for VAROLI GUIDO E FIGLIO S.R.L.
-             const irpHeaderBadge = document.getElementById('irp-header-badge');
-             const irpSection = document.getElementById('irp-summary-section');
-             const scoreCircle = document.querySelector('.irp-score-circle');
-             const categoryTextElement = document.querySelector('.irp-category-text');
-             const categoryBadge = categoryTextElement ? categoryTextElement.querySelector('.status-badge') : null;
+        window.logout = function() { window.location.href = "../index.html"; };
+        window.printDocument = function() { window.print(); };
 
-             let badgeHeaderClass = 'bg-danger'; let sectionBorderClass = 'risk-high'; let circleClass = 'risk-high';
-             let categoryText = 'elevato'; let categoryTextColor = 'text-danger'; let badgeClass = 'bg-danger'; let categoryBadgeText = 'D+'; let categoryBadgeTextColor = '';
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                await window.dataManager.loadAll();
 
-             if (irpHeaderBadge) { irpHeaderBadge.className = `badge ${badgeHeaderClass} me-3`; irpHeaderBadge.textContent = `IRP: ${irpScoreValue.toFixed(1)}`; }
-             if(irpSection) { irpSection.classList.remove('risk-low', 'risk-medium', 'risk-high'); irpSection.classList.add(sectionBorderClass); }
-             if(scoreCircle) { scoreCircle.classList.remove('risk-low', 'risk-medium', 'risk-high'); scoreCircle.classList.add(circleClass); }
-             if(categoryTextElement && categoryBadge) {
-                 categoryTextElement.classList.remove('text-success', 'text-warning', 'text-danger');
-                 categoryTextElement.textContent = `Rischio ${categoryText} `; categoryTextElement.classList.add(categoryTextColor);
-                 categoryBadge.className = `status-badge ${badgeClass}`; // Reset classes first
-                 categoryBadge.textContent = categoryBadgeText;
-                 if(categoryBadgeTextColor) categoryBadge.classList.add(categoryBadgeTextColor); else categoryBadge.classList.remove('text-dark');
-                 categoryTextElement.appendChild(categoryBadge);
-             }
-         });
-
-        // Script per posizionare e colorare il punto Z-Score
-        document.addEventListener('DOMContentLoaded', function() {
-            const zScoreValue = 2.45; // Updated Z-Score Value for VAROLI GUIDO E FIGLIO S.R.L.
-            const indicatorDot = document.getElementById('zscore-indicator');
-            const indicatorLabel = document.getElementById('zscore-indicator-label');
-            const progressBarContainer = document.querySelector('.zscore-scale-container');
-
-            if (indicatorDot && indicatorLabel && progressBarContainer) {
-                const lowRiskThreshold = 1.81;
-                const safeZoneThreshold = 2.99;
-                const scaleMin = 0;
-                const scaleMax = 8; // Adjusted for VAROLI GUIDO E FIGLIO's Z-Score range
-
-                let positionPercent = ((zScoreValue - scaleMin) / (scaleMax - scaleMin)) * 100;
-                positionPercent = Math.max(0, Math.min(100, positionPercent)); // Limit 0-100%
-
-                indicatorDot.style.left = `${positionPercent}%`;
-                indicatorLabel.textContent = zScoreValue.toFixed(2);
-
-                indicatorDot.classList.remove('zone-danger', 'zone-warning', 'zone-success');
-                if (zScoreValue < lowRiskThreshold) {
-                    indicatorDot.classList.add('zone-danger');
-                } else if (zScoreValue < safeZoneThreshold) {
-                    indicatorDot.classList.add('zone-warning');
-                } else {
-                    indicatorDot.classList.add('zone-success'); // VAROLI GUIDO E FIGLIO is in safe zone
+                // Populate company name
+                const companyName = window.dataManager.getCompanyName();
+                if (companyName) {
+                    document.querySelectorAll('.company-name, .sidebar-header h5, button[id="userMenuButton"]').forEach(el => {
+                        if (el.tagName === 'BUTTON') {
+                            el.innerHTML = `<i class="fas fa-user-circle me-1"></i> ${companyName}`;
+                        } else {
+                            el.textContent = companyName;
+                        }
+                    });
                 }
-            } else {
-                console.error("Elementi per l'indicatore Z-Score non trovati:", {indicatorDot, indicatorLabel, progressBarContainer});
+
+                // Update IRP badge and visual elements
+                const irpKPI = window.dataManager.getKPI('irp');
+                if (irpKPI) {
+                    const irpScoreValue = parseFloat(irpKPI.value);
+
+                    // Update header badge
+                    const irpHeaderBadge = document.getElementById('irp-header-badge');
+                    if (irpHeaderBadge) {
+                        const badgeClass = irpKPI.status === 'danger' ? 'bg-danger' :
+                                         irpKPI.status === 'warning' ? 'bg-warning text-dark' : 'bg-success';
+                        irpHeaderBadge.className = `badge ${badgeClass} me-3`;
+                        irpHeaderBadge.textContent = `IRP: ${irpKPI.displayValue}`;
+                    }
+
+                    // Update IRP section visual elements
+                    const irpSection = document.getElementById('irp-summary-section');
+                    const scoreCircle = document.querySelector('.irp-score-circle');
+                    const categoryTextElement = document.querySelector('.irp-category-text');
+                    const categoryBadge = categoryTextElement ? categoryTextElement.querySelector('.status-badge') : null;
+
+                    let sectionBorderClass = irpKPI.status === 'danger' ? 'risk-high' :
+                                           irpKPI.status === 'warning' ? 'risk-medium' : 'risk-low';
+                    let circleClass = sectionBorderClass;
+                    let categoryText = irpKPI.status === 'danger' ? 'elevato' :
+                                      irpKPI.status === 'warning' ? 'medio' : 'basso';
+                    let categoryTextColor = irpKPI.status === 'danger' ? 'text-danger' :
+                                          irpKPI.status === 'warning' ? 'text-warning' : 'text-success';
+                    let badgeClass = irpKPI.status === 'danger' ? 'bg-danger' :
+                                    irpKPI.status === 'warning' ? 'bg-warning' : 'bg-success';
+
+                    if (irpSection) {
+                        irpSection.classList.remove('risk-low', 'risk-medium', 'risk-high');
+                        irpSection.classList.add(sectionBorderClass);
+                    }
+                    if (scoreCircle) {
+                        scoreCircle.classList.remove('risk-low', 'risk-medium', 'risk-high');
+                        scoreCircle.classList.add(circleClass);
+                    }
+                    if (categoryTextElement && categoryBadge) {
+                        categoryTextElement.classList.remove('text-success', 'text-warning', 'text-danger');
+                        categoryTextElement.textContent = `Rischio ${categoryText} `;
+                        categoryTextElement.classList.add(categoryTextColor);
+                        categoryBadge.className = `status-badge ${badgeClass}`;
+                        categoryBadge.textContent = irpKPI.category || 'D+';
+                        if (irpKPI.status === 'warning') categoryBadge.classList.add('text-dark');
+                        categoryTextElement.appendChild(categoryBadge);
+                    }
+
+                    // Update IRP score display
+                    const irpScoreValueEl = document.querySelector('.irp-score-value');
+                    if (irpScoreValueEl) {
+                        irpScoreValueEl.textContent = irpScoreValue.toFixed(2);
+                    }
+
+                    // Update IRP marker position
+                    const irpMarker = document.querySelector('.irp-marker');
+                    if (irpMarker) {
+                        irpMarker.style.left = `${irpScoreValue}%`;
+                        irpMarker.title = `IRP: ${irpScoreValue.toFixed(2)}`;
+                    }
+                }
+
+                // Update Z-Score indicator
+                const zScoreKPI = window.dataManager.getKPI('zScore');
+                if (zScoreKPI) {
+                    const zScoreValue = parseFloat(zScoreKPI.value);
+                    const indicatorDot = document.getElementById('zscore-indicator');
+                    const indicatorLabel = document.getElementById('zscore-indicator-label');
+
+                    if (indicatorDot && indicatorLabel) {
+                        const lowRiskThreshold = 1.81;
+                        const safeZoneThreshold = 2.99;
+                        const scaleMin = 0;
+                        const scaleMax = 8;
+
+                        let positionPercent = ((zScoreValue - scaleMin) / (scaleMax - scaleMin)) * 100;
+                        positionPercent = Math.max(0, Math.min(100, positionPercent));
+
+                        indicatorDot.style.left = `${positionPercent}%`;
+                        indicatorLabel.textContent = zScoreValue.toFixed(2);
+
+                        indicatorDot.classList.remove('zone-danger', 'zone-warning', 'zone-success');
+                        if (zScoreValue < lowRiskThreshold) {
+                            indicatorDot.classList.add('zone-danger');
+                        } else if (zScoreValue < safeZoneThreshold) {
+                            indicatorDot.classList.add('zone-warning');
+                        } else {
+                            indicatorDot.classList.add('zone-success');
+                        }
+                    }
+                }
+
+                console.log('✅ Report IRP Dettaglio inizializzato');
+            } catch (error) {
+                console.error('❌ Errore inizializzazione Report IRP Dettaglio:', error);
             }
-
-            // Ensure logout function is defined
-             if (typeof logout !== 'function') {
-                 window.logout = function() {
-                    console.log("Logout action triggered (placeholder)");
-                }
-             }
-             // Ensure print function is defined
-             if (typeof printDocument !== 'function') {
-                window.printDocument = function() {
-                    window.print();
-                }
-             }
         });
     </script>
     <scan-chat data-bot-id="a944ec72-81f6-4a0a-84da-a8ced9377979"></scan-chat>

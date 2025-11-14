@@ -272,251 +272,168 @@
     <!-- Script JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    
+    <script src="../js/data-manager.js"></script>
+
     <script>
-        // Set current year
         document.getElementById('currentYearSidebar').textContent = new Date().getFullYear();
         document.getElementById('currentYearFooterReport').textContent = new Date().getFullYear();
 
-        // Initialize page when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            // Update IRP badge
-            const irpScoreValue = 51.42;
-            const irpHeaderBadge = document.getElementById('irp-header-badge');
-            if(irpHeaderBadge) {
-                let badgeClass = 'bg-warning text-dark';
-                if (irpScoreValue >= 80) badgeClass = 'bg-success';
-                else if (irpScoreValue < 60) badgeClass = 'bg-danger';
-                irpHeaderBadge.className = `badge ${badgeClass} me-3`;
-                irpHeaderBadge.textContent = `IRP: ${irpScoreValue.toFixed(1)}`;
-            }
+        window.logout = function() { console.log("Logout action triggered"); };
+        window.printDocument = function() { window.print(); };
 
-            // Define utility functions
-            window.logout = function() {
-                console.log("Logout action triggered");
-            };
-            
-            window.printDocument = function() {
-                window.print();
-            };
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                await window.dataManager.loadAll();
 
-            // Initialize charts immediately after DOM is ready
-            initializeCharts();
-        });
-
-        // Backup initialization for charts
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                if (typeof Chart !== 'undefined') {
-                    // Re-initialize only if charts haven't been created yet
-                    const existingCharts = document.querySelectorAll('canvas');
-                    let hasCharts = false;
-                    existingCharts.forEach(canvas => {
-                        if (Chart.getChart(canvas)) {
-                            hasCharts = true;
+                // Populate company name
+                const companyName = window.dataManager.getCompanyName();
+                if (companyName) {
+                    document.querySelectorAll('.company-name, .sidebar-header h5, button[id="userMenuButton"]').forEach(el => {
+                        if (el.tagName === 'BUTTON') {
+                            el.innerHTML = `<i class="fas fa-user-circle me-1"></i> ${companyName}`;
+                        } else {
+                            el.textContent = companyName;
                         }
                     });
-                    if (!hasCharts) {
-                        initializeCharts();
+                }
+
+                // Update IRP badge
+                const irpKPI = window.dataManager.getKPI('irp');
+                if (irpKPI) {
+                    const irpHeaderBadge = document.getElementById('irp-header-badge');
+                    if (irpHeaderBadge) {
+                        const badgeClass = irpKPI.status === 'danger' ? 'bg-danger' :
+                                         irpKPI.status === 'warning' ? 'bg-warning text-dark' : 'bg-success';
+                        irpHeaderBadge.className = `badge ${badgeClass} me-3`;
+                        irpHeaderBadge.textContent = `IRP: ${irpKPI.displayValue}`;
                     }
                 }
-            }, 1000);
+
+                renderParte3Charts();
+                console.log('✅ Report Parte 3 inizializzato');
+            } catch (error) {
+                console.error('❌ Errore inizializzazione Report Parte 3:', error);
+            }
         });
 
-        function initializeCharts() {
-            // Check if Chart.js is available
-            if (typeof Chart === 'undefined') {
-                console.error('Chart.js non disponibile');
-                return;
-            }
+        function renderParte3Charts() {
+            const chartsData = window.dataManager.getChartData('reports', 'parte3');
+            if (!chartsData) return;
 
-            console.log('Inizializzazione grafici...');
-            
-            // Grafico 3.1: Composizione Impieghi 2024
-            const assetsCtx = document.getElementById('assetsChart');
-            if (assetsCtx && !Chart.getChart(assetsCtx)) {
-                console.log('Creando grafico assetsChart...');
-                new Chart(assetsCtx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Liquidità', 'Crediti Clienti', 'Rimanenze', 'Altri Crediti', 'Immobilizzazioni'],
-                        datasets: [{
-                            data: [15.6, 14.2, 46.8, 3.6, 19.8],
-                            backgroundColor: ['#28a745', '#17a2b8', '#ffc107', '#6c757d', '#6f42c1']
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'bottom'
-                            }
-                        }
-                    }
-                });
-            }
-
-            // Grafico 3.2: Composizione Fonti 2024
-            const liabilitiesCtx = document.getElementById('liabilitiesChart');
-            if (liabilitiesCtx && !Chart.getChart(liabilitiesCtx)) {
-                console.log('Creando grafico liabilitiesChart...');
-                new Chart(liabilitiesCtx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Patrimonio Netto', 'Passività Correnti', 'Fondi', 'Debiti Finanziari'],
-                        datasets: [{
-                            data: [17.5, 23.2, 3.5, 55.8],
-                            backgroundColor: ['#28a745', '#dc3545', '#6c757d', '#fd7e14']
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'bottom'
-                            }
-                        }
-                    }
-                });
-            }
-
-            // Grafico 3.3: Evoluzione Struttura Impieghi
-            const investmentsCtx = document.getElementById('investmentsStructureChart');
-            if (investmentsCtx && !Chart.getChart(investmentsCtx)) {
-                console.log('Creando grafico investmentsStructureChart...');
-                new Chart(investmentsCtx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['2022', '2023', '2024'],
-                        datasets: [{
-                            label: 'Attivo Circolante',
-                            data: [1869726, 1995911, 1828448],
-                            backgroundColor: '#17a2b8'
-                        }, {
-                            label: 'Immobilizzazioni',
-                            data: [562981, 542153, 454485],
-                            backgroundColor: '#6f42c1'
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            x: {
-                                stacked: true
-                            },
-                            y: {
-                                stacked: true
-                            }
-                        }
-                    }
-                });
-            }
-
-            // Grafico 3.4: Composizione Patrimonio Netto 2024
-            const equityCtx = document.getElementById('equityCompositionChart');
-            if (equityCtx && !Chart.getChart(equityCtx)) {
-                console.log('Creando grafico equityCompositionChart...');
-                new Chart(equityCtx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Capitale Sociale', 'Riserve', 'Perdita'],
-                        datasets: [{
-                            data: [51.6, 79.5, -31.1],
-                            backgroundColor: ['#007bff', '#28a745', '#dc3545']
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'bottom'
-                            }
-                        }
-                    }
-                });
-            }
-
-            // Grafico 3.5: Composizione Passività Correnti 2024
-            const currentLiabilitiesCtx = document.getElementById('currentLiabilitiesChart');
-            if (currentLiabilitiesCtx && !Chart.getChart(currentLiabilitiesCtx)) {
-                console.log('Creando grafico currentLiabilitiesChart...');
-                try {
-                    new Chart(currentLiabilitiesCtx, {
-                        type: 'doughnut',
+            // Assets Chart
+            if (chartsData.assetsChart) {
+                const ctx = document.getElementById('assetsChart');
+                if (ctx && !Chart.getChart(ctx)) {
+                    new Chart(ctx, {
+                        type: 'pie',
                         data: {
-                            labels: ['Debiti Fornitori', 'Altri Debiti'],
+                            labels: chartsData.assetsChart.labels,
                             datasets: [{
-                                data: [388221, 140993],
-                                backgroundColor: ['#fd7e14', '#e83e8c']
+                                data: chartsData.assetsChart.datasets.values.data,
+                                backgroundColor: ['#28a745', '#17a2b8', '#ffc107', '#6c757d', '#6f42c1', '#007bff']
                             }]
                         },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            plugins: {
-                                legend: {
-                                    position: 'bottom'
-                                },
-                                tooltip: {
-                                    callbacks: {
-                                        label: function(context) {
-                                            const ds = context.chart.data.datasets[context.datasetIndex];
-                                            const arr = Array.isArray(ds?.data) ? ds.data : [];
-                                            const total = arr.reduce((a, b) => a + b, 0);
-                                            const value = Number(context.raw) || 0;
-                                            const percentage = total ? ((value / total) * 100).toFixed(1) : '0.0';
-                                            return `${context.label}: €${value.toLocaleString()} (${percentage}%)`;
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
                     });
-                    console.log('Grafico 3.5 creato con successo!');
-                } catch (error) {
-                    console.error('Errore creazione grafico 3.5:', error);
                 }
             }
 
-            // Grafico 4.1: Evoluzione PFN
-            const pfnCtx = document.getElementById('pfnTrendChart');
-            if (pfnCtx && !Chart.getChart(pfnCtx)) {
-                console.log('Creando grafico pfnTrendChart...');
-                new Chart(pfnCtx, {
-                    type: 'line',
-                    data: {
-                        labels: ['2022', '2023', '2024'],
-                        datasets: [{
-                            label: 'Liquidità',
-                            data: [331275, 424881, 355443],
-                            borderColor: '#28a745',
-                            backgroundColor: '#28a745',
-                            fill: false
-                        }, {
-                            label: 'Debiti Finanziari',
-                            data: [1140362, 1163776, 1275053],
-                            borderColor: '#dc3545',
-                            backgroundColor: '#dc3545',
-                            fill: false
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
+            // Liabilities Chart
+            if (chartsData.liabilitiesChart) {
+                const ctx = document.getElementById('liabilitiesChart');
+                if (ctx && !Chart.getChart(ctx)) {
+                    new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: chartsData.liabilitiesChart.labels,
+                            datasets: [{
+                                data: chartsData.liabilitiesChart.datasets.values.data,
+                                backgroundColor: ['#28a745', '#dc3545', '#6c757d', '#fd7e14', '#e83e8c']
+                            }]
+                        },
+                        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+                    });
+                }
             }
-            
-            console.log('Inizializzazione grafici completata');
+
+            // Investments Structure Chart
+            if (chartsData.investmentsStructureChart) {
+                const ctx = document.getElementById('investmentsStructureChart');
+                if (ctx && !Chart.getChart(ctx)) {
+                    const data = chartsData.investmentsStructureChart;
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: data.labels,
+                            datasets: [
+                                { label: data.datasets.fixedAssets.label, data: data.datasets.fixedAssets.data, backgroundColor: '#6f42c1' },
+                                { label: data.datasets.receivables.label, data: data.datasets.receivables.data, backgroundColor: '#17a2b8' },
+                                { label: data.datasets.inventory.label, data: data.datasets.inventory.data, backgroundColor: '#ffc107' },
+                                { label: data.datasets.cash.label, data: data.datasets.cash.data, backgroundColor: '#28a745' }
+                            ]
+                        },
+                        options: { responsive: true, maintainAspectRatio: false, scales: { x: { stacked: true }, y: { stacked: true } } }
+                    });
+                }
+            }
+
+            // Equity Composition Chart
+            if (chartsData.equityCompositionChart) {
+                const ctx = document.getElementById('equityCompositionChart');
+                if (ctx && !Chart.getChart(ctx)) {
+                    new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: chartsData.equityCompositionChart.labels,
+                            datasets: [{
+                                data: chartsData.equityCompositionChart.datasets.values.data,
+                                backgroundColor: ['#007bff', '#28a745', '#dc3545', '#6c757d']
+                            }]
+                        },
+                        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+                    });
+                }
+            }
+
+            // Financial Debt Sources Chart
+            if (chartsData.financialDebtSourcesChart) {
+                const ctx = document.getElementById('financialDebtSourcesChart');
+                const data = chartsData.financialDebtSourcesChart;
+                if (ctx && !Chart.getChart(ctx)) {
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: data.labels,
+                            datasets: [
+                                { label: data.datasets.financialDebt.label, data: data.datasets.financialDebt.data, type: 'bar', backgroundColor: 'rgba(220, 53, 69, 0.8)', yAxisID: 'y' },
+                                { label: data.datasets.equity.label, data: data.datasets.equity.data, type: 'bar', backgroundColor: 'rgba(40, 167, 80, 0.8)', yAxisID: 'y' },
+                                { label: data.datasets.debtToEquity.label, data: data.datasets.debtToEquity.data, type: 'line', borderColor: 'rgba(25, 25, 112, 1)', yAxisID: 'y1' }
+                            ]
+                        },
+                        options: { responsive: true, maintainAspectRatio: false, scales: { y: { type: 'linear', position: 'left' }, y1: { type: 'linear', position: 'right', grid: { drawOnChartArea: false } } } }
+                    });
+                }
+            }
+
+            // PFN Trend Chart
+            if (chartsData.pfnTrendChart) {
+                const ctx = document.getElementById('pfnTrendChart');
+                const data = chartsData.pfnTrendChart;
+                if (ctx && !Chart.getChart(ctx)) {
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: data.labels,
+                            datasets: [
+                                { label: data.datasets.totalDebt.label, data: data.datasets.totalDebt.data, type: 'bar', backgroundColor: 'rgba(220, 53, 69, 0.8)' },
+                                { label: data.datasets.cash.label, data: data.datasets.cash.data, type: 'bar', backgroundColor: 'rgba(40, 167, 80, 0.8)' },
+                                { label: data.datasets.pfn.label, data: data.datasets.pfn.data, type: 'line', borderColor: 'rgba(25, 25, 112, 1)' }
+                            ]
+                        },
+                        options: { responsive: true, maintainAspectRatio: false }
+                    });
+                }
+            }
         }
     </script>
      

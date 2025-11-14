@@ -487,6 +487,7 @@
     <!-- Script JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="../js/data-manager.js"></script>
     <script src="../js/common.js"></script>
     <script src="../js/charts_config.js"></script>
     <script src="../js/report_init.js"></script>
@@ -494,31 +495,191 @@
         document.getElementById('currentYearSidebar').textContent = new Date().getFullYear();
         document.getElementById('currentYearFooterReport').textContent = new Date().getFullYear();
 
-         // Script aggiornamento badge IRP header (Updated for L IMPRENDITORE)
-         document.addEventListener('DOMContentLoaded', function() {
-             const irpScoreValue = 51.42; // Updated IRP Value from PARTE0_irp-report.md
-             const irpHeaderBadge = document.getElementById('irp-header-badge');
-             if(irpHeaderBadge) {
-                 let badgeClass = 'bg-warning text-dark';
-                 if (irpScoreValue >= 71) badgeClass = 'bg-success'; // Basso
-                 else if (irpScoreValue < 51) badgeClass = 'bg-danger'; // Alto
-                 irpHeaderBadge.className = `badge ${badgeClass} me-3`;
-                 irpHeaderBadge.textContent = `IRP: ${irpScoreValue.toFixed(1)}`;
-             }
+         // Utility functions
+         if (typeof logout !== 'function') {
+             window.logout = function() {
+                console.log("Logout action triggered");
+            }
+         }
+         if (typeof printDocument !== 'function') {
+            window.printDocument = function() {
+                window.print();
+            }
+         }
 
-              // Ensure logout function is defined
-             if (typeof logout !== 'function') {
-                 window.logout = function() {
-                    console.log("Logout action triggered (placeholder)");
-                }
-             }
-             // Ensure print function is defined
-             if (typeof printDocument !== 'function') {
-                window.printDocument = function() {
-                    window.print();
-                }
+         // Initialize report
+         document.addEventListener('DOMContentLoaded', async function() {
+             try {
+                 await window.dataManager.loadAll();
+
+                 // Populate company name
+                 const companyName = window.dataManager.getCompanyName();
+                 if (companyName) {
+                     document.querySelectorAll('.company-name, .sidebar-header h5, button[id="userMenuButton"]').forEach(el => {
+                         if (el.tagName === 'BUTTON') {
+                             el.innerHTML = `<i class="fas fa-user-circle me-1"></i> ${companyName}`;
+                         } else {
+                             el.textContent = companyName;
+                         }
+                     });
+                 }
+
+                 // Update IRP badge
+                 const irpKPI = window.dataManager.getKPI('irp');
+                 if (irpKPI) {
+                     const irpHeaderBadge = document.getElementById('irp-header-badge');
+                     if (irpHeaderBadge) {
+                         const badgeClass = irpKPI.status === 'danger' ? 'bg-danger' :
+                                          irpKPI.status === 'warning' ? 'bg-warning text-dark' : 'bg-success';
+                         irpHeaderBadge.className = `badge ${badgeClass} me-3`;
+                         irpHeaderBadge.textContent = `IRP: ${irpKPI.displayValue}`;
+                     }
+                 }
+
+                 // Render all charts
+                 renderParte2Charts();
+
+                 console.log('✅ Report Parte 2 inizializzato');
+             } catch (error) {
+                 console.error('❌ Errore inizializzazione Report Parte 2:', error);
              }
          });
+
+         function renderParte2Charts() {
+             const chartsData = window.dataManager.getChartData('reports', 'parte2');
+             if (!chartsData) return;
+
+             // Economic Trend Chart
+             if (chartsData.economicTrendChart) {
+                 const ctx = document.getElementById('economicTrendChart');
+                 if (ctx) {
+                     const data = chartsData.economicTrendChart;
+                     new Chart(ctx, {
+                         type: 'bar',
+                         data: {
+                             labels: data.labels,
+                             datasets: [
+                                 { label: data.datasets.revenue.label, data: data.datasets.revenue.data, type: 'bar', backgroundColor: 'rgba(25, 25, 112, 0.8)', yAxisID: 'y' },
+                                 { label: data.datasets.ebitda.label, data: data.datasets.ebitda.data, type: 'bar', backgroundColor: 'rgba(217, 140, 0, 0.8)', yAxisID: 'y' },
+                                 { label: data.datasets.ebitdaMarginPercent.label, data: data.datasets.ebitdaMarginPercent.data, type: 'line', borderColor: 'rgba(244, 67, 54, 1)', yAxisID: 'y1' }
+                             ]
+                         },
+                         options: {
+                             responsive: true,
+                             maintainAspectRatio: false,
+                             scales: {
+                                 y: { type: 'linear', position: 'left', beginAtZero: true },
+                                 y1: { type: 'linear', position: 'right', grid: { drawOnChartArea: false } }
+                             }
+                         }
+                     });
+                 }
+             }
+
+             // Marginality Chart
+             if (chartsData.marginalityChart) {
+                 const ctx = document.getElementById('marginalityChart');
+                 if (ctx) {
+                     const data = chartsData.marginalityChart;
+                     new Chart(ctx, {
+                         type: 'line',
+                         data: {
+                             labels: data.labels,
+                             datasets: Object.keys(data.datasets).map((key, idx) => ({
+                                 label: data.datasets[key].label,
+                                 data: data.datasets[key].data,
+                                 borderColor: ['#4CAF50', '#FFC107', '#F44336', '#9C27B0'][idx],
+                                 fill: false
+                             }))
+                         },
+                         options: { responsive: true, maintainAspectRatio: false }
+                     });
+                 }
+             }
+
+             // Profitability Indices Chart
+             if (chartsData.profitabilityIndicesChart) {
+                 const ctx = document.getElementById('profitabilityIndicesChart');
+                 if (ctx) {
+                     const data = chartsData.profitabilityIndicesChart;
+                     new Chart(ctx, {
+                         type: 'line',
+                         data: {
+                             labels: data.labels,
+                             datasets: Object.keys(data.datasets).map((key, idx) => ({
+                                 label: data.datasets[key].label,
+                                 data: data.datasets[key].data,
+                                 borderColor: ['#4CAF50', '#FFC107', '#F44336'][idx],
+                                 fill: false
+                             }))
+                         },
+                         options: { responsive: true, maintainAspectRatio: false }
+                     });
+                 }
+             }
+
+             // Leverage Chart
+             if (chartsData.leverageChart) {
+                 const ctx = document.getElementById('leverageChart');
+                 if (ctx) {
+                     const data = chartsData.leverageChart;
+                     new Chart(ctx, {
+                         type: 'bar',
+                         data: {
+                             labels: data.labels,
+                             datasets: [
+                                 { label: data.datasets.roi.label, data: data.datasets.roi.data, backgroundColor: 'rgba(25, 25, 112, 0.8)' },
+                                 { label: data.datasets.roe.label, data: data.datasets.roe.data, backgroundColor: 'rgba(217, 140, 0, 0.8)' }
+                             ]
+                         },
+                         options: { responsive: true, maintainAspectRatio: false }
+                     });
+                 }
+             }
+
+             // Benchmark Radar Chart
+             if (chartsData.benchmarkRadarChart) {
+                 const ctx = document.getElementById('benchmarkRadarChart');
+                 if (ctx) {
+                     const data = chartsData.benchmarkRadarChart;
+                     const existingChart = Chart.getChart(ctx);
+                     if (existingChart) existingChart.destroy();
+
+                     new Chart(ctx, {
+                         type: 'radar',
+                         data: {
+                             labels: data.labels,
+                             datasets: [
+                                 {
+                                     label: data.datasets.company.label,
+                                     data: data.datasets.company.data,
+                                     backgroundColor: 'rgba(25, 25, 112, 0.3)',
+                                     borderColor: 'rgba(25, 25, 112, 1)',
+                                     borderWidth: 2
+                                 },
+                                 {
+                                     label: data.datasets.sector.label,
+                                     data: data.datasets.sector.data,
+                                     backgroundColor: 'rgba(217, 140, 0, 0.3)',
+                                     borderColor: 'rgba(217, 140, 0, 1)',
+                                     borderWidth: 2
+                                 }
+                             ]
+                         },
+                         options: {
+                             responsive: true,
+                             maintainAspectRatio: false,
+                             scales: {
+                                 r: {
+                                     suggestedMin: 0,
+                                     suggestedMax: 100
+                                 }
+                             }
+                         }
+                     });
+                 }
+             }
+         }
     </script>
     <scan-chat data-bot-id="a944ec72-81f6-4a0a-84da-a8ced9377979"></scan-chat>
     <script src="../js/bundle.js"></script>

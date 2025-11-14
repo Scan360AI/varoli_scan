@@ -382,28 +382,172 @@
 
     <!-- Bootstrap and other Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="../js/data-manager.js"></script>
+
     <script>
-        // Imposta l'anno corrente nel footer
         document.getElementById('currentYearSidebar').textContent = new Date().getFullYear();
         document.getElementById('currentYearFooter').textContent = new Date().getFullYear();
-        
-        // Funzione per la stampa
-        function printDocument() {
-            window.print();
-        }
-        
-        // Funzione per il logout (simulata)
-        function logout() {
-            alert('Logout simulato. In un ambiente reale, verrai disconnesso dal sistema.');
-        }
-        
-        // Imposta il badge IRP in base alla categoria
-        document.addEventListener('DOMContentLoaded', function() {
-            // VAROLI ha IRP 51,42 categoria D+
-            const irpElement = document.getElementById('irp-header-badge');
-            irpElement.textContent = 'IRP: 51,42 (D+)';
-            irpElement.classList.add('bg-danger');
+
+        window.logout = function() { window.location.href = "../index.html"; };
+        window.printDocument = function() { window.print(); };
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                await window.dataManager.loadAll();
+
+                // Populate company name
+                const companyName = window.dataManager.getCompanyName();
+                if (companyName) {
+                    document.querySelectorAll('.company-name, .sidebar-header h5, button[id="userMenuButton"]').forEach(el => {
+                        if (el.tagName === 'BUTTON') {
+                            el.innerHTML = `<i class="fas fa-user-circle me-1"></i> ${companyName}`;
+                        } else {
+                            el.textContent = companyName;
+                        }
+                    });
+                }
+
+                // Update IRP badge
+                const irpKPI = window.dataManager.getKPI('irp');
+                if (irpKPI) {
+                    const irpHeaderBadge = document.getElementById('irp-header-badge');
+                    if (irpHeaderBadge) {
+                        const badgeClass = irpKPI.status === 'danger' ? 'bg-danger' :
+                                         irpKPI.status === 'warning' ? 'bg-warning text-dark' : 'bg-success';
+                        irpHeaderBadge.className = `badge ${badgeClass} me-3`;
+                        irpHeaderBadge.textContent = `IRP: ${irpKPI.displayValue}`;
+                    }
+                }
+
+                renderParte6Charts();
+                console.log('✅ Report Parte 6 inizializzato');
+            } catch (error) {
+                console.error('❌ Errore inizializzazione Report Parte 6:', error);
+            }
         });
+
+        function renderParte6Charts() {
+            const chartsData = window.dataManager.getChartData('reports', 'parte6');
+            if (!chartsData) return;
+
+            // Z-Score Chart
+            if (chartsData.zScoreChart) {
+                const ctx = document.getElementById('zScoreChart');
+                if (ctx && !Chart.getChart(ctx)) {
+                    const data = chartsData.zScoreChart;
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                label: data.datasets.zScore.label,
+                                data: data.datasets.zScore.data,
+                                borderColor: '#191970',
+                                backgroundColor: 'rgba(25, 25, 112, 0.1)',
+                                borderWidth: 3,
+                                tension: 0.3
+                            }, {
+                                label: data.datasets.safeThreshold.label,
+                                data: data.datasets.safeThreshold.data,
+                                borderColor: '#4CAF50',
+                                borderDash: [5, 5],
+                                borderWidth: 2
+                            }, {
+                                label: data.datasets.riskThreshold.label,
+                                data: data.datasets.riskThreshold.data,
+                                borderColor: '#F44336',
+                                borderDash: [5, 5],
+                                borderWidth: 2
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { position: 'bottom' }
+                            }
+                        }
+                    });
+                }
+            }
+
+            // Risk Indicators Chart
+            if (chartsData.riskIndicatorsChart) {
+                const ctx = document.getElementById('riskIndicatorsChart');
+                if (ctx && !Chart.getChart(ctx)) {
+                    const data = chartsData.riskIndicatorsChart;
+                    new Chart(ctx, {
+                        type: 'radar',
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                label: data.datasets.company.label,
+                                data: data.datasets.company.data,
+                                borderColor: 'rgba(255, 99, 132, 0.8)',
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                borderWidth: 2
+                            }, {
+                                label: data.datasets.target.label,
+                                data: data.datasets.target.data,
+                                borderColor: 'rgba(54, 162, 235, 0.8)',
+                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                borderWidth: 2
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                r: {
+                                    min: 0,
+                                    max: 150,
+                                    beginAtZero: true,
+                                    ticks: { display: false }
+                                }
+                            },
+                            plugins: {
+                                legend: { position: 'bottom' }
+                            }
+                        }
+                    });
+                }
+            }
+
+            // Sensitivity Chart
+            if (chartsData.sensitivityChart) {
+                const ctx = document.getElementById('sensitivityChart');
+                if (ctx && !Chart.getChart(ctx)) {
+                    const data = chartsData.sensitivityChart;
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                label: data.datasets.criticalVariation.label,
+                                data: data.datasets.criticalVariation.data,
+                                backgroundColor: data.datasets.criticalVariation.data.map(v => v >= 0 ? 'rgba(76, 175, 80, 0.8)' : 'rgba(244, 67, 54, 0.8)'),
+                                borderColor: data.datasets.criticalVariation.data.map(v => v >= 0 ? '#388E3C' : '#D32F2F'),
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { display: false }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    title: { display: true, text: 'Variazione %/Giorni' }
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        }
     </script>
     <scan-chat data-bot-id="a944ec72-81f6-4a0a-84da-a8ced9377979"></scan-chat>
     <script src="../js/bundle.js"></script>

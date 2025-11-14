@@ -276,6 +276,7 @@
     <!-- Script JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="../js/data-manager.js"></script>
     <script src="../js/common.js"></script>
     <script src="../js/charts_config.js"></script>
     <script src="../js/report_init.js"></script>
@@ -283,36 +284,185 @@
         document.getElementById('currentYearSidebar').textContent = new Date().getFullYear();
         document.getElementById('currentYearFooterReport').textContent = new Date().getFullYear();
 
-         // Script colori IRP
-         document.addEventListener('DOMContentLoaded', function() {
-             const irpScoreValue = 51.42; // IRP Value from report
-             const irpHeaderBadge = document.getElementById('irp-header-badge');
-             const irpSection = document.getElementById('irp-summary-section');
-             const scoreCircle = document.querySelector('.irp-score-circle');
-             const categoryTextElement = document.querySelector('.irp-category-text');
-             const categoryBadge = categoryTextElement ? categoryTextElement.querySelector('.status-badge') : null;
+         // Ensure utility functions are defined
+         if (typeof logout !== 'function') {
+             window.logout = function() {
+                console.log("Logout action triggered (placeholder)");
+            }
+         }
+         if (typeof printDocument !== 'function') {
+            window.printDocument = function() {
+                window.print();
+            }
+         }
 
-             let badgeHeaderClass = 'bg-danger'; 
-             let categoryText = 'elevato'; 
-             
-             if (irpHeaderBadge) { 
-                 irpHeaderBadge.className = `badge ${badgeHeaderClass} me-3`; 
-                 irpHeaderBadge.textContent = `IRP: ${irpScoreValue.toFixed(1)}`; 
-             }
+         // Initialize report when DOM is loaded
+         document.addEventListener('DOMContentLoaded', async function() {
+             try {
+                 // Load all data
+                 await window.dataManager.loadAll();
 
-              // Ensure logout function is defined
-             if (typeof logout !== 'function') {
-                 window.logout = function() {
-                    console.log("Logout action triggered (placeholder)");
-                }
-             }
-             // Ensure print function is defined
-             if (typeof printDocument !== 'function') {
-                window.printDocument = function() {
-                    window.print();
-                }
+                 // Populate company name
+                 const companyName = window.dataManager.getCompanyName();
+                 if (companyName) {
+                     document.querySelectorAll('.company-name, .sidebar-header h5, button[id="userMenuButton"]').forEach(el => {
+                         if (el.tagName === 'BUTTON') {
+                             el.innerHTML = `<i class="fas fa-user-circle me-1"></i> ${companyName}`;
+                         } else {
+                             el.textContent = companyName;
+                         }
+                     });
+                 }
+
+                 // Update IRP badge
+                 const irpKPI = window.dataManager.getKPI('irp');
+                 if (irpKPI) {
+                     const irpHeaderBadge = document.getElementById('irp-header-badge');
+                     if (irpHeaderBadge) {
+                         const badgeClass = irpKPI.status === 'danger' ? 'bg-danger' :
+                                          irpKPI.status === 'warning' ? 'bg-warning text-dark' : 'bg-success';
+                         irpHeaderBadge.className = `badge ${badgeClass} me-3`;
+                         irpHeaderBadge.textContent = `IRP: ${irpKPI.displayValue}`;
+                     }
+                 }
+
+                 // Render charts
+                 renderCharts();
+
+                 console.log('✅ Report Parte 1 inizializzato con successo');
+             } catch (error) {
+                 console.error('❌ Errore inizializzazione Report Parte 1:', error);
              }
          });
+
+         function renderCharts() {
+             // Grafico 1.1: Main Metrics (Ricavi, EBITDA, Patrimonio Netto)
+             const mainMetricsData = window.dataManager.getChartData('reports', 'parte1');
+             if (mainMetricsData && mainMetricsData.mainMetricsChart) {
+                 const ctx1 = document.getElementById('mainMetricsChart');
+                 if (ctx1) {
+                     const data = mainMetricsData.mainMetricsChart;
+                     new Chart(ctx1, {
+                         type: 'bar',
+                         data: {
+                             labels: data.labels,
+                             datasets: [
+                                 {
+                                     label: data.datasets.revenue.label,
+                                     data: data.datasets.revenue.data,
+                                     backgroundColor: 'rgba(25, 25, 112, 0.8)',
+                                     borderColor: 'rgba(25, 25, 112, 1)',
+                                     borderWidth: 1
+                                 },
+                                 {
+                                     label: data.datasets.ebitda.label,
+                                     data: data.datasets.ebitda.data,
+                                     backgroundColor: 'rgba(217, 140, 0, 0.8)',
+                                     borderColor: 'rgba(217, 140, 0, 1)',
+                                     borderWidth: 1
+                                 },
+                                 {
+                                     label: data.datasets.equity.label,
+                                     data: data.datasets.equity.data,
+                                     backgroundColor: 'rgba(76, 175, 80, 0.8)',
+                                     borderColor: 'rgba(76, 175, 80, 1)',
+                                     borderWidth: 1
+                                 }
+                             ]
+                         },
+                         options: {
+                             responsive: true,
+                             maintainAspectRatio: false,
+                             scales: {
+                                 y: {
+                                     beginAtZero: true,
+                                     ticks: {
+                                         callback: function(value) {
+                                             return '€' + value.toLocaleString() + 'K';
+                                         }
+                                     }
+                                 }
+                             },
+                             plugins: {
+                                 legend: {
+                                     position: 'bottom'
+                                 },
+                                 tooltip: {
+                                     callbacks: {
+                                         label: function(context) {
+                                             return context.dataset.label + ': €' + context.parsed.y.toLocaleString() + 'K';
+                                         }
+                                     }
+                                 }
+                             }
+                         }
+                     });
+                 }
+             }
+
+             // Grafico 1.2: Current Assets/Liabilities
+             if (mainMetricsData && mainMetricsData.currentAssetsLiabilitiesChart) {
+                 const ctx2 = document.getElementById('currentAssetsLiabilitiesChart');
+                 if (ctx2) {
+                     const data = mainMetricsData.currentAssetsLiabilitiesChart;
+                     new Chart(ctx2, {
+                         type: 'bar',
+                         data: {
+                             labels: data.labels,
+                             datasets: [
+                                 {
+                                     label: data.datasets.currentAssets.label,
+                                     data: data.datasets.currentAssets.data,
+                                     backgroundColor: 'rgba(76, 175, 80, 0.8)',
+                                     borderColor: 'rgba(76, 175, 80, 1)',
+                                     borderWidth: 1
+                                 },
+                                 {
+                                     label: data.datasets.currentLiabilities.label,
+                                     data: data.datasets.currentLiabilities.data,
+                                     backgroundColor: 'rgba(244, 67, 54, 0.8)',
+                                     borderColor: 'rgba(244, 67, 54, 1)',
+                                     borderWidth: 1
+                                 },
+                                 {
+                                     label: data.datasets.workingCapital.label,
+                                     data: data.datasets.workingCapital.data,
+                                     backgroundColor: 'rgba(25, 25, 112, 0.8)',
+                                     borderColor: 'rgba(25, 25, 112, 1)',
+                                     borderWidth: 1
+                                 }
+                             ]
+                         },
+                         options: {
+                             responsive: true,
+                             maintainAspectRatio: false,
+                             scales: {
+                                 y: {
+                                     beginAtZero: true,
+                                     ticks: {
+                                         callback: function(value) {
+                                             return '€' + (value / 1000).toLocaleString() + 'K';
+                                         }
+                                     }
+                                 }
+                             },
+                             plugins: {
+                                 legend: {
+                                     position: 'bottom'
+                                 },
+                                 tooltip: {
+                                     callbacks: {
+                                         label: function(context) {
+                                             return context.dataset.label + ': €' + context.parsed.y.toLocaleString();
+                                         }
+                                     }
+                                 }
+                             }
+                         }
+                     });
+                 }
+             }
+         }
      </script>
 <scan-chat data-bot-id="a944ec72-81f6-4a0a-84da-a8ced9377979"></scan-chat>
 <script src="../js/bundle.js"></script>

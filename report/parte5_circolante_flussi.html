@@ -376,229 +376,250 @@
     <!-- Script JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <script src="../js/common.js"></script>
-    <script src="../js/charts_config.js"></script>
-    <script src="../js/report_init.js"></script>
-     <script>
+    <script src="../js/data-manager.js"></script>
+
+    <script>
         document.getElementById('currentYearSidebar').textContent = new Date().getFullYear();
         document.getElementById('currentYearFooterReport').textContent = new Date().getFullYear();
 
-         // Script aggiornamento badge IRP header (Updated for VAROLI GUIDO E FIGLIO S.R.L.)
-         document.addEventListener('DOMContentLoaded', function() {
-             const irpScoreValue = 51.42; // IRP Score from IRP Analysis
-             const irpHeaderBadge = document.getElementById('irp-header-badge');
-             if(irpHeaderBadge) {
-                 let badgeClass = 'bg-success';
-                 if (irpScoreValue < 51) badgeClass = 'bg-danger'; // Alto
-                 else if (irpScoreValue < 71) badgeClass = 'bg-warning text-dark'; // Medio
-                 irpHeaderBadge.className = `badge ${badgeClass} me-3`;
-                 irpHeaderBadge.textContent = `IRP: ${irpScoreValue.toFixed(1)}`;
-             }
+        window.logout = function() { window.location.href = "../index.html"; };
+        window.printDocument = function() { window.print(); };
 
-              // Ensure logout function is defined
-             if (typeof logout !== 'function') {
-                 window.logout = function() {
-                    console.log("Logout action triggered (placeholder)");
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                await window.dataManager.loadAll();
+
+                // Populate company name
+                const companyName = window.dataManager.getCompanyName();
+                if (companyName) {
+                    document.querySelectorAll('.company-name, .sidebar-header h5, button[id="userMenuButton"]').forEach(el => {
+                        if (el.tagName === 'BUTTON') {
+                            el.innerHTML = `<i class="fas fa-user-circle me-1"></i> ${companyName}`;
+                        } else {
+                            el.textContent = companyName;
+                        }
+                    });
                 }
-             }
-             // Ensure print function is defined
-             if (typeof printDocument !== 'function') {
-                window.printDocument = function() {
-                    window.print();
+
+                // Update IRP badge
+                const irpKPI = window.dataManager.getKPI('irp');
+                if (irpKPI) {
+                    const irpHeaderBadge = document.getElementById('irp-header-badge');
+                    if (irpHeaderBadge) {
+                        const badgeClass = irpKPI.status === 'danger' ? 'bg-danger' :
+                                         irpKPI.status === 'warning' ? 'bg-warning text-dark' : 'bg-success';
+                        irpHeaderBadge.className = `badge ${badgeClass} me-3`;
+                        irpHeaderBadge.textContent = `IRP: ${irpKPI.displayValue}`;
+                    }
                 }
-             }
 
-             // Initialize Working Capital Cycle Chart
-             const ctxWCC = document.getElementById('workingCapitalCycleChart');
-             if(ctxWCC) {
-                 new Chart(ctxWCC, {
-                     type: 'bar',
-                     data: {
-                         labels: ['DSO', 'DIO', 'DPO', 'Ciclo Totale'],
-                         datasets: [{
-                             label: 'VAROLI GUIDO E FIGLIO 2024',
-                             data: [41, 194, -68, 167],
-                             backgroundColor: ['#FFC107', '#4CAF50', '#FFC107', '#FFC107'],
-                             borderColor: ['#FFA000', '#388E3C', '#FFA000', '#FFA000'],
-                             borderWidth: 1
-                         }, {
-                             label: 'Benchmark Settore',
-                             data: [55, 105, -75, 85],
-                             backgroundColor: 'rgba(76, 175, 80, 0.6)',
-                             borderColor: '#388E3C',
-                             borderWidth: 1
-                         }]
-                     },
-                     options: {
-                         responsive: true,
-                         maintainAspectRatio: false,
-                         plugins: {
-                             legend: { position: 'top' },
-                             title: { display: false }
-                         },
-                         scales: {
-                             y: {
-                                 beginAtZero: true,
-                                 title: { display: true, text: 'Giorni' }
-                             }
-                         }
-                     }
-                 });
-             }
+                renderParte5Charts();
+                console.log('✅ Report Parte 5 inizializzato');
+            } catch (error) {
+                console.error('❌ Errore inizializzazione Report Parte 5:', error);
+            }
+        });
 
-             // Initialize Cash Flow Waterfall Chart
-             const ctxCFW = document.getElementById('cashFlowWaterfallChart');
-             if(ctxCFW) {
-                 new Chart(ctxCFW, {
-                     type: 'bar',
-                     data: {
-                         labels: ['EBITDA', 'Imposte', 'Var. CCN', 'CF Operativo', 'Investimenti', 'FCF', 'Op. Finanziarie', 'Var. Cassa'],
-                         datasets: [{
-                             label: 'Flussi di Cassa 2024',
-                             data: [-43535, -5720, 108427, 211345, -774136, -562791, 746599, 183808],
-                             backgroundColor: [
-                                 '#F44336', '#F44336', '#4CAF50', 
-                                 '#4CAF50', '#F44336', '#F44336', 
-                                 '#4CAF50', '#4CAF50'
-                             ],
-                             borderColor: [
-                                 '#D32F2F', '#D32F2F', '#388E3C',
-                                 '#388E3C', '#D32F2F', '#D32F2F',
-                                 '#388E3C', '#388E3C'
-                             ],
-                             borderWidth: 1
-                         }]
-                     },
-                     options: {
-                         responsive: true,
-                         maintainAspectRatio: false,
-                         plugins: {
-                             legend: { display: false },
-                             title: { display: false }
-                         },
-                         scales: {
-                             y: {
-                                 beginAtZero: true,
-                                 title: { display: true, text: 'Euro (€)' },
-                                 ticks: {
-                                     callback: function(value) {
-                                         return value.toLocaleString('it-IT');
-                                     }
-                                 }
-                             }
-                         }
-                     }
-                 });
-             }
+        function renderParte5Charts() {
+            const chartsData = window.dataManager.getChartData('reports', 'parte5');
+            if (!chartsData) return;
 
-             // Initialize Cash Flow Trend Chart
-             const ctxCFT = document.getElementById('cashFlowTrendChart');
-             if(ctxCFT) {
-                 new Chart(ctxCFT, {
-                     type: 'line',
-                     data: {
-                         labels: ['2022', '2023', '2024'],
-                         datasets: [{
-                             label: 'Cash Flow Operativo',
-                             data: [-125524, 96543, 211345],
-                             borderColor: '#2196F3',
-                             backgroundColor: 'rgba(33, 150, 243, 0.1)',
-                             tension: 0.3
-                         }, {
-                             label: 'EBITDA',
-                             data: [-64517, 76378, -43535],
-                             borderColor: '#4CAF50',
-                             backgroundColor: 'rgba(76, 175, 80, 0.1)',
-                             tension: 0.3
-                         }, {
-                             label: 'Variazione Netta Cassa',
-                             data: [33976, -132863, 183808],
-                             borderColor: '#F44336',
-                             backgroundColor: 'rgba(244, 67, 54, 0.1)',
-                             tension: 0.3
-                         }]
-                     },
-                     options: {
-                         responsive: true,
-                         maintainAspectRatio: false,
-                         plugins: {
-                             legend: { position: 'top' },
-                             title: { display: false }
-                         },
-                         scales: {
-                             y: {
-                                 beginAtZero: true,
-                                 title: { display: true, text: 'Euro (€)' },
-                                 ticks: {
-                                     callback: function(value) {
-                                         return value.toLocaleString('it-IT');
-                                     }
-                                 }
-                             }
-                         }
-                     }
-                 });
-             }
+            // Working Capital Cycle Chart
+            if (chartsData.workingCapitalCycleChart) {
+                const ctx = document.getElementById('workingCapitalCycleChart');
+                if (ctx && !Chart.getChart(ctx)) {
+                    const data = chartsData.workingCapitalCycleChart;
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                label: data.datasets.company.label,
+                                data: data.datasets.company.data,
+                                backgroundColor: ['#FFC107', '#4CAF50', '#FFC107', '#FFC107'],
+                                borderColor: ['#FFA000', '#388E3C', '#FFA000', '#FFA000'],
+                                borderWidth: 1
+                            }, {
+                                label: data.datasets.benchmark.label,
+                                data: data.datasets.benchmark.data,
+                                backgroundColor: 'rgba(76, 175, 80, 0.6)',
+                                borderColor: '#388E3C',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { position: 'top' }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    title: { display: true, text: 'Giorni' }
+                                }
+                            }
+                        }
+                    });
+                }
+            }
 
-             // Initialize Projection Chart
-             const ctxProj = document.getElementById('cashFlowProjectionChart');
-             if(ctxProj) {
-                 new Chart(ctxProj, {
-                     type: 'line',
-                     data: {
-                         labels: ['2024', '2025', '2026', '2027', '2028'],
-                         datasets: [{
-                             label: 'Liquidità Prevista',
-                             data: [183808, 304780, 331409, 411891, 506351],
-                             borderColor: '#4CAF50',
-                             backgroundColor: 'rgba(76, 175, 80, 0.1)',
-                             tension: 0.3,
-                             yAxisID: 'y'
-                         }, {
-                             label: 'Debiti Finanziari',
-                             data: [919610, 1132866, 1057393, 992702, 937253],
-                             borderColor: '#F44336',
-                             backgroundColor: 'rgba(244, 67, 54, 0.1)',
-                             tension: 0.3,
-                             yAxisID: 'y1'
-                         }]
-                     },
-                     options: {
-                         responsive: true,
-                         maintainAspectRatio: false,
-                         plugins: {
-                             legend: { position: 'top' },
-                             title: { display: false }
-                         },
-                         scales: {
-                             y: {
-                                 type: 'linear',
-                                 display: true,
-                                 position: 'left',
-                                 title: { display: true, text: 'Liquidità (€)' },
-                                 ticks: {
-                                     callback: function(value) {
-                                         return value.toLocaleString('it-IT');
-                                     }
-                                 }
-                             },
-                             y1: {
-                                 type: 'linear',
-                                 display: true,
-                                 position: 'right',
-                                 title: { display: true, text: 'Debiti Finanziari (€)' },
-                                 ticks: {
-                                     callback: function(value) {
-                                         return value.toLocaleString('it-IT');
-                                     }
-                                 },
-                                 grid: { drawOnChartArea: false }
-                             }
-                         }
-                     }
-                 });
-             }
-         });
+            // Cash Flow Waterfall Chart
+            if (chartsData.cashFlowWaterfallChart) {
+                const ctx = document.getElementById('cashFlowWaterfallChart');
+                if (ctx && !Chart.getChart(ctx)) {
+                    const data = chartsData.cashFlowWaterfallChart;
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                label: 'Flussi di Cassa 2024',
+                                data: data.datasets.values.data,
+                                backgroundColor: data.datasets.values.data.map(v => v >= 0 ? '#4CAF50' : '#F44336'),
+                                borderColor: data.datasets.values.data.map(v => v >= 0 ? '#388E3C' : '#D32F2F'),
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { display: false }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    title: { display: true, text: 'Euro (€)' },
+                                    ticks: {
+                                        callback: function(value) {
+                                            return value.toLocaleString('it-IT');
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+
+            // Cash Flow Trend Chart
+            if (chartsData.cashFlowTrendChart) {
+                const ctx = document.getElementById('cashFlowTrendChart');
+                if (ctx && !Chart.getChart(ctx)) {
+                    const data = chartsData.cashFlowTrendChart;
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                label: data.datasets.operating.label,
+                                data: data.datasets.operating.data,
+                                borderColor: '#2196F3',
+                                backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                                tension: 0.3
+                            }, {
+                                label: data.datasets.investing.label,
+                                data: data.datasets.investing.data,
+                                borderColor: '#4CAF50',
+                                backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                                tension: 0.3
+                            }, {
+                                label: data.datasets.netChange.label,
+                                data: data.datasets.netChange.data,
+                                borderColor: '#F44336',
+                                backgroundColor: 'rgba(244, 67, 54, 0.1)',
+                                tension: 0.3
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { position: 'top' }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    title: { display: true, text: 'Euro (€)' },
+                                    ticks: {
+                                        callback: function(value) {
+                                            return value.toLocaleString('it-IT');
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+
+            // Cash Flow Projection Chart
+            if (chartsData.cashFlowProjectionChart) {
+                const ctx = document.getElementById('cashFlowProjectionChart');
+                if (ctx && !Chart.getChart(ctx)) {
+                    const data = chartsData.cashFlowProjectionChart;
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                label: data.datasets.operating.label,
+                                data: data.datasets.operating.data,
+                                type: 'bar',
+                                backgroundColor: 'rgba(33, 150, 243, 0.8)',
+                                yAxisID: 'y'
+                            }, {
+                                label: data.datasets.debtVariation.label,
+                                data: data.datasets.debtVariation.data,
+                                type: 'bar',
+                                backgroundColor: 'rgba(244, 67, 54, 0.8)',
+                                yAxisID: 'y'
+                            }, {
+                                label: data.datasets.cashBalance.label,
+                                data: data.datasets.cashBalance.data,
+                                type: 'line',
+                                borderColor: '#4CAF50',
+                                borderWidth: 2,
+                                yAxisID: 'y1'
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { position: 'top' }
+                            },
+                            scales: {
+                                y: {
+                                    type: 'linear',
+                                    display: true,
+                                    position: 'left',
+                                    title: { display: true, text: 'Flussi (€)' },
+                                    ticks: {
+                                        callback: function(value) {
+                                            return value.toLocaleString('it-IT');
+                                        }
+                                    }
+                                },
+                                y1: {
+                                    type: 'linear',
+                                    display: true,
+                                    position: 'right',
+                                    title: { display: true, text: 'Liquidità (€)' },
+                                    ticks: {
+                                        callback: function(value) {
+                                            return value.toLocaleString('it-IT');
+                                        }
+                                    },
+                                    grid: { drawOnChartArea: false }
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        }
     </script>
     <scan-chat data-bot-id="a944ec72-81f6-4a0a-84da-a8ced9377979"></scan-chat>
     <script src="../js/bundle.js"></script>
