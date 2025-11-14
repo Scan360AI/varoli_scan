@@ -11,7 +11,8 @@ class DataManager {
             config: null,
             kpis: null,
             charts: null,
-            tables: null
+            tables: null,
+            content: null
         };
         this.loaded = false;
         this.loading = false;
@@ -40,10 +41,11 @@ class DataManager {
             this.loadJSON('data/config.json'),
             this.loadJSON('data/kpis.json'),
             this.loadJSON('data/charts.json'),
-            this.loadJSON('data/tables.json')
+            this.loadJSON('data/tables.json'),
+            this.loadJSON('data/content.json')
         ])
-        .then(([company, config, kpis, charts, tables]) => {
-            this.data = { company, config, kpis, charts, tables };
+        .then(([company, config, kpis, charts, tables, content]) => {
+            this.data = { company, config, kpis, charts, tables, content };
             this.loaded = true;
             this.loading = false;
             console.log('✅ DataManager: Tutti i dati caricati con successo');
@@ -223,6 +225,37 @@ class DataManager {
      */
     getAllTables() {
         return this.data.tables;
+    }
+
+    // =============================================
+    // METODI CONTENT
+    // =============================================
+
+    /**
+     * Ottiene un contenuto testuale
+     * @param {string} section - Sezione (es: 'parte1_sintesi', 'parte2_economico')
+     * @param {string} contentKey - Chiave del contenuto (es: 'irpDescription', 'businessModel')
+     * @returns {string|Object|null} Contenuto testuale
+     */
+    getContent(section, contentKey) {
+        return this.data.content?.[section]?.[contentKey] || null;
+    }
+
+    /**
+     * Ottiene tutti i contenuti di una sezione
+     * @param {string} section - Sezione
+     * @returns {Object|null} Tutti i contenuti della sezione
+     */
+    getSectionContent(section) {
+        return this.data.content?.[section] || null;
+    }
+
+    /**
+     * Ottiene tutti i dati dei contenuti
+     * @returns {Object|null} Tutti i contenuti
+     */
+    getAllContent() {
+        return this.data.content;
     }
 
     // =============================================

@@ -164,8 +164,8 @@
         </div>
         <div class="col-md-8">
             <h4 class="mb-3 fw-bold" style="color: var(--primary);">Valutazione Generale</h4>
-            <p class="mb-3" data-value="irpDescription">Profilo di rischio <strong>elevato con criticità significative</strong>. L'azienda presenta una redditività operativa negativa e una posizione finanziaria deteriorata, con criticità nella generazione di cassa operativa e nello squilibrio del ciclo del circolante.</p>
-            <a href="#crisis-framework" class="btn btn-danger btn-sm mb-3 btn-pill"> <i class="fas fa-exclamation-circle me-1"></i> Verifica Crisi d'Impresa (2 su 6) </a>
+            <p class="mb-3" data-content="parte1_sintesi.irpDescription"></p>
+            <a href="#crisis-framework" class="btn btn-danger btn-sm mb-3 btn-pill" data-content-btn="parte1_sintesi.crisisButton"> <i class="fas fa-exclamation-circle me-1"></i> </a>
             <div class="other-ratings border-top pt-3 mt-3">
                 <h6 class="card-title-small mb-2">Altri Indicatori di Supporto:</h6>
                 <ul class="list-unstyled mb-0 row gx-3 gy-2" id="support-indicators-list">
@@ -213,7 +213,7 @@
                      </div>
                       <div class="col-lg-12 mt-3">
                           <h6><i class="fas fa-briefcase fa-fw me-2 text-primary"></i> Modello di Business e Posizionamento</h6>
-                          <p class="small">VAROLI GUIDO E FIGLIO S.R.L. opera dal 1985 nel settore del commercio all'ingrosso di legname, con un modello di business focalizzato sulla commercializzazione B2B. L'azienda presenta una struttura patrimoniale compromessa, caratterizzata da un elevato indebitamento finanziario (€1.275.053, pari al 44,74% dei ricavi) e un rapporto PFN/Patrimonio Netto di 1,92x. L'esercizio 2024 ha evidenziato un significativo calo dei ricavi (-14,27%) e un deterioramento dell'EBITDA (passato da positivo a negativo), segnalando criticità nel modello di business. L'indicatore di resilienza, che misura la capacità dell'impresa di reagire a condizioni di mercato avverse, è classificato come "Basso", a causa della fragile posizione finanziaria e della redditività operativa negativa.</p>
+                          <p class="small" data-content="parte1_sintesi.businessModel"></p>
                      </div>
                  </div>
              </div>
@@ -231,10 +231,10 @@
               <div class="card mb-4 report-section">
                  <div class="card-header"><h5 class="mb-0">Verifica Indicatori e Framework Normativo</h5></div>
                   <div class="card-body">
-                      <div class="alert-box alert-danger d-flex align-items-center"> <span class="icon-circle bg-icon-danger me-3"><i class="fas fa-exclamation-circle"></i></span> <div> <h6 class="mb-1">Indicatori CCII: <strong>In linea con 2 su 6 indicatori</strong></h6> <p class="small mb-0">L'analisi degli indicatori della crisi calcolati sullo schema civilistico mostra che l'impresa non è conforme a 4 dei 6 indicatori previsti dal CCII. Diversi parametri risultano al di sotto delle soglie minime, segnalando la presenza di segnali di allerta secondo il framework normativo.</p> </div> </div>
+                      <div class="alert-box alert-danger d-flex align-items-center"> <span class="icon-circle bg-icon-danger me-3"><i class="fas fa-exclamation-circle"></i></span> <div> <h6 class="mb-1" data-content="parte1_sintesi.cciiAlert.title"></h6> <p class="small mb-0" data-content="parte1_sintesi.cciiAlert.description"></p> </div> </div>
                        <h6 class="mt-4">Contesto Normativo Rilevante:</h6>
-                       <ul class="small"><li><strong>D.Lgs. 14/2019 (CCII)</strong> - Richiede implementazione di adeguati assetti organizzativi e monitoraggio continuativo degli indicatori di crisi</li><li><strong>Art. 2086 c.c.</strong> - Obbligo di adeguati assetti per piccole imprese con 9 dipendenti</li><li><strong>Normative settore commercio all'ingrosso di legname</strong> - Requisiti specifici per la commercializzazione, incluse normative sulla tracciabilità dei prodotti forestali</li><li><strong>Principi OIC</strong> per la predisposizione del bilancio</li><li><strong>Normativa fiscale</strong> applicabile alle società commerciali</li></ul>
-                       <p class="small text-muted mt-3">L'azienda presenta un DSCR teorico insufficiente (0,67) a causa dell'elevato indebitamento finanziario, che conferma la difficoltà nel far fronte agli impegni finanziari. Questo valore, significativamente inferiore alla soglia minima (1,0), rappresenta un punto di debolezza che limita la flessibilità finanziaria e aumenta la vulnerabilità a potenziali shock esterni.</p>
+                       <ul class="small" id="normative-context-list"></ul>
+                       <p class="small text-muted mt-3" data-content="parte1_sintesi.dscrNote"></p>
                   </div>
               </div>
 
@@ -320,6 +320,7 @@
                  }
 
                  // Populate dynamic content
+                populateContent();
                 populateKPICards();
                 populateSupportIndicators();
                 populateSWOT();
@@ -337,6 +338,58 @@
          // =============================================
          // POPULATE FUNCTIONS
          // =============================================
+
+         function populateContent() {
+             // Populate all text content from content.json
+             document.querySelectorAll('[data-content]').forEach(el => {
+                 const contentPath = el.dataset.content;
+                 const [section, ...keys] = contentPath.split('.');
+                 let content = window.dataManager.getContent(section, keys[0]);
+
+                 // Navigate nested keys (e.g., cciiAlert.title)
+                 for (let i = 1; i < keys.length; i++) {
+                     if (content && typeof content === 'object') {
+                         content = content[keys[i]];
+                     }
+                 }
+
+                 if (content) {
+                     el.innerHTML = content;
+                 }
+             });
+
+             // Populate button text content
+             document.querySelectorAll('[data-content-btn]').forEach(el => {
+                 const contentPath = el.dataset.contentBtn;
+                 const [section, key] = contentPath.split('.');
+                 const content = window.dataManager.getContent(section, key);
+                 if (content) {
+                     // Keep the icon, just append the text
+                     const icon = el.querySelector('i');
+                     el.innerHTML = '';
+                     if (icon) {
+                         el.appendChild(icon);
+                         el.innerHTML += ' ' + content;
+                     } else {
+                         el.textContent = content;
+                     }
+                 }
+             });
+
+             // Populate normative context list
+             const normativeList = document.getElementById('normative-context-list');
+             if (normativeList) {
+                 const normativeContext = window.dataManager.getContent('parte1_sintesi', 'normativeContext');
+                 if (normativeContext && Array.isArray(normativeContext)) {
+                     normativeList.innerHTML = '';
+                     normativeContext.forEach(item => {
+                         const li = document.createElement('li');
+                         li.innerHTML = item;
+                         normativeList.appendChild(li);
+                     });
+                 }
+             }
+         }
 
          function populateKPICards() {
              // Populate KPI card values
