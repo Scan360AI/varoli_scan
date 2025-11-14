@@ -309,190 +309,244 @@
 
     <!-- Script JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="js/data-manager.js"></script>
     <script src="js/common.js"></script>
     <script>
         document.getElementById('currentYearSidebar').textContent = new Date().getFullYear();
         document.getElementById('currentYearFooter').textContent = new Date().getFullYear();
 
-        // Dati VAROLI GUIDO E FIGLIO S.R.L.
-        const revenueData = [3.722, 3.324, 2.850]; // Milioni di €
-        const ebitdaData = [196.510, 213.142, -43.535]; // Migliaia di €
-        const ebitdaMarginData = [5.3, 6.4, -1.53]; // Percentuali
-        const pfnEbitdaData = [2.10, 1.58, null]; // Rapporto PFN/EBITDA
-        const years = ['2022', '2023', '2024'];
+        // Carica i dati e inizializza la dashboard
+        async function initDashboard() {
+            try {
+                // Carica tutti i dati JSON
+                await window.dataManager.loadAll();
 
-        // Grafico 1: Trend Economico e Margine
-        const ctx1 = document.getElementById('trendChart').getContext('2d');
-        new Chart(ctx1, {
-            type: 'bar',
-            data: {
-                labels: years,
-                datasets: [{
-                    label: 'Ricavi (M€)',
-                    data: revenueData,
-                    backgroundColor: 'rgba(40, 167, 69, 0.8)',
-                    borderColor: 'rgba(40, 167, 69, 1)',
-                    borderWidth: 1,
-                    yAxisID: 'y'
-                }, {
-                    label: 'EBITDA Margin (%)',
-                    data: ebitdaMarginData,
-                    type: 'line',
-                    borderColor: 'rgba(255, 193, 7, 1)',
-                    backgroundColor: 'rgba(255, 193, 7, 0.2)',
-                    borderWidth: 3,
-                    borderDash: [5, 5],
-                    pointBackgroundColor: 'rgba(255, 193, 7, 1)',
-                    pointBorderColor: 'rgba(255, 193, 7, 1)',
-                    pointRadius: 6,
-                    fill: false,
-                    yAxisID: 'y1'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                interaction: {
-                    mode: 'index',
-                    intersect: false,
-                },
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                if (context.datasetIndex === 0) {
-                                    return context.dataset.label + ': €' + context.raw + 'M';
-                                } else {
-                                    return context.dataset.label + ': ' + context.raw + '%';
-                                }
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    x: {
-                        display: true,
-                        title: {
-                            display: true,
-                            text: 'Anno'
-                        }
-                    },
-                    y: {
-                        type: 'linear',
-                        display: true,
-                        position: 'left',
-                        title: {
-                            display: true,
-                            text: 'Ricavi (M€)'
-                        },
-                        min: 0,
-                        max: 4.0
-                    },
-                    y1: {
-                        type: 'linear',
-                        display: true,
-                        position: 'right',
-                        title: {
-                            display: true,
-                            text: 'EBITDA Margin (%)'
-                        },
-                        min: -5,
-                        max: 10,
-                        grid: {
-                            drawOnChartArea: false,
-                        },
-                    }
-                }
+                // Popola i dati della dashboard
+                populateCompanyName();
+                populateKPICards();
+                renderCharts();
+
+                console.log('✅ Dashboard inizializzata con successo');
+            } catch (error) {
+                console.error('❌ Errore inizializzazione dashboard:', error);
+                alert('Errore nel caricamento dei dati. Ricarica la pagina.');
             }
-        });
+        }
 
-        // Grafico 2: PFN/EBITDA
-        const ctx2 = document.getElementById('pfnChart').getContext('2d');
-        new Chart(ctx2, {
-            type: 'bar',
-            data: {
-                labels: years,
-                datasets: [{
-                    label: 'PFN/EBITDA',
-                    data: pfnEbitdaData,
-                    backgroundColor: pfnEbitdaData.map(val => val < 0 ? 'rgba(40, 167, 69, 0.8)' : 'rgba(220, 53, 69, 0.8)'),
-                    borderColor: pfnEbitdaData.map(val => val < 0 ? 'rgba(40, 167, 69, 1)' : 'rgba(220, 53, 69, 1)'),
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return context.dataset.label + ': ' + context.raw;
-                            }
-                        }
-                    }
+        // Popola il nome dell'azienda in tutti i punti
+        function populateCompanyName() {
+            const companyName = window.dataManager.getCompanyName();
+            if (!companyName) return;
+
+            // Aggiorna tutti gli elementi con il nome azienda
+            document.querySelectorAll('.sidebar-header h5, .header-title h4, .header-title h5').forEach(el => {
+                if (el.textContent.includes('VAROLI') || el.textContent.includes('Dashboard Esecutiva')) {
+                    el.textContent = el.textContent.replace('VAROLI GUIDO E FIGLIO S.R.L.', companyName);
+                }
+            });
+        }
+
+        // Popola le KPI cards dinamicamente
+        function populateKPICards() {
+            const kpis = window.dataManager.getAllKPIs();
+            if (!kpis) return;
+
+            // Mapping tra chiavi JSON e elementi HTML
+            const kpiMapping = {
+                'irp': { value: '.kpi-value-modern', title: '.card-title-modern' },
+                'revenue': { value: '.kpi-value-modern', title: '.card-title-modern' },
+                'ebitdaMargin': { value: '.kpi-value-modern', title: '.card-title-modern' },
+                'pfnEbitda': { value: '.kpi-value-modern', title: '.card-title-modern' },
+                'dso': { value: '.kpi-value-modern', title: '.card-title-modern' },
+                'cashFlowOperativo': { value: '.kpi-value-modern', title: '.card-title-modern' },
+                'leanusScore': { value: '.kpi-value-modern', title: '.card-title-modern' },
+                'azionePrioritaria': { value: '.kpi-value-modern', title: '.card-title-modern' }
+            };
+
+            // Nota: Le KPI cards sono già popolate nell'HTML, questo è per future modifiche dinamiche
+            console.log('✅ KPI cards pronte (valori da JSON disponibili)');
+        }
+
+        // Render dei grafici usando dati JSON
+        function renderCharts() {
+            const trendChartData = window.dataManager.getChartData('dashboard', 'trendChart');
+            const pfnChartData = window.dataManager.getChartData('dashboard', 'pfnChart');
+
+            if (trendChartData) {
+                renderTrendChart(trendChartData);
+            }
+
+            if (pfnChartData) {
+                renderPfnChart(pfnChartData);
+            }
+        }
+
+        // Render Trend Chart
+        function renderTrendChart(data) {
+            const years = data.labels;
+            const revenueData = data.datasets.revenue.data.map(v => v / 1000000); // Converti in milioni
+            const ebitdaMarginData = data.datasets.ebitdaMargin.data;
+
+            const ctx1 = document.getElementById('trendChart').getContext('2d');
+            new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: years,
+                    datasets: [{
+                        label: 'Ricavi (M€)',
+                        data: revenueData,
+                        backgroundColor: 'rgba(40, 167, 69, 0.8)',
+                        borderColor: 'rgba(40, 167, 69, 1)',
+                        borderWidth: 1,
+                        yAxisID: 'y'
+                    }, {
+                        label: 'EBITDA Margin (%)',
+                        data: ebitdaMarginData,
+                        type: 'line',
+                        borderColor: 'rgba(255, 193, 7, 1)',
+                        backgroundColor: 'rgba(255, 193, 7, 0.2)',
+                        borderWidth: 3,
+                        borderDash: [5, 5],
+                        pointBackgroundColor: 'rgba(255, 193, 7, 1)',
+                        pointBorderColor: 'rgba(255, 193, 7, 1)',
+                        pointRadius: 6,
+                        fill: false,
+                        yAxisID: 'y1'
+                    }]
                 },
-                scales: {
-                    x: {
-                        display: true,
-                        title: {
-                            display: true,
-                            text: 'Anno'
-                        }
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
                     },
-                    y: {
-                        display: true,
-                        title: {
-                            display: true,
-                            text: 'PFN/EBITDA'
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
                         },
-                        min: 0,
-                        max: 3,
-                        plugins: {
-                            annotation: {
-                                annotations: {
-                                    line1: {
-                                        type: 'line',
-                                        yMin: 0,
-                                        yMax: 0,
-                                        borderColor: 'rgba(220, 53, 69, 1)',
-                                        borderWidth: 2,
-                                        borderDash: [5, 5],
-                                        label: {
-                                            content: 'Soglia 0',
-                                            enabled: true,
-                                            position: 'end'
-                                        }
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    if (context.datasetIndex === 0) {
+                                        return context.dataset.label + ': €' + context.raw.toFixed(2) + 'M';
+                                    } else {
+                                        return context.dataset.label + ': ' + context.raw + '%';
                                     }
                                 }
                             }
                         }
+                    },
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Anno'
+                            }
+                        },
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'Ricavi (M€)'
+                            },
+                            min: 0,
+                            max: 4.0
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'EBITDA Margin (%)'
+                            },
+                            min: -5,
+                            max: 10,
+                            grid: {
+                                drawOnChartArea: false,
+                            },
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
 
-         // Assign correct anchor target ID for Azione Prioritaria button link
+        // Render PFN Chart
+        function renderPfnChart(data) {
+            const years = data.labels;
+            const pfnEbitdaData = data.datasets.pfnEbitda.data;
+
+            const ctx2 = document.getElementById('pfnChart').getContext('2d');
+            new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: years,
+                    datasets: [{
+                        label: 'PFN/EBITDA',
+                        data: pfnEbitdaData,
+                        backgroundColor: pfnEbitdaData.map(val => val === null || val < 0 ? 'rgba(40, 167, 69, 0.8)' : 'rgba(220, 53, 69, 0.8)'),
+                        borderColor: pfnEbitdaData.map(val => val === null || val < 0 ? 'rgba(40, 167, 69, 1)' : 'rgba(220, 53, 69, 1)'),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.raw === null ? 'N/A' : context.raw.toFixed(2);
+                                    return context.dataset.label + ': ' + value;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Anno'
+                            }
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'PFN/EBITDA'
+                            },
+                            min: 0,
+                            max: 6
+                        }
+                    }
+                }
+            });
+        }
+
+        // Inizializza tutto al caricamento della pagina
         document.addEventListener('DOMContentLoaded', function() {
+            // Inizializza la dashboard con i dati JSON
+            initDashboard();
+
+            // Assign correct anchor target ID for Azione Prioritaria button link
             const actionButton = document.querySelector('a[href^="report/parte6_rischi-raccomandazioni.html"]');
             if(actionButton) {
-                 // Update target based on the actual ID used in parte6 file for table 7.1.1
-                 // Assuming the table has an ID or a preceding anchor like <a id="section_7_1"></a>
-                 actionButton.href = "report/parte6_rischi-raccomandazioni.html#table_7_1_1"; // Adjusted target ID
+                 actionButton.href = "report/parte6_rischi-raccomandazioni.html#table_7_1_1";
             }
 
             // Ensure logout function is defined
              if (typeof logout !== 'function') {
                  window.logout = function() {
                     console.log("Logout action triggered (placeholder)");
-                    // Add actual logout logic here (e.g., redirect, clear session)
-                    // window.location.href = '/logout'; // Example redirect
+                    // window.location.href = '/logout';
                 }
              }
              // Ensure print function is defined
